@@ -19,6 +19,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    // 보유하고 있는 jwtSecret Key를 인코딩하여 저장
     @PostConstruct
     protected void init() {
         jwtSecret = Base64.getEncoder()
@@ -29,7 +30,7 @@ public class JwtService {
     public String issuedToken(String userId) {
         final Date now = new Date();
 
-        // 클레임 생성
+        // 클레임 생성 (토큰의 payload에 저장됨, 서버에서 보낼 데이터가 담김)
         final Claims claims = Jwts.claims()
                 .setSubject("access_token")
                 .setIssuedAt(now)
@@ -39,10 +40,10 @@ public class JwtService {
         claims.put("userId", userId);
 
         return Jwts.builder()
-                .setHeaderParam(Header.TYPE , Header.JWT_TYPE)
-                .setClaims(claims)
-                .signWith(getSigningKey())
-                .compact();
+                .setHeaderParam(Header.TYPE , Header.JWT_TYPE) //header 파라미터 추가
+                .setClaims(claims) //claim 추가
+                .signWith(getSigningKey()) //서명에 쓸 secret key나 private key 지정
+                .compact(); // 압축 및 서명
     }
 
     private Key getSigningKey() {
@@ -65,10 +66,10 @@ public class JwtService {
 
     private Claims getBody(final String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .setSigningKey(getSigningKey()) // 서명 검증을 위한 키  지정
+                .build() //builder를 통해 jwt parser 리턴
+                .parseClaimsJws(token) //토큰을 원래 claim으로 변환
+                .getBody(); //body 받아오기
     }
 
     // JWT 토큰 내용 확인
