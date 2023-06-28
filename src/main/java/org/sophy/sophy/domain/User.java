@@ -2,6 +2,7 @@ package org.sophy.sophy.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +14,12 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private boolean isAuthor;
 
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
 }
