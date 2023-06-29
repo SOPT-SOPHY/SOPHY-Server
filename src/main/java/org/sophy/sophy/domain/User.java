@@ -1,6 +1,7 @@
 package org.sophy.sophy.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,8 +21,9 @@ public class User extends AuditingTimeEntity{
     @Column(nullable = false)
     private String nickname;
 
+    @Builder.Default // 기본값 설정
     @Column(nullable = false)
-    private boolean isAuthor;
+    private boolean isAuthor = false;
 
     @Column(nullable = false)
     private String email;
@@ -29,14 +31,11 @@ public class User extends AuditingTimeEntity{
     @Column(nullable = false)
     private String password;
 
-    private User(String nickname, boolean isAuthor, String email, String password) {
+    @Builder
+    public User(String nickname, boolean isAuthor, String email, String password) {
         this.nickname = nickname;
         this.isAuthor = isAuthor;
         this.email = email;
         this.password = password;
-    }
-
-    public static User newInstance(String nickname, boolean isAuthor, String email, String password) {
-        return new User(nickname, isAuthor, email, password);
     }
 }

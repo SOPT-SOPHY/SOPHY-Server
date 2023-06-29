@@ -2,6 +2,8 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.request.dto.UserLoginRequestDto;
+import org.sophy.sophy.controller.request.dto.UserRequestDto;
+import org.sophy.sophy.controller.response.dto.UserResponseDto;
 import org.sophy.sophy.domain.User;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.InvalidPasswordException;
@@ -26,5 +28,18 @@ public class UserService {
         }
 
         return user.getId();
+    }
+
+    @Transactional
+    public UserResponseDto create(UserRequestDto request) {
+        User user = User.builder()
+                .email(request.getEmail())
+                .nickname(request.getNickname())
+                .password(request.getPassword())
+                .build();
+
+        userRepository.save(user);
+
+        return UserResponseDto.of(user.getId(), user.getNickname());
     }
 }
