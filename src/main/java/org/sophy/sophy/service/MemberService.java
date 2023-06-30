@@ -1,9 +1,9 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.request.dto.MemberLoginRequestDto;
-import org.sophy.sophy.controller.request.dto.MemberRequestDto;
-import org.sophy.sophy.controller.response.dto.MemberResponseDto;
+import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
+import org.sophy.sophy.controller.dto.request.MemberRequestDto;
+import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.InvalidPasswordException;

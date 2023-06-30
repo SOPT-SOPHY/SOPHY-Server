@@ -1,4 +1,4 @@
-package org.sophy.sophy.controller.response.dto;
+package org.sophy.sophy.controller.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
