@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserResponseDto {
-    private Long userId;
+public class MemberResponseDto {
+    private Long memberId;
     private String nickname;
 
-    public static UserResponseDto of(Long userId, String nickname) {
-        return new UserResponseDto(userId, nickname);
+    public static MemberResponseDto of(Long memberId, String nickname) {
+        return new MemberResponseDto(memberId, nickname);
     }
 }

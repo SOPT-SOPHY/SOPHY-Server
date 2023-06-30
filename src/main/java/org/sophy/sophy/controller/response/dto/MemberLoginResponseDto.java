@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserLoginResponseDto {
-    private Long userId;
+public class MemberLoginResponseDto {
+    private Long memberId;
     private String accessToken;
 
-    public static UserLoginResponseDto of(Long userId, String accessToken) {
-        return new UserLoginResponseDto(userId, accessToken);
+    public static MemberLoginResponseDto of(Long memberId, String accessToken) {
+        return new MemberLoginResponseDto(memberId, accessToken);
     }
 }
