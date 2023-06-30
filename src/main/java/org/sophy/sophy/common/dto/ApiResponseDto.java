@@ -26,4 +26,8 @@ public class ApiResponseDto<T> {
     public static ApiResponseDto error(ErrorStatus errorStatus) {
         return new ApiResponseDto<>(errorStatus.getHttpStatus().value(), errorStatus.getMessage());
     }
+
+    public static ApiResponseDto error(ErrorStatus errorStatus, String message) {
+        return new ApiResponseDto<>(errorStatus.getHttpStatusCode(), message);
+    }
 }
