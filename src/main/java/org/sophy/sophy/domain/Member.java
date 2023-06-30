@@ -31,10 +31,11 @@ public class Member extends AuditingTimeEntity{
     private Authority authority;
 
     @Builder
-    public Member(String nickname, boolean isAuthor, String email, String password) {
+    public Member(String nickname, boolean isAuthor, String email, String password, Authority authority) {
         this.nickname = nickname;
         this.isAuthor = isAuthor;
         this.email = email;
         this.password = password;
+        this.authority = authority;
     }
 }
