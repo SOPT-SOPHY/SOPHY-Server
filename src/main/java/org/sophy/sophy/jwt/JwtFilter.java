@@ -35,6 +35,8 @@ public class JwtFilter extends OncePerRequestFilter {
             //Context에 저장할 때 auth를 설정하며 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
+        filterChain.doFilter(request, response);
     }
 
     //Request Header에서 토큰 정보를 꺼내오기

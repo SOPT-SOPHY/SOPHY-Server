@@ -6,9 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @Slf4j
 public class SecurityUtil {
-    private SecurityUtil() {
-
-    }
+    private SecurityUtil() { }
 
     // SecurityContext 에 유저 정보가 저장되는 시점
     // Request 가 들어올 때 JwtFilter 의 do Filter 에서 저장

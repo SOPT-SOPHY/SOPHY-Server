@@ -1,6 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
 import org.sophy.sophy.controller.dto.request.TokenRequestDto;
 import org.sophy.sophy.controller.dto.response.MemberResponseDto;
@@ -30,13 +31,13 @@ public class AuthService {
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
-        return MemberResponseDto.of(member);
+        return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional
-    public TokenDto login(MemberRequestDto memberRequestDto) {
+    public TokenDto login(MemberLoginRequestDto memberLoginRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = memberLoginRequestDto.toAuthentication();
 
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         // ID 존재 여부 + 해당 ID로 불러온 비밀번호가 사용자가 제출한 비밀번호와 일치하는지 겅즘

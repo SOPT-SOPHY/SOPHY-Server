@@ -1,12 +1,13 @@
 package org.sophy.sophy.controller.dto.response;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sophy.sophy.domain.Member;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberResponseDto {
     private String email;
     private String nickname;

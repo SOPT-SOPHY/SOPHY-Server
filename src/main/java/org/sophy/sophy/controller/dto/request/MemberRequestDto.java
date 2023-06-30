@@ -1,8 +1,8 @@
 package org.sophy.sophy.controller.dto.request;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sophy.sophy.domain.Authority;
 import org.sophy.sophy.domain.Member;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberRequestDto {
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotNull
