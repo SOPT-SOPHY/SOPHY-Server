@@ -36,6 +36,11 @@ public class TokenProvider {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
+
+    public long getRefreshTokenExpireTime() {
+        return REFRESH_TOKEN_EXPIRE_TIME;
+    }
+
     //로그인 시
     public TokenDto generateTokenDto(Authentication authentication) {
         //권한들 가져오기
