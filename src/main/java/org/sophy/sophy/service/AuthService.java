@@ -28,6 +28,8 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RedisTemplate redisTemplate;
 
+    //이메일 중복 체크만 가능한 서비스 하나 추가
+    
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
