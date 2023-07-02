@@ -8,8 +8,13 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SuccessStatus {
+    /**
+     * 200 OK
+     */
+    LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다."),
+    REISSUE_SUCCESS(HttpStatus.OK, "토큰 재발행에 성공했습니다."),
     /*
-    user
+     * 201 created
      */
     SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입이 완료되었습니다."),
     ;
