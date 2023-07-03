@@ -1,6 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.controller.dto.request.DuplCheckDto;
 import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
 import org.sophy.sophy.controller.dto.request.TokenRequestDto;
@@ -43,8 +44,9 @@ public class AuthService {
     }
 
     @Transactional
-    public String duplCheck(String email) {
-        if (memberRepository.findByEmail(email).isPresent()) {
+    public String  duplCheck(DuplCheckDto email) {
+
+        if (memberRepository.existsByEmail(email.getEmail())) {
             throw new ExistEmailException(ErrorStatus.ALREADY_EXIST_USER_EXCEPTION, ErrorStatus.ALREADY_EXIST_USER_EXCEPTION.getMessage());
         }
         return "사용 가능한 이메일입니다.";
