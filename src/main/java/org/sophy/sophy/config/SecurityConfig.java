@@ -3,6 +3,7 @@ package org.sophy.sophy.config;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.jwt.JwtAccessDeniedHandler;
 import org.sophy.sophy.jwt.JwtAuthenticationEntryPoint;
+import org.sophy.sophy.jwt.JwtExceptionFilter;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,8 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    private final JwtExceptionFilter jwtExceptionFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -55,7 +58,7 @@ public class SecurityConfig {
 
                 //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider, jwtExceptionFilter));
 
         return http.build();
     }

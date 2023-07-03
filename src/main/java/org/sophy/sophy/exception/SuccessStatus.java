@@ -13,6 +13,8 @@ public enum SuccessStatus {
      */
     LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다."),
     REISSUE_SUCCESS(HttpStatus.OK, "토큰 재발행에 성공했습니다."),
+    CHECK_DUPL_EMAIL_SUCCESS(HttpStatus.OK, "사용 가능한 이메일 주소입니다."),
+    TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created
      */
