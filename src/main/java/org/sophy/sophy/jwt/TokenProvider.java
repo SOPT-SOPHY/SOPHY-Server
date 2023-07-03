@@ -80,7 +80,7 @@ public class TokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new JwtException("권한 정보가 없는 토큰입니다.");
         }
 
         //클레임에서 권한 정보 가져오기
