@@ -23,7 +23,7 @@ public class MemberRequestDto {
 
     @NotBlank
     @Pattern(regexp = "^[가-힣a-zA-Z]{2,10}$", message = "닉네임 형식에 맞지 않습니다.")
-    private String nickname;
+    private String name;
 
     @NotBlank
     @Pattern(
@@ -35,7 +35,7 @@ public class MemberRequestDto {
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
-                .nickname(nickname)
+                .name(name)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)
                 .build();
