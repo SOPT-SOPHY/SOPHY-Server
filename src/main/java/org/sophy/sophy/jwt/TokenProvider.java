@@ -26,11 +26,9 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 10;
-//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 30;
-//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
 
+    private static long ACCESS_TOKEN_EXPIRE_TIME;
+    private static long REFRESH_TOKEN_EXPIRE_TIME;
     private final Key key;
 
     //빈 생성 때 key 값 세팅
@@ -44,12 +42,14 @@ public class TokenProvider {
     }
 
     //로그인 시
-    public TokenDto generateTokenDto(Authentication authentication) {
+    public TokenDto generateTokenDto(Authentication authentication, long accessTokenExpiredTime, long refreshTokenExpiredTime) {
         //권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        ACCESS_TOKEN_EXPIRE_TIME = accessTokenExpiredTime * 1000;
+        REFRESH_TOKEN_EXPIRE_TIME = refreshTokenExpiredTime * 1000;
         long now = (new Date()).getTime();
 
         //Access Token 생성

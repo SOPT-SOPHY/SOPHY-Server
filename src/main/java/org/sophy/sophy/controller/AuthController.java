@@ -27,6 +27,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ApiResponseDto<TokenDto> login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+        System.out.println(memberLoginRequestDto.getEmail() + memberLoginRequestDto.getAccessTokenExpiredTime());
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 

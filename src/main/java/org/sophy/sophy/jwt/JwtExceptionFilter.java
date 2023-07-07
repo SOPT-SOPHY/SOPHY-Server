@@ -27,6 +27,11 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (JwtException exception) {
             setErrorResponse(HttpStatus.UNAUTHORIZED, response, exception);
+        } catch (NullPointerException e) {
+            response.setStatus(400);
+            response.setContentType("application/json; charset=UTF-8");
+
+            response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.error(ErrorStatus.VALIDATION_EXCEPTION)));
         }
     }
 
