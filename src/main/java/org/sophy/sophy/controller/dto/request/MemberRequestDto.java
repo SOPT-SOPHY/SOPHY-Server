@@ -35,6 +35,7 @@ public class MemberRequestDto {
     @NotBlank
     private String phoneNum;
 
+    @NotBlank
     private boolean marketingAgree;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
