@@ -1,6 +1,7 @@
 package org.sophy.sophy.common.advice;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.lettuce.core.RedisCommandExecutionException;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,12 @@ public class ControllerExceptionAdvice {
     protected ApiResponseDto handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         return ApiResponseDto.error(ErrorStatus.VALIDATION_REQUEST_MISSING_EXCEPTION);
     }
-    /**
-     * 500 Internal Server
-     */
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(Exception.class)
-//    protected ApiResponseDto<Object> handleException(final Exception e) {
-//        return ApiResponseDto.error(ErrorStatus.INTERNAL_SERVER_ERROR);
-//    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RedisCommandExecutionException.class)
+    protected ApiResponseDto handleRedisCommandExecutionException(final RedisCommandExecutionException e) {
+        return ApiResponseDto.error(ErrorStatus.INVALID_TOKEN_INFO_EXCEPTION);
+    }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
