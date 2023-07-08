@@ -32,11 +32,17 @@ public class MemberRequestDto {
     )
     private String password;
 
+    @NotBlank
+    private String phoneNum;
+
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
                 .name(name)
                 .password(passwordEncoder.encode(password))
+                .phoneNum(phoneNum)
+                .isAuthor(false)
+                .isOperator(false)
                 .authority(Authority.ROLE_USER)
                 .build();
     }
