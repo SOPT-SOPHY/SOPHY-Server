@@ -26,4 +26,10 @@ public class MemberController {
     public ApiResponseDto<MyInfoDto> getInfo(@PathVariable("memberId") long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyInfo(memberId));
     }
+
+    @PatchMapping("/my-info/{memberId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<MyInfoDto> patchInfo(@PathVariable("memberId") long memberId, @RequestBody MyInfoDto myInfoDto) {
+        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(memberId, myInfoDto));
+    }
 }

@@ -50,6 +50,13 @@ public class MemberService {
                 .build();
     }
 
+    @Transactional
+    public MyInfoDto patchMyInfo(Long memberId, MyInfoDto myInfoDto) {
+        Member member = getMemberById(memberId);
+        member.patchMyInfo(myInfoDto);
+        return myInfoDto;
+    }
+
     private Member getMemberById(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
