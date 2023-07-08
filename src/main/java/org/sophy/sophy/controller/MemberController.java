@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/mypage")
+    @GetMapping("/mypage/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyPageDto> getMyPage(@RequestBody Long memberId) {
+    public ApiResponseDto<MyPageDto> getMyPage(@PathVariable("memberId") long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyPage(memberId));
     }
 }

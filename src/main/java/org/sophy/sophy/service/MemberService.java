@@ -19,6 +19,7 @@ public class MemberService {
     public MyPageDto getMyPage(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
         if(member.isAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())

@@ -1,6 +1,7 @@
 package org.sophy.sophy.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Author {
     @Id
     @GeneratedValue
