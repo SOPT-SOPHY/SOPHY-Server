@@ -3,6 +3,7 @@ package org.sophy.sophy.service;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.MyPageDto;
+import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.MemberRepository;
@@ -17,8 +18,7 @@ public class MemberService {
 
     @Transactional
     public MyPageDto getMyPage(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        Member member = getMemberById(memberId);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
         if(member.isAuthor()){
             return MyPageDto.builder()
@@ -36,4 +36,25 @@ public class MemberService {
                     .build();
         }
     }
+    @Transactional
+    public MyInfoDto getMyInfo(Long memberId) {
+        Member member = getMemberById(memberId);
+        return MyInfoDto.builder()
+                .email(member.getEmail())
+                .name(member.getName())
+                .phoneNum(member.getPhoneNum())
+                .gender(member.getGender())
+                .birth(member.getBirth())
+                .city(member.getMyCity())
+                .marketingAgree(member.isMarketingAgree())
+                .build();
+    }
+
+    private Member getMemberById(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        return member;
+    }
+
+
 }

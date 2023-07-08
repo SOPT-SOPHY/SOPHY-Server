@@ -15,6 +15,7 @@ public enum SuccessStatus {
     REISSUE_SUCCESS(HttpStatus.OK, "토큰 재발행에 성공했습니다."),
     CHECK_DUPL_EMAIL_SUCCESS(HttpStatus.OK, "사용 가능한 이메일 주소입니다."),
     GET_MYPAGE_SUCCESS(HttpStatus.OK, "마이페이지를 성공적으로 불러왔습니다."),
+    GET_MYINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 불러왔습니다."),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created
