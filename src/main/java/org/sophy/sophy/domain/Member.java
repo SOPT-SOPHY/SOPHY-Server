@@ -79,8 +79,6 @@ public class Member extends AuditingTimeEntity{
     }
 
     public void patchMyInfo(MyInfoDto myInfoDto) {
-        this.email = myInfoDto.getEmail();
-        this.name = myInfoDto.getName();
         this.phoneNum = myInfoDto.getPhoneNum();
         this.gender = myInfoDto.getGender();
         this.birth = myInfoDto.getBirth();
