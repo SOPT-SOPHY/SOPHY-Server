@@ -3,6 +3,8 @@ package org.sophy.sophy.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
+import org.sophy.sophy.domain.dto.MyInfoDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -81,5 +83,17 @@ public class Member extends AuditingTimeEntity{
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
+    }
+
+    public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        this.gender = memberAdditionalInfoDto.getGender();
+        this.birth = memberAdditionalInfoDto.getBirth();
+    }
+
+    public void patchMyInfo(MyInfoDto myInfoDto) {
+        this.gender = myInfoDto.getGender();
+        this.birth = myInfoDto.getBirth();
+        this.myCity = myInfoDto.getCity();
+        this.marketingAgree = myInfoDto.isMarketingAgree();
     }
 }
