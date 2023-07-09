@@ -1,6 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
@@ -49,6 +50,12 @@ public class MemberService {
                 .marketingAgree(member.isMarketingAgree())
                 .build();
     }
+    @Transactional
+    public MemberAdditionalInfoDto postAdditionalInfo(Long memberId, MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        Member member = getMemberById(memberId);
+        member.setAdditionalInfo(memberAdditionalInfoDto);
+        return memberAdditionalInfoDto;
+    }
 
     @Transactional
     public MyInfoDto patchMyInfo(Long memberId, MyInfoDto myInfoDto) {
@@ -58,9 +65,8 @@ public class MemberService {
     }
 
     private Member getMemberById(Long memberId) {
-        Member member = memberRepository.findById(memberId)
+        return memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
-        return member;
     }
 
 
