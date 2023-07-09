@@ -1,9 +1,7 @@
 package org.sophy.sophy;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.domain.Author;
-import org.sophy.sophy.domain.Authority;
-import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +63,21 @@ public class InitDb {
             author.setBookTalkCount(3);
             author.setBookCount(3);
             em.persist(author);
+
+            Place place = Place.builder()
+                    .name("장소")
+                    .city(City.UIJEONGBU_SI)
+                    .address("의정부시 무슨동 뭐시기")
+                    .maximum(30)
+                    .build();
+            Place place2 = Place.builder()
+                    .name("장소")
+                    .city(City.GANEUNG_DONG)
+                    .address("의정부시 가능동")
+                    .maximum(10)
+                    .build();
+            em.persist(place);
+            em.persist(place2);
         }
     }
 }
