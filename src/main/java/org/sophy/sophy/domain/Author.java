@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,7 +21,8 @@ public class Author {
     @GeneratedValue
     private Long id;
 
-//    private List<Booktalk> myBookTalkList;
+    @OneToMany(mappedBy = "author")
+    private List<Booktalk> myBookTalkList;
     //private List<Book> myBookList
     private Integer matchingBookTalkCount;
     private Integer recruitBookTalkCount;

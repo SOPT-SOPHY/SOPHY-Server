@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -48,7 +49,9 @@ public class Member extends AuditingTimeEntity{
     private Integer bookCount;
     private Integer bookTalkCount;
 
-    //private List<Booktalk> userBookTalk list
+    @OneToMany(mappedBy = "member")
+    private List<MemberBooktalk> userBookTalkList;
+
     @OneToOne
     private Author author; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
