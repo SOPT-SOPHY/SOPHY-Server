@@ -1,6 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
@@ -48,6 +49,13 @@ public class MemberService {
                 .city(member.getMyCity())
                 .marketingAgree(member.isMarketingAgree())
                 .build();
+    }
+
+    @Transactional
+    public MemberAdditionalInfoDto postAdditionalInfo(Long memberId, MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        Member member = getMemberById(memberId);
+        member.setAdditionalInfo(memberAdditionalInfoDto);
+        return memberAdditionalInfoDto;
     }
 
     @Transactional

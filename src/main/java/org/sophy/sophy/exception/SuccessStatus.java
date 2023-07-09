@@ -16,7 +16,8 @@ public enum SuccessStatus {
     CHECK_DUPL_EMAIL_SUCCESS(HttpStatus.OK, "사용 가능한 이메일 주소입니다."),
     GET_MYPAGE_SUCCESS(HttpStatus.OK, "마이페이지를 성공적으로 불러왔습니다."),
     GET_MYINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 불러왔습니다."),
-    PATCH_MYINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 불러왔습니다."),
+    PATCH_MYINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 수정했습니다."),
+    POST_ADDITIONALINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 추가했습니다."),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created
