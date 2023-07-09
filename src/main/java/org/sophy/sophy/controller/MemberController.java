@@ -5,6 +5,7 @@ import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
+import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;

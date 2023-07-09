@@ -5,6 +5,8 @@ import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
+import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MyPageDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.MemberRepository;

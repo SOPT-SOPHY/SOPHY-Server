@@ -7,6 +7,8 @@ import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
@@ -25,7 +27,8 @@ public class Member extends AuditingTimeEntity{
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
+    @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phoneNum;
 
     private String gender;
