@@ -35,12 +35,16 @@ public class MemberRequestDto {
     @NotBlank
     private String phoneNum;
 
+    @NotBlank
+    private boolean marketingAgree;
+
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .phoneNum(phoneNum)
+                .marketingAgree(marketingAgree)
                 .isAuthor(false)
                 .isOperator(false)
                 .authority(Authority.ROLE_USER)

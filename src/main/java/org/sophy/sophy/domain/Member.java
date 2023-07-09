@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
@@ -24,7 +26,8 @@ public class Member extends AuditingTimeEntity{
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
+    @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phoneNum;
 
     private String gender;
@@ -66,5 +69,17 @@ public class Member extends AuditingTimeEntity{
         this.isAuthor = isAuthor;
         this.isOperator = isOperator;
         this.authority = authority;
+    }
+
+    public void serAuthor(Author author) {
+        this.author = author;
+    }
+
+    public void setBookCount(int count) {
+        this.bookCount = count;
+    }
+
+    public void setBookTalkCount(int count) {
+        this.bookTalkCount = count;
     }
 }
