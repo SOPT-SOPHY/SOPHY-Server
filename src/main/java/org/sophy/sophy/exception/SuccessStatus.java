@@ -19,6 +19,7 @@ public enum SuccessStatus {
     PATCH_MYINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 수정했습니다."),
     POST_ADDITIONALINFO_SUCCESS(HttpStatus.OK, "내 정보를 성공적으로 추가했습니다."),
     GET_PLACES_BY_CITY_SUCCESS(HttpStatus.OK, "지역으로 공간 리스트를 성공적으로 불러왔습니다."),
+    PATCH_BOOKTALK_SUCCESS(HttpStatus.OK, "북토크를 성공적으로 수정했습니다."),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created

@@ -2,6 +2,7 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
+import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
@@ -23,13 +24,32 @@ public class BooktalkService {
 
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
-        Place place = placeRepository.findById(booktalkRequestDto.getPlaceId())
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_PLACE_EXCEPTION, ErrorStatus.NOT_FOUND_PLACE_EXCEPTION.getMessage()));
+        Place place = getPlaceById(booktalkRequestDto.getPlaceId());
         //작가인지 확인할 필요가 있는지?
-        Member member = memberRepository.findById(booktalkRequestDto.getMemberId())
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
-
+        Member member = getMemberById(booktalkRequestDto.getMemberId());
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
+    }
+
+    @Transactional
+    public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
+        Booktalk booktalk = booktalkRepository.findById(booktalkId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
+        if (booktalkUpdateDto.getPlaceId() != booktalk.getPlace().getId()) {
+            Place place = getPlaceById(booktalkUpdateDto.getPlaceId());
+            booktalk.setPlace(place);
+        }
+        booktalk.patchBooktalk(booktalkUpdateDto);
+        return booktalkUpdateDto;
+    }
+
+    private Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+    }
+
+    private Place getPlaceById(Long placeId) {
+        return placeRepository.findById(placeId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_PLACE_EXCEPTION, ErrorStatus.NOT_FOUND_PLACE_EXCEPTION.getMessage()));
     }
 }
