@@ -4,6 +4,6 @@ import lombok.Getter;
 import org.sophy.sophy.domain.City;
 
 @Getter
-public class PlaceRequestDto {
+public class CityRequestDto {
     private City city;
 }
