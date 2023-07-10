@@ -106,6 +106,8 @@ src/main/java/org/sophy
 	
 	
 ## <strong> 아키텍처 구조 </strong>
+![소피 아키텍쳐 구조](https://github.com/SOPT-SOPHY/SOPHY-Server/assets/31067658/3b3334d5-194e-47c7-8ddc-570e9fefb343)
+
 
 	
 	
