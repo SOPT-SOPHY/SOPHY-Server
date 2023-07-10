@@ -2,12 +2,13 @@ package org.sophy.sophy.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
+import org.sophy.sophy.controller.dto.request.PlaceRequestDto;
 import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.PlaceService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.List;
 public class PlaceController {
     private final PlaceService placeService;
 
-    @GetMapping("")
-    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(@RequestParam String city) {
-        return ApiResponseDto.success(SuccessStatus.GET_PLACES_BY_CITY_SUCCESS, placeService.getPlacesByCity(city));
+    @GetMapping
+    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(@RequestBody PlaceRequestDto placeRequestDto) {
+        return ApiResponseDto.success(SuccessStatus.GET_PLACES_BY_CITY_SUCCESS, placeService.getPlacesByCity(placeRequestDto));
     }
 }
