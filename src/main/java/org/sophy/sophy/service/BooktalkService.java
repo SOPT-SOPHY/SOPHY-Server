@@ -1,9 +1,10 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
+import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
+import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.Place;
@@ -33,14 +34,23 @@ public class BooktalkService {
 
     @Transactional
     public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
-        Booktalk booktalk = booktalkRepository.findById(booktalkId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
+        Booktalk booktalk = getBooktalkById(booktalkId);
         if (booktalkUpdateDto.getPlaceId() != booktalk.getPlace().getId()) {
             Place place = getPlaceById(booktalkUpdateDto.getPlaceId());
             booktalk.setPlace(place);
         }
         booktalk.patchBooktalk(booktalkUpdateDto);
         return booktalkUpdateDto;
+    }
+
+    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) {
+        Booktalk booktalk = getBooktalkById(booktalkId);
+        //TODO soft delete?
+        //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
+        booktalk.getPlace().deleteBooktalk(booktalk);
+        booktalk.getMember().getAuthor().deleteBooktalk(booktalk);
+        booktalkRepository.deleteById(booktalkId);
+        return BooktalkDeleteResponseDto.of(booktalkId);
     }
 
     private Member getMemberById(Long memberId) {
@@ -51,5 +61,10 @@ public class BooktalkService {
     private Place getPlaceById(Long placeId) {
         return placeRepository.findById(placeId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_PLACE_EXCEPTION, ErrorStatus.NOT_FOUND_PLACE_EXCEPTION.getMessage()));
+    }
+
+    private Booktalk getBooktalkById(Long booktalkId) {
+        return booktalkRepository.findById(booktalkId)
+                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
     }
 }
