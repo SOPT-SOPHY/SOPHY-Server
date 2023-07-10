@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "PLACE")
 @NoArgsConstructor
 public class Place extends AuditingTimeEntity {
     @Id
@@ -36,10 +35,7 @@ public class Place extends AuditingTimeEntity {
     private String placeImage;
 
     @OneToMany(mappedBy = "place")
-    private List<Booktalk> approvedBooktalkList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "place")
-    private List<Booktalk> pendingBooktalkList = new ArrayList<>();
+    private List<Booktalk> booktalkList = new ArrayList<>();
 
     @Builder
     public Place(City city, String name, String address, Integer maximum, String placeImage) {
@@ -48,7 +44,6 @@ public class Place extends AuditingTimeEntity {
         this.address = address;
         this.maximum = maximum;
         this.placeImage = placeImage;
-        this.approvedBooktalkList = new ArrayList<>();
-        this.pendingBooktalkList = new ArrayList<>();
+        this.booktalkList = new ArrayList<>();
     }
 }

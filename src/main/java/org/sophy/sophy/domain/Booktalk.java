@@ -11,11 +11,11 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "BOOKTALK")
 @NoArgsConstructor
 public class Booktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booktalk_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,13 +64,13 @@ public class Booktalk extends AuditingTimeEntity {
     // 연관 관계 편의 메서드
     public void setPlace(Place place) {
         if (this.place != null) {
-            this.place.getPendingBooktalkList().remove(this);
+            this.place.getBooktalkList().remove(this);
         }
 
         this.place = place;
 
-        if (!place.getPendingBooktalkList().contains(this)) {
-            place.getPendingBooktalkList().add(this);
+        if (!place.getBooktalkList().contains(this)) {
+            place.getBooktalkList().add(this);
         }
     }
 
