@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "MEMBER_BOOKTALK")
 @Getter
 @NoArgsConstructor
 public class MemberBooktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_booktalk_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,7 +28,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
     // 연관 관계 편의 메서드
     public void setMember(Member member) {
         if(this.member != null) {
-            this.member.getUserBookTalkList().remove(this);
+            this.member.getUserBookTalkList().remove(this); //이거 PATCH될 가능성이 있나?
         }
         this.member = member;
         if(!member.getUserBookTalkList().contains(this)) {

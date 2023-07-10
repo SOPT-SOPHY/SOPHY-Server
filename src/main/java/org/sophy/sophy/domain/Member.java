@@ -17,6 +17,7 @@ import javax.validation.constraints.Pattern;
 public class Member extends AuditingTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false)

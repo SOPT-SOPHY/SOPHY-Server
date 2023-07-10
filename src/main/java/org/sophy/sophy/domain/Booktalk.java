@@ -11,11 +11,11 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "BOOKTALK")
 @NoArgsConstructor
 public class Booktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booktalk_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

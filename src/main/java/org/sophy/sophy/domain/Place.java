@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "PLACE")
 @NoArgsConstructor
 public class Place extends AuditingTimeEntity {
     @Id
@@ -35,7 +34,7 @@ public class Place extends AuditingTimeEntity {
 
     private String placeImage;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place") // Booktalk리스트에 이 속성 요소를 넣고 하나로 통합하던, BooktalkPlace를 만드는게 나을 것 같은데?
     private List<Booktalk> approvedBooktalkList = new ArrayList<>();
 
     @OneToMany(mappedBy = "place")
