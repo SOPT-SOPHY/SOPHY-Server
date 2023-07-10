@@ -21,7 +21,7 @@ public class Author {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany
     private List<Booktalk> myBookTalkList;
     //private List<Book> myBookList
     private Integer matchingBookTalkCount;
