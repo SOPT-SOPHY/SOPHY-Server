@@ -8,7 +8,7 @@ DEPLOY_PATH=/home/ubuntu/app/nonstop/jar/
 cp $BUILD_PATH $DEPLOY_PATH
 
 echo "> 현재 구동중인 Set 확인"
-CURRENT_PROFILE=$(curl -L http://localhost/profile)
+CURRENT_PROFILE=$(curl -sL http://localhost/profile)
 echo "> $CURRENT_PROFILE"
 
 # 쉬고 있는 set 찾기: set1이 사용중이면 set2가 쉬고 있고, 반대면 set1이 쉬고 있음
@@ -49,12 +49,12 @@ echo "> $IDLE_PROFILE 배포"
 nohup java -jar -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH >> /home/ubuntu/app/nohup.out 2>&1 &
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
-echo "> curl -L http://localhost:$IDLE_PORT/health "
+echo "> curl -sL http://localhost:$IDLE_PORT/health "
 sleep 10
 
 for retry_count in {1..10}
 do
-  response=$(curl -L http://localhost:$IDLE_PORT/actuator/health)
+  response=$(curl -sL http://localhost:$IDLE_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
 
   if [ $up_count -ge 1 ]
