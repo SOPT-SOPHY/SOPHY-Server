@@ -8,6 +8,7 @@ import org.sophy.sophy.domain.City;
 import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,6 +19,7 @@ import java.util.List;
 public class BooktalkService {
     private final PlaceRepository placeRepository;
 
+    @Transactional
     public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) {
         City city = cityRequestDto.getCity();
         List<Place> placeList;
