@@ -90,7 +90,7 @@ public class Booktalk extends AuditingTimeEntity {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
-        this.member = member;
+        setMember(member);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;

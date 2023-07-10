@@ -24,4 +24,8 @@ public class Author {
     //private List<Book> myBookList
     private Integer matchingBookTalkCount;
     private Integer recruitBookTalkCount;
+
+    public void deleteBooktalk(Booktalk booktalk) {
+        myBookTalkList.remove(booktalk);
+    }
 }
