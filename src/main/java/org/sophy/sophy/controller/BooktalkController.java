@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,8 @@ import java.util.List;
 public class BooktalkController {
     private final BooktalkService booktalkService;
 
-    @GetMapping
-    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@RequestBody CityRequestDto cityRequestDto) {
+    @GetMapping("/search")
+    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(cityRequestDto));
     }
 }
