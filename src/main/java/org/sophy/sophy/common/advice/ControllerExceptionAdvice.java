@@ -1,15 +1,16 @@
 package org.sophy.sophy.common.advice;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.lettuce.core.RedisCommandExecutionException;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.exception.ErrorStatus;
+import org.sophy.sophy.exception.model.SophyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.sophy.sophy.exception.model.SophyException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -33,6 +34,12 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(ExpiredJwtException.class)
     protected ApiResponseDto handleExpiredRefreshTokenException(final ExpiredJwtException e) {
         return ApiResponseDto.error(ErrorStatus.REFRESH_TOKEN_TIME_EXPIRED_EXCEPTION);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(InvalidFormatException.class)
+    protected ApiResponseDto handleInvalidFormatException(final InvalidFormatException e) {
+        return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
     }
 
     /**
