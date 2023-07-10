@@ -32,7 +32,6 @@ public class BooktalkService {
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
         Place place = getPlaceById(booktalkRequestDto.getPlaceId());
-        //작가인지 확인할 필요가 있는지?
         Member member = getMemberById(booktalkRequestDto.getMemberId());
         if (!member.getIsAuthor()) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
