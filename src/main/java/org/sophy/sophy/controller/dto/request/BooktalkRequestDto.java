@@ -39,10 +39,8 @@ public class BooktalkRequestDto {
 
     public Booktalk toBooktalk(Place place, Member member) {
         return Booktalk.builder()
-                .place(place)
                 .title(title)
                 .booktalkImageUrl(booktalkImageUrl)
-                .member(member)
                 .bookCategory(bookCategory)
                 .startDate(startDate)
                 .endDate(endDate)
@@ -50,7 +48,10 @@ public class BooktalkRequestDto {
                 .participationFee(participationFee)
                 .preliminaryInfo(preliminaryInfo)
                 .description(description)
-                .booktalkStatus(BooktalkStatus.APPLYING).build();
+                .booktalkStatus(BooktalkStatus.APPLYING)
+                .member(member)
+                .place(place)
+                .build();
     }
 
 }
