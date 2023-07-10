@@ -3,6 +3,7 @@ package org.sophy.sophy.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -99,5 +100,17 @@ public class Booktalk extends AuditingTimeEntity {
         this.description = description;
         this.booktalkStatus = booktalkStatus;
         this.participantList = new ArrayList<>();
+    }
+
+    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto) {
+        this.title = booktalkUpdateDto.getTitle();
+        this.booktalkImageUrl = booktalkUpdateDto.getBooktalkImageUrl();
+        this.bookCategory = booktalkUpdateDto.getBookCategory();
+        this.startDate = booktalkUpdateDto.getStartDate();
+        this.endDate = booktalkUpdateDto.getEndDate();
+        this.maximum = booktalkUpdateDto.getParticipant();
+        this.participationFee = booktalkUpdateDto.getParticipationFee();
+        this.preliminaryInfo = booktalkUpdateDto.getPreliminaryInfo();
+        this.description = booktalkUpdateDto.getDescription();
     }
 }
