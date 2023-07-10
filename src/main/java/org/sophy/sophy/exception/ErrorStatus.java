@@ -29,6 +29,7 @@ public enum ErrorStatus {
     NOT_FOUND_SAVE_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "이미지 저장에 실패했습니다"),
     NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "이미지 이름을 찾을 수 없습니다"),
     NOT_FOUND_CITY_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 지역입니다"),
+    NOT_FOUND_PLACE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 공간입니다"),
 
     /**
      * 409 CONFLICT
