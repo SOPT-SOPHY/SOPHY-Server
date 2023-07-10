@@ -5,6 +5,7 @@ import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
 import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
+import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.Place;
@@ -43,6 +44,7 @@ public class BooktalkService {
         return booktalkUpdateDto;
     }
 
+    @Transactional
     public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) {
         Booktalk booktalk = getBooktalkById(booktalkId);
         //TODO soft delete?
@@ -51,6 +53,11 @@ public class BooktalkService {
         booktalk.getMember().getAuthor().deleteBooktalk(booktalk);
         booktalkRepository.deleteById(booktalkId);
         return BooktalkDeleteResponseDto.of(booktalkId);
+    }
+
+    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
+        Booktalk booktalk = getBooktalkById(booktalkId);
+        return BooktalkDetailResponseDto.of(booktalk);
     }
 
     private Member getMemberById(Long memberId) {

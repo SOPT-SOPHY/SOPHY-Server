@@ -6,6 +6,7 @@ import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
 import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
+import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class BooktalkController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.deleteBooktalk(booktalkId));
+    }
+
+    @GetMapping("/{booktalkId}/detail")
+    public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(@PathVariable("booktalkId") Long booktalkId) {
+        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));
     }
 
 }
