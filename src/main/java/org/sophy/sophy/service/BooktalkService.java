@@ -3,24 +3,21 @@ package org.sophy.sophy.service;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
+import org.sophy.sophy.controller.dto.request.CityRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
 import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
 import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
-import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.Member;
-import org.sophy.sophy.domain.Place;
+import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
+import org.sophy.sophy.domain.*;
 import org.sophy.sophy.exception.ErrorStatus;
+import org.sophy.sophy.exception.model.ForbiddenException;
 import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
-import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
-import org.sophy.sophy.domain.BooktalkStatus;
-import org.sophy.sophy.domain.City;
-import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +34,9 @@ public class BooktalkService {
         Place place = getPlaceById(booktalkRequestDto.getPlaceId());
         //작가인지 확인할 필요가 있는지?
         Member member = getMemberById(booktalkRequestDto.getMemberId());
+        if(!member.isAuthor()) {
+            throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
+        }
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
@@ -44,11 +44,7 @@ public class BooktalkService {
     @Transactional
     public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
         Booktalk booktalk = getBooktalkById(booktalkId);
-        if (booktalkUpdateDto.getPlaceId() != booktalk.getPlace().getId()) {
-            Place place = getPlaceById(booktalkUpdateDto.getPlaceId());
-            booktalk.setPlace(place);
-        }
-        booktalk.patchBooktalk(booktalkUpdateDto);
+        booktalk.patchBooktalk(booktalkUpdateDto, getPlaceById(booktalkUpdateDto.getPlaceId()));
         return booktalkUpdateDto;
     }
 
@@ -82,6 +78,7 @@ public class BooktalkService {
         return booktalkRepository.findById(booktalkId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
     }
+
     @Transactional
     public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) {
         City city = cityRequestDto.getCity();
