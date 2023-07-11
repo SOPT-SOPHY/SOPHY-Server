@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Member extends AuditingTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,7 @@ public class Member extends AuditingTimeEntity{
         this.authority = authority;
     }
 
-    public void serAuthor(Author author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 

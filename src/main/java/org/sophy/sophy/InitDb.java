@@ -59,7 +59,7 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            author.serAuthor(memauthor);
+            author.setAuthor(memauthor);
             author.setBookTalkCount(3);
             author.setBookCount(3);
             em.persist(author);
