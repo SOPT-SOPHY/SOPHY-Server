@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -78,6 +79,28 @@ public class InitDb {
                     .build();
             em.persist(place);
             em.persist(place2);
+
+            Booktalk booktalk = Booktalk.builder()
+                    .place(place2)
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .author(author)
+                    .bookCategory(BookCategory.HUMANITIES)
+                    .startDate(LocalDateTime.of(2023, 7, 13, 13, 00))
+                    .endDate(LocalDateTime.of(2023, 7, 13, 15, 00))
+                    .maximum(6)
+                    .participationFee(1000)
+                    .preliminaryInfo(PreliminaryInfo.PRE_READING)
+                    .description("테스트입니당")
+                    .booktalkStatus(BooktalkStatus.RECRUITING)
+                    .build();
+            em.persist(booktalk);
+
+            MemberBooktalk memberBooktalk = MemberBooktalk.builder()
+                    .member(citizen)
+                    .booktalk(booktalk)
+                    .build();
+
+            em.persist(memberBooktalk);
         }
     }
 }
