@@ -52,6 +52,6 @@ public class MemberController {
     @GetMapping("/author-booktalks/{memberId}")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@PathVariable("memberId") Long memberId) {
-        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorByMemberId(memberId));
+        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByMemberId(memberId));
     }
 }
