@@ -18,25 +18,25 @@ public class MemberController {
 
     @GetMapping("/my-page/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyPageDto> getMyPage(@PathVariable("memberId") long memberId) {
+    public ApiResponseDto<MyPageDto> getMyPage(@PathVariable("memberId") Long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyPage(memberId));
     }
 
     @GetMapping("/my-info/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyInfoDto> getInfo(@PathVariable("memberId") long memberId) {
+    public ApiResponseDto<MyInfoDto> getInfo(@PathVariable("memberId") Long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyInfo(memberId));
     }
 
     @PostMapping("/my-info/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@PathVariable("memberId") long memberId, @RequestBody MemberAdditionalInfoDto memberAdditionalInfoDto) {
+    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@PathVariable("memberId") Long memberId, @RequestBody MemberAdditionalInfoDto memberAdditionalInfoDto) {
         return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS, memberService.postAdditionalInfo(memberId, memberAdditionalInfoDto));
     }
 
     @PatchMapping("/my-info/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyInfoDto> patchInfo(@PathVariable("memberId") long memberId, @RequestBody MyInfoDto myInfoDto) {
+    public ApiResponseDto<MyInfoDto> patchInfo(@PathVariable("memberId") Long memberId, @RequestBody MyInfoDto myInfoDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(memberId, myInfoDto));
     }
 }
