@@ -4,8 +4,6 @@ import org.sophy.sophy.domain.Booktalk;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface BooktalkRepository extends JpaRepository<Booktalk, Long> {
     public List<Booktalk> findAllByMemberId(Long memberId);

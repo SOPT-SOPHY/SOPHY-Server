@@ -102,7 +102,8 @@ public class Booktalk extends AuditingTimeEntity {
         this.participantList = new ArrayList<>();
     }
 
-    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto) {
+    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto, Place place) {
+        setPlace(place);
         this.title = booktalkUpdateDto.getTitle();
         this.booktalkImageUrl = booktalkUpdateDto.getBooktalkImageUrl();
         this.bookCategory = booktalkUpdateDto.getBookCategory();
