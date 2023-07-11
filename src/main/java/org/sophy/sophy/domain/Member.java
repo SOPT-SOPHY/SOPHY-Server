@@ -48,7 +48,7 @@ public class Member extends AuditingTimeEntity{
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private Integer bookCount;
+//    private Integer bookCount; 나의 서재 기능 삭제
     private Integer bookTalkCount;
 
     @OneToOne
@@ -77,9 +77,6 @@ public class Member extends AuditingTimeEntity{
         this.authorProperty = authorProperty;
     }
 
-    public void setBookCount(int count) {
-        this.bookCount = count;
-    }
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
