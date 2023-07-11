@@ -3,6 +3,7 @@ package org.sophy.sophy.controller;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
+import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
@@ -42,12 +43,20 @@ public class BooktalkController {
     }
 
     @GetMapping("/{booktalkId}/detail")
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));
     }
 
     @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(cityRequestDto));
+    }
+    @PostMapping("/participation")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
+        booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto);
+        return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_PARTICIPATION_SUCCESS);
     }
 }

@@ -2,6 +2,7 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
+import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
 import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
@@ -13,6 +14,7 @@ import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
 import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
+import org.sophy.sophy.infrastructure.MemberBooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class BooktalkService {
     private final BooktalkRepository booktalkRepository;
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
+    private final MemberBooktalkRepository memberBooktalkRepository;
 
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
@@ -61,6 +64,16 @@ public class BooktalkService {
     public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
         Booktalk booktalk = getBooktalkById(booktalkId);
         return BooktalkDetailResponseDto.of(booktalk);
+    }
+
+    @Transactional
+    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
+        Member member = getMemberById(booktalkParticipationRequestDto.getMemberId());
+        Booktalk booktalk = getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
+        // 복합키?
+        // null이면은 넣고, 아니면 시작날짜로 비교해서!!!
+        MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
+        memberBooktalkRepository.save(memberBooktalk);
     }
 
     private Member getMemberById(Long memberId) {

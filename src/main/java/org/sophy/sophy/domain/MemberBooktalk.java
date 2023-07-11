@@ -24,7 +24,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
     @JoinColumn(name = "booktalk_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private Booktalk booktalk;
 
-    private Boolean isConfirmed;
+    private Boolean isConfirmed; //주민은 신청하면 무조건 승인인데 뭐지..?
 
     // 연관 관계 편의 메서드
     public void setMember(Member member) {
@@ -43,7 +43,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
 
     @Builder
     public MemberBooktalk(Member member, Booktalk booktalk, Boolean isConfirmed) {
-        this.member = member;
+        setMember(member);
         setBooktalk(booktalk);
         this.isConfirmed = isConfirmed;
     }
