@@ -50,7 +50,7 @@ public class BooktalkService {
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
         booktalk.getPlace().deleteBooktalk(booktalk);
-        booktalk.getMember().getAuthor().deleteBooktalk(booktalk);
+        booktalk.getAuthor().getAuthorProperty().deleteBooktalk(booktalk);
         booktalkRepository.deleteById(booktalkId);
         return BooktalkDeleteResponseDto.of(booktalkId);
     }

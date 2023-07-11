@@ -2,20 +2,27 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
+import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.NotFoundException;
+import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BooktalkRepository booktalkRepository;
 
     @Transactional
     public MyPageDto getMyPage(Long memberId) {
@@ -26,8 +33,8 @@ public class MemberService {
                     .name(member.getName())
                     .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthor().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthor().getRecruitBookTalkCount())
+                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
+                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
                     .build();
         } else {
             return MyPageDto.builder()
@@ -69,5 +76,14 @@ public class MemberService {
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
     }
 
+    @Transactional
+    public List<BooktalkResponseDto> getBooktalksByMemberId(Long memberId) {
+        List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
+        List<BooktalkResponseDto> booktalkResponseDtoList = new ArrayList<>();
+        userBookTalkList.forEach(booktalk -> {
+            booktalkResponseDtoList.add(BooktalkResponseDto.of(booktalk.getBooktalk()));
+        });
+        return booktalkResponseDtoList;
+    }
 
 }
