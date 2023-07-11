@@ -33,8 +33,8 @@ public class MemberService {
                     .name(member.getName())
                     .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthor().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthor().getRecruitBookTalkCount())
+                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
+                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
                     .build();
         } else {
             return MyPageDto.builder()

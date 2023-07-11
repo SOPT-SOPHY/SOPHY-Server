@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BooktalkRepository extends JpaRepository<Booktalk, Long> {
-    public List<Booktalk> findAllByMemberId(Long memberId);
+    List<Booktalk> findAllByAuthorId(Long authorId); //Booktalk의 작가
 }
