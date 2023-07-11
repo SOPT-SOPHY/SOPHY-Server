@@ -3,8 +3,8 @@ package org.sophy.sophy.service;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
-import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
@@ -78,10 +78,10 @@ public class MemberService {
 
     @Transactional
     public List<BooktalkResponseDto> getBooktalksByMemberId(Long memberId) {
-        List<Booktalk> booktalks = booktalkRepository.findAllByMemberId(memberId);
+        List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<BooktalkResponseDto> booktalkResponseDtoList = new ArrayList<>();
-        booktalks.forEach(booktalk -> {
-            booktalkResponseDtoList.add(BooktalkResponseDto.of(booktalk));
+        userBookTalkList.forEach(booktalk -> {
+            booktalkResponseDtoList.add(BooktalkResponseDto.of(booktalk.getBooktalk()));
         });
         return booktalkResponseDtoList;
     }
