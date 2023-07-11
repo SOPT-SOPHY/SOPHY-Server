@@ -81,7 +81,7 @@ public class BooktalkService {
     private Booktalk getBooktalkById(Long booktalkId) {
         return booktalkRepository.findById(booktalkId)
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
-
+    }
     @Transactional
     public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) {
         City city = cityRequestDto.getCity();
