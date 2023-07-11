@@ -21,7 +21,7 @@ public class MemberService {
     public MyPageDto getMyPage(Long memberId) {
         Member member = getMemberById(memberId);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
-        if(member.isAuthor()){
+        if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
                     .bookCount(member.getBookCount())
@@ -47,7 +47,7 @@ public class MemberService {
                 .gender(member.getGender())
                 .birth(member.getBirth())
                 .city(member.getMyCity())
-                .marketingAgree(member.isMarketingAgree())
+                .marketingAgree(member.getMarketingAgree())
                 .build();
     }
     @Transactional
