@@ -47,4 +47,8 @@ public class Place extends AuditingTimeEntity {
         this.placeImage = placeImage;
         this.booktalkList = new ArrayList<>();
     }
+
+    public void deleteBooktalk(Booktalk booktalk) {
+        booktalkList.remove(booktalk);
+    }
 }
