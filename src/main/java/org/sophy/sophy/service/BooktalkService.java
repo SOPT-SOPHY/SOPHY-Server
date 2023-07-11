@@ -34,7 +34,7 @@ public class BooktalkService {
         Place place = getPlaceById(booktalkRequestDto.getPlaceId());
         //작가인지 확인할 필요가 있는지?
         Member member = getMemberById(booktalkRequestDto.getMemberId());
-        if(!member.isAuthor()) {
+        if(!member.getIsAuthor()) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
@@ -54,7 +54,7 @@ public class BooktalkService {
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
         booktalk.getPlace().deleteBooktalk(booktalk);
-        booktalk.getMember().getAuthor().deleteBooktalk(booktalk);
+        booktalk.getAuthor().getAuthorProperty().deleteBooktalk(booktalk);
         booktalkRepository.deleteById(booktalkId);
         return BooktalkDeleteResponseDto.of(booktalkId);
     }
