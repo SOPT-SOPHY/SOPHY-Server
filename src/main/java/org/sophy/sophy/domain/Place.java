@@ -1,5 +1,6 @@
 package org.sophy.sophy.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Place extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,5 +46,9 @@ public class Place extends AuditingTimeEntity {
         this.maximum = maximum;
         this.placeImage = placeImage;
         this.booktalkList = new ArrayList<>();
+    }
+
+    public void deleteBooktalk(Booktalk booktalk) {
+        booktalkList.remove(booktalk);
     }
 }

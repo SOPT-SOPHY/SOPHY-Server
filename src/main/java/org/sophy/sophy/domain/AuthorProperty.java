@@ -1,22 +1,19 @@
 package org.sophy.sophy.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Author {
+public class AuthorProperty {
     @Id
     @GeneratedValue
-    @Column(name = "author_id")
+    @Column(name = "author_property_id")
     private Long id;
 
     @OneToMany
@@ -24,4 +21,8 @@ public class Author {
     //private List<Book> myBookList
     private Integer matchingBookTalkCount;
     private Integer recruitBookTalkCount;
+
+    public void deleteBooktalk(Booktalk booktalk) {
+        myBookTalkList.remove(booktalk);
+    }
 }

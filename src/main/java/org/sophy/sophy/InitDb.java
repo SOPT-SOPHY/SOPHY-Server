@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +44,8 @@ public class InitDb {
             citizen.setBookTalkCount(5);
             em.persist(citizen);
 
-            Author memauthor = Author.builder()
+            AuthorProperty memauthor = AuthorProperty.builder()
+                    .myBookTalkList(new ArrayList<>())
                     .matchingBookTalkCount(3)
                     .recruitBookTalkCount(3)
                     .build();
@@ -58,7 +61,7 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            author.serAuthor(memauthor);
+            author.setAuthor(memauthor);
             author.setBookTalkCount(3);
             em.persist(author);
 
@@ -76,6 +79,51 @@ public class InitDb {
                     .build();
             em.persist(place);
             em.persist(place2);
+
+            Booktalk booktalk = Booktalk.builder()
+                    .place(place2)
+                    .title("테스트 타이틀")
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .author(author)
+                    .bookCategory(BookCategory.HUMANITIES)
+                    .startDate(LocalDateTime.of(2023, 7, 13, 13, 0))
+                    .endDate(LocalDateTime.of(2023, 7, 13, 15, 0))
+                    .maximum(6)
+                    .participationFee(1000)
+                    .preliminaryInfo(PreliminaryInfo.PRE_READING)
+                    .description("테스트입니당")
+                    .booktalkStatus(BooktalkStatus.RECRUITING)
+                    .build();
+            em.persist(booktalk);
+
+            Booktalk booktalk2 = Booktalk.builder()
+                    .place(place)
+                    .title("테스트 타이틀2")
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .author(author)
+                    .bookCategory(BookCategory.HEALTH_COOKING)
+                    .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
+                    .endDate(LocalDateTime.of(2023, 7, 18, 18, 0))
+                    .maximum(6)
+                    .participationFee(10000)
+                    .preliminaryInfo(PreliminaryInfo.PRE_READING)
+                    .description("재밌습니다~")
+                    .booktalkStatus(BooktalkStatus.PLACE_CONFIRMED)
+                    .build();
+            em.persist(booktalk2);
+
+            MemberBooktalk memberBooktalk = MemberBooktalk.builder()
+                    .member(citizen)
+                    .booktalk(booktalk)
+                    .build();
+
+            MemberBooktalk memberBooktalk2 = MemberBooktalk.builder()
+                    .member(citizen)
+                    .booktalk(booktalk2)
+                    .build();
+
+            em.persist(memberBooktalk);
+            em.persist(memberBooktalk2);
         }
     }
 }

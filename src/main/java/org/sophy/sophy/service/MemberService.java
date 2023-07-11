@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
 import org.sophy.sophy.domain.dto.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.NotFoundException;
-import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final BooktalkRepository booktalkRepository;
 
     @Transactional
     public MyPageDto getMyPage(Long memberId) {
@@ -33,8 +32,8 @@ public class MemberService {
                     .name(member.getName())
 //                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthor().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthor().getRecruitBookTalkCount())
+                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
+                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
                     .build();
         } else {
             return MyPageDto.builder()
@@ -78,14 +77,15 @@ public class MemberService {
 
     @Transactional
     public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) {
-        List<Booktalk> booktalks = booktalkRepository.findAllByMemberId(memberId);
+        List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
-        booktalks.forEach(booktalk -> {
+        userBookTalkList.forEach(memberBooktalk -> {
+            Booktalk booktalk = memberBooktalk.getBooktalk();
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
                     .booktalkId(booktalk.getId())
                     .booktalkImageUrl(booktalk.getBooktalkImageUrl())
                     .title(booktalk.getTitle())
-                    .author(booktalk.getMember().getName())
+                    .author(booktalk.getAuthor().getName())
                     .startDate(booktalk.getStartDate())
                     .endDate(booktalk.getEndDate())
                     .place(booktalk.getPlace().getName())
@@ -98,14 +98,15 @@ public class MemberService {
 
     @Transactional
     public List<MyPageBooktalkDto> getAuthorByMemberId(Long memberId) {
-        List<Booktalk> booktalks = booktalkRepository.findAllByMemberId(memberId);
+        List<MemberBooktalk> authorBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
-        booktalks.forEach(booktalk -> {
+        authorBookTalkList.forEach(memberBooktalk -> {
+            Booktalk booktalk = memberBooktalk.getBooktalk();
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
                     .booktalkId(booktalk.getId())
                     .booktalkImageUrl(booktalk.getBooktalkImageUrl())
                     .title(booktalk.getTitle())
-                    .author(booktalk.getMember().getName())
+                    .author(booktalk.getAuthor().getName())
                     .startDate(booktalk.getStartDate())
                     .endDate(booktalk.getEndDate())
                     .place(booktalk.getPlace().getName())

@@ -4,10 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.PreliminaryInfo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -21,17 +19,19 @@ public class BooktalkResponseDto {
     private String place;
     private Integer participant;
     private Integer maximum;
+    private String booktalkImageUrl;
 
     public static BooktalkResponseDto of(Booktalk booktalk) {
         return new BooktalkResponseDto(
                 booktalk.getId(),
                 booktalk.getPreliminaryInfo().ordinal(),
                 booktalk.getTitle(),
-                booktalk.getMember().getName(),
+                booktalk.getAuthor().getName(),
                 booktalk.getStartDate(),
                 booktalk.getEndDate(),
                 booktalk.getPlace().getName(),
                 booktalk.getParticipantList().size(),
-                booktalk.getMaximum());
+                booktalk.getMaximum(),
+                booktalk.getBooktalkImageUrl());
     }
 }

@@ -3,6 +3,7 @@ package org.sophy.sophy.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class Booktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booktalk_id")
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -29,7 +30,7 @@ public class Booktalk extends AuditingTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-    private Member member;
+    private Member author;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -74,22 +75,22 @@ public class Booktalk extends AuditingTimeEntity {
         }
     }
 
-    public void setMember(Member member) {
-        if (this.member != null) {
-            this.member.getAuthor().getMyBookTalkList().remove(this);
+    public void setAuthor(Member member) {
+        if (this.author != null) {
+            this.author.getAuthorProperty().getMyBookTalkList().remove(this);
         }
-        this.member = member;
-        if (!member.getAuthor().getMyBookTalkList().contains(this)) {
-            member.getAuthor().getMyBookTalkList().add(this);
+        this.author = member;
+        if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
+            member.getAuthorProperty().getMyBookTalkList().add(this);
         }
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Member author, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
-        this.member = member;
+        setAuthor(author);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -99,5 +100,18 @@ public class Booktalk extends AuditingTimeEntity {
         this.description = description;
         this.booktalkStatus = booktalkStatus;
         this.participantList = new ArrayList<>();
+    }
+
+    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto, Place place) {
+        setPlace(place);
+        this.title = booktalkUpdateDto.getTitle();
+        this.booktalkImageUrl = booktalkUpdateDto.getBooktalkImageUrl();
+        this.bookCategory = booktalkUpdateDto.getBookCategory();
+        this.startDate = booktalkUpdateDto.getStartDate();
+        this.endDate = booktalkUpdateDto.getEndDate();
+        this.maximum = booktalkUpdateDto.getParticipant();
+        this.participationFee = booktalkUpdateDto.getParticipationFee();
+        this.preliminaryInfo = booktalkUpdateDto.getPreliminaryInfo();
+        this.description = booktalkUpdateDto.getDescription();
     }
 }
