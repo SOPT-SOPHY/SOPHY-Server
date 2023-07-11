@@ -98,12 +98,34 @@ public class InitDb {
                     .build();
             em.persist(booktalk);
 
+            Booktalk booktalk2 = Booktalk.builder()
+                    .place(place)
+                    .title("테스트 타이틀2")
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .author(author)
+                    .bookCategory(BookCategory.HEALTH_COOKING)
+                    .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
+                    .endDate(LocalDateTime.of(2023, 7, 18, 18, 0))
+                    .maximum(6)
+                    .participationFee(10000)
+                    .preliminaryInfo(PreliminaryInfo.PRE_READING)
+                    .description("재밌습니다~")
+                    .booktalkStatus(BooktalkStatus.PLACE_CONFIRMED)
+                    .build();
+            em.persist(booktalk2);
+
             MemberBooktalk memberBooktalk = MemberBooktalk.builder()
                     .member(citizen)
                     .booktalk(booktalk)
                     .build();
 
+            MemberBooktalk memberBooktalk2 = MemberBooktalk.builder()
+                    .member(citizen)
+                    .booktalk(booktalk2)
+                    .build();
+
             em.persist(memberBooktalk);
+            em.persist(memberBooktalk2);
         }
     }
 }

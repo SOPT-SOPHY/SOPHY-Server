@@ -19,6 +19,7 @@ public class BooktalkResponseDto {
     private String place;
     private Integer participant;
     private Integer maximum;
+    private String booktalkImageUrl;
 
     public static BooktalkResponseDto of(Booktalk booktalk) {
         return new BooktalkResponseDto(
@@ -30,6 +31,7 @@ public class BooktalkResponseDto {
                 booktalk.getEndDate(),
                 booktalk.getPlace().getName(),
                 booktalk.getParticipantList().size(),
-                booktalk.getMaximum());
+                booktalk.getMaximum(),
+                booktalk.getBooktalkImageUrl());
     }
 }
