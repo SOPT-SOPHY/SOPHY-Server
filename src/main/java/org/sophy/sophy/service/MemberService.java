@@ -2,7 +2,10 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
+import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
+import org.sophy.sophy.domain.dto.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
@@ -10,6 +13,9 @@ import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -24,15 +30,15 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthor().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthor().getRecruitBookTalkCount())
+                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
+                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
                     .build();
         }
@@ -69,5 +75,46 @@ public class MemberService {
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
     }
 
+    @Transactional
+    public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
+        List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
+        List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
+        userBookTalkList.forEach(memberBooktalk -> {
+            Booktalk booktalk = memberBooktalk.getBooktalk();
+            booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
+                    .booktalkId(booktalk.getId())
+                    .booktalkImageUrl(booktalk.getBooktalkImageUrl())
+                    .title(booktalk.getTitle())
+                    .author(booktalk.getAuthor().getName())
+                    .startDate(booktalk.getStartDate())
+                    .endDate(booktalk.getEndDate())
+                    .place(booktalk.getPlace().getName())
+                    .participant(booktalk.getParticipantList().size())
+                    .maximum(booktalk.getMaximum())
+                    .build());
+        });
+        return booktalkResponseDtoList;
+    }
+
+    @Transactional
+    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가 북토크 조회 메서드
+        List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
+        List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
+        authorBookTalkList.forEach(booktalk -> {
+            booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
+                    .booktalkId(booktalk.getId())
+                    .booktalkImageUrl(booktalk.getBooktalkImageUrl())
+                    .title(booktalk.getTitle())
+                    .author(booktalk.getAuthor().getName())
+                    .startDate(booktalk.getStartDate())
+                    .endDate(booktalk.getEndDate())
+                    .place(booktalk.getPlace().getName())
+                    .participant(booktalk.getParticipantList().size())
+                    .maximum(booktalk.getMaximum())
+                    .booktalkStatus(booktalk.getBooktalkStatus())
+                    .build());
+        });
+        return booktalkResponseDtoList;
+    }
 
 }

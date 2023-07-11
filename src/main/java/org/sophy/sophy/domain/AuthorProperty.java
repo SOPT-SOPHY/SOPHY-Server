@@ -10,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Author {
+public class AuthorProperty {
     @Id
     @GeneratedValue
-    @Column(name = "author_id")
+    @Column(name = "author_property_id")
     private Long id;
 
     @OneToMany

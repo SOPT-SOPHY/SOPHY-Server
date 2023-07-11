@@ -5,6 +5,7 @@ import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -47,41 +48,42 @@ public class Member extends AuditingTimeEntity{
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private Integer bookCount;
+//    private Integer bookCount; 나의 서재 기능 삭제
     private Integer bookTalkCount;
+
+    @OneToOne
+    private Booktalk imminentBooktalk;
 
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
 
     @OneToOne
-    private Author author; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
+    private AuthorProperty authorProperty; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
     @Builder
-    public Member(String name, String email, String password, String phoneNum, String gender, String birth
-            , City myCity, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
+    public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNum = phoneNum;
-        this.gender = gender;
-        this.birth = birth;
-        this.myCity = myCity;
         this.marketingAgree = marketingAgree;
         this.isAuthor = isAuthor;
         this.isOperator = isOperator;
         this.authority = authority;
+        this.userBookTalkList = new ArrayList<>();
     }
 
-    public void serAuthor(Author author) {
-        this.author = author;
+    public void setAuthor(AuthorProperty authorProperty) {
+        this.authorProperty = authorProperty;
     }
 
-    public void setBookCount(int count) {
-        this.bookCount = count;
-    }
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
+    }
+
+    public void changeImminentBooktalk(Booktalk booktalk) {
+        this.imminentBooktalk = booktalk;
     }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {

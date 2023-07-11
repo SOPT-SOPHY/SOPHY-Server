@@ -27,7 +27,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
     // 연관 관계 편의 메서드
     public void setMember(Member member) {
         this.member = member;
-        if(!member.getUserBookTalkList().contains(this)) {
+        if (!member.getUserBookTalkList().contains(this)) {
             member.getUserBookTalkList().add(this);
         }
     }
@@ -40,7 +40,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
     }
 
     @Builder
-    public MemberBooktalk(Member member, Booktalk booktalk, Boolean isConfirmed) {
+    public MemberBooktalk(Member member, Booktalk booktalk) {
         setMember(member);
         setBooktalk(booktalk);
     }
