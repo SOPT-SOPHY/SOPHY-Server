@@ -50,6 +50,9 @@ public class Member extends AuditingTimeEntity{
     private Integer bookCount;
     private Integer bookTalkCount;
 
+    @OneToOne
+    private Booktalk imminentBooktalk;
+
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
 
@@ -57,15 +60,11 @@ public class Member extends AuditingTimeEntity{
     private Author author; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
     @Builder
-    public Member(String name, String email, String password, String phoneNum, String gender, String birth
-            , City myCity, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
+    public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNum = phoneNum;
-        this.gender = gender;
-        this.birth = birth;
-        this.myCity = myCity;
         this.marketingAgree = marketingAgree;
         this.isAuthor = isAuthor;
         this.isOperator = isOperator;
@@ -82,6 +81,10 @@ public class Member extends AuditingTimeEntity{
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
+    }
+
+    public void changeImminentBooktalk(Booktalk booktalk) {
+        this.imminentBooktalk = booktalk;
     }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {
