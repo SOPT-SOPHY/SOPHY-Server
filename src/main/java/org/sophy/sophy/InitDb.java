@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -44,7 +45,8 @@ public class InitDb {
             citizen.setBookTalkCount(5);
             em.persist(citizen);
 
-            Author memauthor = Author.builder()
+            AuthorProperty memauthor = AuthorProperty.builder()
+                    .myBookTalkList(new ArrayList<>())
                     .matchingBookTalkCount(3)
                     .recruitBookTalkCount(3)
                     .build();
@@ -82,6 +84,7 @@ public class InitDb {
 
             Booktalk booktalk = Booktalk.builder()
                     .place(place2)
+                    .title("테스트 타이틀")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
                     .author(author)
                     .bookCategory(BookCategory.HUMANITIES)
