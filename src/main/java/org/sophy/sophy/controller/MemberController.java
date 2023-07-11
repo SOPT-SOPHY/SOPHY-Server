@@ -3,7 +3,7 @@ package org.sophy.sophy.controller;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
-import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
+import org.sophy.sophy.domain.dto.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.SuccessStatus;
@@ -45,7 +45,13 @@ public class MemberController {
 
     @GetMapping("/my-booktalks/{memberId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<List<BooktalkResponseDto>> getMyBooktalks(@PathVariable("memberId") Long memberId) {
+    public ApiResponseDto<List<MyPageBooktalkDto>> getMyBooktalks(@PathVariable("memberId") Long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MY_BOOKTALKS_SUCCESS, memberService.getBooktalksByMemberId(memberId));
+    }
+
+    @GetMapping("/author-booktalks/{memberId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@PathVariable("memberId") Long memberId) {
+        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorByMemberId(memberId));
     }
 }

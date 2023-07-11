@@ -24,6 +24,7 @@ public enum SuccessStatus {
     GET_BOOKTALK_DETAIL_SUCCESS(HttpStatus.OK, "북토크 상세정보를 성공적으로 불러왔습니다."),
     GET_BOOKTALKS_BY_CITY_SUCCESS(HttpStatus.OK, "지역으로 북토크 리스트를 성공적으로 불러왔습니다"),
     GET_MY_BOOKTALKS_SUCCESS(HttpStatus.OK, "예정된 북토크 리스트를 성공적으로 불러왔습니다"),
+    GET_AUTHOR_BOOKTALKS_SUCCESS(HttpStatus.OK, "작가 북토크 리스트를 성공적으로 불러왔습니다"),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created
