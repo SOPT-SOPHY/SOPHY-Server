@@ -4,10 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.PreliminaryInfo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -27,7 +25,7 @@ public class BooktalkResponseDto {
                 booktalk.getId(),
                 booktalk.getPreliminaryInfo().ordinal(),
                 booktalk.getTitle(),
-                booktalk.getMember().getName(),
+                booktalk.getAuthor().getName(),
                 booktalk.getStartDate(),
                 booktalk.getEndDate(),
                 booktalk.getPlace().getName(),

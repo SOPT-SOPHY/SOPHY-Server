@@ -49,7 +49,7 @@ public class BooktalkRequestDto {
                 .preliminaryInfo(preliminaryInfo)
                 .description(description)
                 .booktalkStatus(BooktalkStatus.APPLYING)
-                .member(member)
+                .author(member)
                 .place(place)
                 .build();
     }
