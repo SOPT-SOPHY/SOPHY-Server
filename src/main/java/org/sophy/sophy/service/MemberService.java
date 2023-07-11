@@ -31,7 +31,7 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
                     .matchingBookTalkCount(member.getAuthor().getMatchingBookTalkCount())
                     .recruitBookTalkCount(member.getAuthor().getRecruitBookTalkCount())
@@ -39,7 +39,7 @@ public class MemberService {
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
                     .build();
         }
