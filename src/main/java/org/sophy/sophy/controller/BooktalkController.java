@@ -3,9 +3,9 @@ package org.sophy.sophy.controller;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
+import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.PlaceService;
+import org.sophy.sophy.service.BooktalkService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +16,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/place")
-public class PlaceController {
-    private final PlaceService placeService;
+@RequestMapping("booktalk")
+public class BooktalkController {
+    private final BooktalkService booktalkService;
 
     @GetMapping("/search")
-    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.GET_PLACES_BY_CITY_SUCCESS, placeService.getPlacesByCity(cityRequestDto));
+    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
+        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(cityRequestDto));
     }
 }
