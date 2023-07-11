@@ -18,7 +18,6 @@ public class BooktalkParticipationRequestDto {
         return MemberBooktalk.builder()
                 .booktalk(booktalk)
                 .member(member)
-                .isConfirmed(true) //주민은 무조건 승인??
                 .build();
     }
 }
