@@ -17,7 +17,7 @@ public class Booktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booktalk_id")
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -102,7 +102,8 @@ public class Booktalk extends AuditingTimeEntity {
         this.participantList = new ArrayList<>();
     }
 
-    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto) {
+    public void patchBooktalk(BooktalkUpdateDto booktalkUpdateDto, Place place) {
+        setPlace(place);
         this.title = booktalkUpdateDto.getTitle();
         this.booktalkImageUrl = booktalkUpdateDto.getBooktalkImageUrl();
         this.bookCategory = booktalkUpdateDto.getBookCategory();

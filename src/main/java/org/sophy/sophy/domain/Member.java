@@ -1,8 +1,6 @@
 package org.sophy.sophy.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 
@@ -13,7 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends AuditingTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +36,13 @@ public class Member extends AuditingTimeEntity{
 
     private City myCity;
 
-    private boolean marketingAgree;
+    private Boolean marketingAgree;
 
     @Column(nullable = false)
-    private boolean isAuthor;
+    private Boolean isAuthor;
 
     @Column(nullable = false)
-    private boolean isOperator;
+    private Boolean isOperator;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
@@ -95,6 +93,6 @@ public class Member extends AuditingTimeEntity{
         this.gender = myInfoDto.getGender();
         this.birth = myInfoDto.getBirth();
         this.myCity = myInfoDto.getCity();
-        this.marketingAgree = myInfoDto.isMarketingAgree();
+        this.marketingAgree = myInfoDto.getMarketingAgree();
     }
 }

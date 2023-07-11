@@ -22,6 +22,7 @@ public enum SuccessStatus {
     PATCH_BOOKTALK_SUCCESS(HttpStatus.OK, "북토크를 성공적으로 수정했습니다."),
     DELETE_BOOKTALK_SUCCESS(HttpStatus.OK, "북토크를 성공적으로 삭제했습니다."),
     GET_BOOKTALK_DETAIL_SUCCESS(HttpStatus.OK, "북토크 상세정보를 성공적으로 불러왔습니다."),
+    GET_BOOKTALKS_BY_CITY_SUCCESS(HttpStatus.OK, "지역으로 북토크 리스트를 성공적으로 불러왔습니다"),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created
