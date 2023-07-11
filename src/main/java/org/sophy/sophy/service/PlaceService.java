@@ -1,7 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.dto.request.PlaceRequestDto;
+import org.sophy.sophy.controller.dto.request.CityRequestDto;
 import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
 import org.sophy.sophy.domain.City;
 import org.sophy.sophy.infrastructure.PlaceRepository;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    public List<PlaceResponseDto> getPlacesByCity(PlaceRequestDto placeRequestDto) {
-        City city = placeRequestDto.getCity();
+    public List<PlaceResponseDto> getPlacesByCity(CityRequestDto cityRequestDto) {
+        City city = cityRequestDto.getCity();
         //의정부 시이면 전체 조회
         if (city == City.UIJEONGBU_SI) {
             return placeRepository.findAll().stream()
