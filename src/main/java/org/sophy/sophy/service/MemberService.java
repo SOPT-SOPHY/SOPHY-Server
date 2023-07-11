@@ -10,7 +10,6 @@ import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.NotFoundException;
-import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
                     .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
                     .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
@@ -39,7 +38,7 @@ public class MemberService {
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-                    .bookCount(member.getBookCount())
+//                    .bookCount(member.getBookCount())
                     .bookTalkCount(member.getBookTalkCount())
                     .build();
         }
