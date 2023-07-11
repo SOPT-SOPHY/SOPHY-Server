@@ -14,7 +14,7 @@ import java.util.List;
 public class Place extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private City city;
 

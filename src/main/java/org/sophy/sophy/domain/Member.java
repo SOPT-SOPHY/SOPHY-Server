@@ -38,13 +38,13 @@ public class Member extends AuditingTimeEntity{
 
     private City myCity;
 
-    private boolean marketingAgree;
+    private Boolean marketingAgree;
 
     @Column(nullable = false)
-    private boolean isAuthor;
+    private Boolean isAuthor;
 
     @Column(nullable = false)
-    private boolean isOperator;
+    private Boolean isOperator;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
