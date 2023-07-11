@@ -71,7 +71,6 @@ public class BooktalkService {
         Member member = getMemberById(booktalkParticipationRequestDto.getMemberId());
         Booktalk booktalk = getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
-        // null이면은 넣고, 아니면 시작날짜로 비교해서!!!
         MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
         memberBooktalkRepository.save(memberBooktalk);
     }

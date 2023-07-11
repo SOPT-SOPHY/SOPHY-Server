@@ -1,19 +1,23 @@
 package org.sophy.sophy.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends AuditingTimeEntity{
+public class Member extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -48,7 +52,7 @@ public class Member extends AuditingTimeEntity{
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-//    private Integer bookCount; 나의 서재 기능 삭제
+    //    private Integer bookCount; 나의 서재 기능 삭제
     private Integer bookTalkCount;
 
     @OneToOne
@@ -96,5 +100,11 @@ public class Member extends AuditingTimeEntity{
         this.birth = myInfoDto.getBirth();
         this.myCity = myInfoDto.getCity();
         this.marketingAgree = myInfoDto.getMarketingAgree();
+    }
+
+    public void addUserBooktalkandSortByStartDate(MemberBooktalk memberBooktalk) {
+        this.getUserBookTalkList().add(memberBooktalk);
+        // 시작날짜순으로 정렬(예정된 북토크)
+        this.getUserBookTalkList().sort(Comparator.comparing(o -> o.getBooktalk().getStartDate()));
     }
 }
