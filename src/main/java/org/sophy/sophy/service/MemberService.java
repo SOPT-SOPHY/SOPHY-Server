@@ -76,7 +76,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) {
+    public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
         List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         userBookTalkList.forEach(memberBooktalk -> {
@@ -97,11 +97,10 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getAuthorByMemberId(Long memberId) {
-        List<MemberBooktalk> authorBookTalkList = getMemberById(memberId).getUserBookTalkList();
+    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가 북토크 조회 메서드
+        List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
-        authorBookTalkList.forEach(memberBooktalk -> {
-            Booktalk booktalk = memberBooktalk.getBooktalk();
+        authorBookTalkList.forEach(booktalk -> {
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
                     .booktalkId(booktalk.getId())
                     .booktalkImageUrl(booktalk.getBooktalkImageUrl())
