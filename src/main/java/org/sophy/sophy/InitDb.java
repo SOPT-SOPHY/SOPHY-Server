@@ -50,6 +50,7 @@ public class InitDb {
                     .matchingBookTalkCount(3)
                     .recruitBookTalkCount(3)
                     .build();
+
             em.persist(memauthor);
 
             Member author = Member.builder()

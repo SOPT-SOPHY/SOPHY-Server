@@ -20,7 +20,7 @@ public class Booktalk extends AuditingTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "place_id")
     private Place place;
 
     @Column(nullable = false)
@@ -31,6 +31,10 @@ public class Booktalk extends AuditingTimeEntity {
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member; //작가 = 북토크당 1명
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_property_id")
+    private AuthorProperty authorProperty;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -80,6 +84,8 @@ public class Booktalk extends AuditingTimeEntity {
             this.member.getAuthorProperty().getMyBookTalkList().remove(this);
         }
         this.member = member;
+        this.authorProperty = member.getAuthorProperty();
+        authorProperty.getMyBookTalkList().add(this);
         if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
             member.getAuthorProperty().getMyBookTalkList().add(this);
         }

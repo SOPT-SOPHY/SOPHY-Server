@@ -55,6 +55,7 @@ public class Member extends AuditingTimeEntity{
     private List<MemberBooktalk> userBookTalkList;
 
     @OneToOne
+    @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
     @Builder
