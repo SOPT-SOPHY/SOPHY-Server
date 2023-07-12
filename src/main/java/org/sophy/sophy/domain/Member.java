@@ -52,16 +52,13 @@ public class Member extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    //    private Integer bookCount; 나의 서재 기능 삭제
     private Integer bookTalkCount;
-
-    @OneToOne
-    private Booktalk imminentBooktalk;
 
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
 
     @OneToOne
+    @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
     @Builder
@@ -81,13 +78,12 @@ public class Member extends AuditingTimeEntity {
         this.authorProperty = authorProperty;
     }
 
+    public void setBookCount(int count) {
+        this.bookCount = count;
+    }
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
-    }
-
-    public void changeImminentBooktalk(Booktalk booktalk) {
-        this.imminentBooktalk = booktalk;
     }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {

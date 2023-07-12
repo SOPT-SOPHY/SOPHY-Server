@@ -41,6 +41,7 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
+            citizen.setBookCount(8);
             citizen.setBookTalkCount(5);
             em.persist(citizen);
 
@@ -49,6 +50,7 @@ public class InitDb {
                     .matchingBookTalkCount(3)
                     .recruitBookTalkCount(3)
                     .build();
+
             em.persist(memauthor);
 
             Member author = Member.builder()
@@ -63,6 +65,7 @@ public class InitDb {
                     .build();
             author.setAuthor(memauthor);
             author.setBookTalkCount(3);
+            author.setBookCount(3);
             em.persist(author);
 
             Place place = Place.builder()
@@ -84,7 +87,7 @@ public class InitDb {
                     .place(place2)
                     .title("테스트 타이틀")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
-                    .author(author)
+                    .member(author)
                     .bookCategory(BookCategory.HUMANITIES)
                     .startDate(LocalDateTime.of(2023, 7, 13, 13, 0))
                     .endDate(LocalDateTime.of(2023, 7, 13, 15, 0))
@@ -100,7 +103,7 @@ public class InitDb {
                     .place(place)
                     .title("테스트 타이틀2")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
-                    .author(author)
+                    .member(author)
                     .bookCategory(BookCategory.HEALTH_COOKING)
                     .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
                     .endDate(LocalDateTime.of(2023, 7, 18, 18, 0))

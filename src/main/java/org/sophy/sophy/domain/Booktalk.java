@@ -20,7 +20,7 @@ public class Booktalk extends AuditingTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "place_id")
     private Place place;
 
     @Column(nullable = false)
@@ -28,9 +28,13 @@ public class Booktalk extends AuditingTimeEntity {
 
     private String booktalkImageUrl;
 
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member; //작가 = 북토크당 1명
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-    private Member author;
+    @JoinColumn(name = "author_property_id")
+    private AuthorProperty authorProperty;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -76,21 +80,23 @@ public class Booktalk extends AuditingTimeEntity {
     }
 
     public void setAuthor(Member member) {
-        if (this.author != null) {
-            this.author.getAuthorProperty().getMyBookTalkList().remove(this);
+        if (this.member != null) {
+            this.member.getAuthorProperty().getMyBookTalkList().remove(this);
         }
-        this.author = member;
+        this.member = member;
+        this.authorProperty = member.getAuthorProperty();
+        authorProperty.getMyBookTalkList().add(this);
         if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
             member.getAuthorProperty().getMyBookTalkList().add(this);
         }
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Member author, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
-        setAuthor(author);
+        setAuthor(member);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;

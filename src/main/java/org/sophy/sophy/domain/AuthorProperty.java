@@ -16,7 +16,7 @@ public class AuthorProperty {
     @Column(name = "author_property_id")
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "authorProperty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Booktalk> myBookTalkList;
     //private List<Book> myBookList
     private Integer matchingBookTalkCount;
