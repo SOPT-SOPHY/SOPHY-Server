@@ -41,6 +41,7 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
+            citizen.setBookCount(8);
             citizen.setBookTalkCount(5);
             em.persist(citizen);
 
@@ -63,6 +64,7 @@ public class InitDb {
                     .build();
             author.setAuthor(memauthor);
             author.setBookTalkCount(3);
+            author.setBookCount(3);
             em.persist(author);
 
             Place place = Place.builder()
