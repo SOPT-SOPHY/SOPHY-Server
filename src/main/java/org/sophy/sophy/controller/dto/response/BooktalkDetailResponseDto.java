@@ -30,7 +30,7 @@ public class BooktalkDetailResponseDto {
         return new BooktalkDetailResponseDto(
                 booktalk.getBooktalkImageUrl(),
                 booktalk.getTitle(),
-                booktalk.getAuthor().getName(),
+                booktalk.getMember().getName(),
                 booktalk.getBookCategory(),
                 "책이름", //TODO 추후 연결
                 booktalk.getStartDate(),

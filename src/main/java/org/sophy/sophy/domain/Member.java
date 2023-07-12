@@ -51,9 +51,6 @@ public class Member extends AuditingTimeEntity{
     private Integer bookCount;
     private Integer bookTalkCount;
 
-    @OneToOne
-    private Booktalk imminentBooktalk;
-
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
 
@@ -83,10 +80,6 @@ public class Member extends AuditingTimeEntity{
 
     public void setBookTalkCount(int count) {
         this.bookTalkCount = count;
-    }
-
-    public void changeImminentBooktalk(Booktalk booktalk) {
-        this.imminentBooktalk = booktalk;
     }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {

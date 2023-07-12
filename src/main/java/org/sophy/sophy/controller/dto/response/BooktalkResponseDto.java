@@ -26,7 +26,7 @@ public class BooktalkResponseDto {
                 booktalk.getId(),
                 booktalk.getPreliminaryInfo().ordinal(),
                 booktalk.getTitle(),
-                booktalk.getAuthor().getName(),
+                booktalk.getMember().getName(),
                 booktalk.getStartDate(),
                 booktalk.getEndDate(),
                 booktalk.getPlace().getName(),

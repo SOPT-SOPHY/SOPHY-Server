@@ -28,9 +28,9 @@ public class Booktalk extends AuditingTimeEntity {
 
     private String booktalkImageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-    private Member author;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member; //작가 = 북토크당 1명
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -76,21 +76,21 @@ public class Booktalk extends AuditingTimeEntity {
     }
 
     public void setAuthor(Member member) {
-        if (this.author != null) {
-            this.author.getAuthorProperty().getMyBookTalkList().remove(this);
+        if (this.member != null) {
+            this.member.getAuthorProperty().getMyBookTalkList().remove(this);
         }
-        this.author = member;
+        this.member = member;
         if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
             member.getAuthorProperty().getMyBookTalkList().add(this);
         }
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Member author, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
-        setAuthor(author);
+        setAuthor(member);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;
