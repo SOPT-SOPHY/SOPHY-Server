@@ -41,14 +41,14 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            citizen.setBookCount(8);
-            citizen.setBookTalkCount(5);
+            citizen.setCompleteBookTalkCounto(8);
+            citizen.setWaitingBookTalkCount(5);
             em.persist(citizen);
 
             AuthorProperty memauthor = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
-                    .matchingBookTalkCount(3)
-                    .recruitBookTalkCount(3)
+                    .myBookList(new ArrayList<>())
+                    .expectedBookTalkCount(3)
                     .build();
 
             em.persist(memauthor);
@@ -64,9 +64,18 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author.setAuthor(memauthor);
-            author.setBookTalkCount(3);
-            author.setBookCount(3);
+            author.setCompleteBookTalkCounto(3);
+            author.setWaitingBookTalkCount(3);
             em.persist(author);
+
+            Book book = Book.builder()
+                    .title("테스트 책")
+                    .bookCategory(BookCategory.HUMANITIES)
+                    .booktalkOpenCount(3)
+                    .isRegistration(true)
+                    .build();
+            book.setAuthorProperty(memauthor);
+            em.persist(book);
 
             Place place = Place.builder()
                     .name("장소")

@@ -35,7 +35,7 @@ public class AuthController {
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));
     }
 
-    @GetMapping("/dupl-check")
+    @PostMapping("/dupl-check")
     public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS, authService.duplCheck(email));
     }

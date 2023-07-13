@@ -30,16 +30,17 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-//                    .bookCount(member.getBookCount())
-                    .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
+                    .expectedBookTalkCount(member.getAuthorProperty().getExpectedBookTalkCount())
+                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
+                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-//                    .bookCount(member.getBookCount())
-                    .bookTalkCount(member.getBookTalkCount())
+                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
+                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .build();
         }
     }
@@ -76,7 +77,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
+    public List<MyPageBooktalkDto>  getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
         List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         userBookTalkList.forEach(memberBooktalk -> {
@@ -97,7 +98,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가 북토크 조회 메서드
+    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
         List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {

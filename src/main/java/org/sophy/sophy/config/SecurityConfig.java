@@ -39,8 +39,7 @@ public class SecurityConfig {
         //CSRF 설정 Disable
         http.csrf().disable()
 
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+                .cors(cors -> cors.disable())
 
                 //exception handling 할 때 우리가 만든 클래스를 추가
                 .exceptionHandling()

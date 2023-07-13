@@ -14,4 +14,9 @@ public class TokenDto {
     private String accessToken;
     private String refreshToken;
     private Long accessTokenExpiresIn;
+    private Long memberId;
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
 }

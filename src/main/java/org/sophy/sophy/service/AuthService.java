@@ -16,6 +16,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +67,11 @@ public class AuthService {
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication, memberLoginRequestDto.getAccessTokenExpiredTime(),  memberLoginRequestDto.getRefreshTokenExpiredTime());
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails principal1 = (UserDetails) principal;
+        Member member = memberRepository.findByEmail(principal1.getUsername()).orElseThrow(() -> new UsernameNotFoundException("사용자를 데이터베이스에서 찾을 수 없습니다."));
+        tokenDto.setMemberId(member.getId());
 
         // 4. RefreshToken 저장
         redisTemplate.opsForValue().set("RT:" + authentication.getName(),
