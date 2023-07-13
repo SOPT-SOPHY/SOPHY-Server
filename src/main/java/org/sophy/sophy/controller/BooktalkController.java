@@ -5,10 +5,7 @@ import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
+import org.sophy.sophy.controller.dto.response.*;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;
@@ -42,12 +39,20 @@ public class BooktalkController {
     }
 
     @GetMapping("/{booktalkId}/detail")
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));
     }
 
     @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(cityRequestDto));
+    }
+
+    @GetMapping("/deadline-upcoming")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<List<BooktalkDeadlineUpcomingDto>> getBooktalkDeadlineUpcoming() {
+        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS, booktalkService.getBooktalkDeadlineUpcoming());
     }
 }
