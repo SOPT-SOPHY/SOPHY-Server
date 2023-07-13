@@ -69,8 +69,7 @@ public class AuthService {
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication, memberLoginRequestDto.getAccessTokenExpiredTime(),  memberLoginRequestDto.getRefreshTokenExpiredTime());
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails principal1 = (UserDetails) principal;
-        Member member = memberRepository.findByEmail(principal1.getUsername()).orElseThrow(() -> new UsernameNotFoundException("사용자를 데이터베이스에서 찾을 수 없습니다."));
+        Member member = memberRepository.findByEmail(((UserDetails) principal).getUsername()).orElseThrow(() -> new UsernameNotFoundException("사용자를 데이터베이스에서 찾을 수 없습니다."));
         tokenDto.setMemberId(member.getId());
 
         // 4. RefreshToken 저장
