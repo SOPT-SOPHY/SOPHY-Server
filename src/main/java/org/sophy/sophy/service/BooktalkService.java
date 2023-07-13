@@ -5,10 +5,7 @@ import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
+import org.sophy.sophy.controller.dto.response.*;
 import org.sophy.sophy.domain.*;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
@@ -73,6 +70,27 @@ public class BooktalkService {
         // 복합키?
         MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
         memberBooktalkRepository.save(memberBooktalk);
+    }
+
+    public List<BooktalkDeadlineUpcomingDto> getBooktalkDeadlineUpcoming() {
+        List<Place> placeList = placeRepository.findAll();
+
+        List<BooktalkDeadlineUpcomingDto> booktalkList = new ArrayList<>();
+        placeList.forEach(place -> {
+            place.getBooktalkList().forEach(booktalk -> {
+                        // 모집중인 북토크만 추가
+                        if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
+                            booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
+                        }
+                    }
+            );
+        });
+
+        // 마감 임박순으로 정렬
+        booktalkList.sort(Comparator.comparing(BooktalkDeadlineUpcomingDto::getEndDate));
+
+        return booktalkList;
+
     }
 
     private Member getMemberById(Long memberId) {

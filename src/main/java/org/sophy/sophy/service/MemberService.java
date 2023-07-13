@@ -2,9 +2,11 @@ package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
+import org.sophy.sophy.domain.Book;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.MemberBooktalk;
+import org.sophy.sophy.domain.dto.MyBookDto;
 import org.sophy.sophy.domain.dto.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.MyPageDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
@@ -30,16 +32,18 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-//                    .bookCount(member.getBookCount())
-                    .bookTalkCount(member.getBookTalkCount())
-                    .matchingBookTalkCount(member.getAuthorProperty().getMatchingBookTalkCount())
-                    .recruitBookTalkCount(member.getAuthorProperty().getRecruitBookTalkCount())
+                    .expectedBookTalkCount(member.getAuthorProperty().getExpectedBookTalkCount())
+                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
+                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
+                    .myBookDtos(getAuthorBooksByMemberId(memberId))
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-//                    .bookCount(member.getBookCount())
-                    .bookTalkCount(member.getBookTalkCount())
+                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
+                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .build();
         }
     }
@@ -76,7 +80,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
+    public List<MyPageBooktalkDto>  getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
         List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         userBookTalkList.forEach(memberBooktalk -> {
@@ -97,7 +101,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가 북토크 조회 메서드
+    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
         List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {
@@ -115,6 +119,21 @@ public class MemberService {
                     .build());
         });
         return booktalkResponseDtoList;
+    }
+
+    @Transactional
+    public List<MyBookDto> getAuthorBooksByMemberId(Long memberId) { //작가가 쓴 책 조회 메서드
+        List<Book> authorBookList = getMemberById(memberId).getAuthorProperty().getMyBookList();
+        List<MyBookDto> bookResponseDtoList = new ArrayList<>();
+        authorBookList.forEach(book -> {
+            bookResponseDtoList.add(MyBookDto.builder()
+                    .title(book.getTitle())
+                    .bookCategory(book.getBookCategory())
+                    .booktalkOpenCount(book.getBooktalkOpenCount())
+                    .isRegistration(book.getIsRegistration())
+                    .build());
+        });
+        return bookResponseDtoList;
     }
 
 }

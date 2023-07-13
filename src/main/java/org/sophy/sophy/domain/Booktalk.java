@@ -28,7 +28,7 @@ public class Booktalk extends AuditingTimeEntity {
 
     private String booktalkImageUrl;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member; //작가 = 북토크당 1명
 
@@ -85,10 +85,10 @@ public class Booktalk extends AuditingTimeEntity {
         }
         this.member = member;
         this.authorProperty = member.getAuthorProperty();
-        authorProperty.getMyBookTalkList().add(this);
-        if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
-            member.getAuthorProperty().getMyBookTalkList().add(this);
-        }
+        member.getAuthorProperty().getMyBookTalkList().add(this);
+//        if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
+//            member.getAuthorProperty().getMyBookTalkList().add(this);
+//        }
     }
 
     @Builder

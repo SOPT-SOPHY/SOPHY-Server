@@ -52,7 +52,8 @@ public class Member extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private Integer bookTalkCount;
+    private Integer waitingBookTalkCount; // 참여 예정 북토크
+    private Integer completeBookTalkCount; // 참여 완료 북토크
 
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
@@ -74,16 +75,16 @@ public class Member extends AuditingTimeEntity {
         this.userBookTalkList = new ArrayList<>();
     }
 
-    public void setAuthor(AuthorProperty authorProperty) {
+    public void setAuthorProperty(AuthorProperty authorProperty) {
         this.authorProperty = authorProperty;
     }
 
-    public void setBookCount(int count) {
-        this.bookCount = count;
+    public void setWaitingBookTalkCount(int count) {
+        this.waitingBookTalkCount = count;
     }
 
-    public void setBookTalkCount(int count) {
-        this.bookTalkCount = count;
+    public void setCompleteBookTalkCounto(int count) {
+        this.completeBookTalkCount = count;
     }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {

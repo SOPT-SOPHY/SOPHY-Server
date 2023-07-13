@@ -6,10 +6,7 @@ import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
 import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
 import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.BooktalkCreateResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDeleteResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkDetailResponseDto;
-import org.sophy.sophy.controller.dto.response.BooktalkResponseDto;
+import org.sophy.sophy.controller.dto.response.*;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;
@@ -58,5 +55,10 @@ public class BooktalkController {
     public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
         booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto);
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_PARTICIPATION_SUCCESS);
+
+    @GetMapping("/deadline-upcoming")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<List<BooktalkDeadlineUpcomingDto>> getBooktalkDeadlineUpcoming() {
+        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS, booktalkService.getBooktalkDeadlineUpcoming());
     }
 }
