@@ -71,7 +71,7 @@ public class Member extends AuditingTimeEntity{
         this.userBookTalkList = new ArrayList<>();
     }
 
-    public void setAuthor(AuthorProperty authorProperty) {
+    public void setAuthorProperty(AuthorProperty authorProperty) {
         this.authorProperty = authorProperty;
     }
 
