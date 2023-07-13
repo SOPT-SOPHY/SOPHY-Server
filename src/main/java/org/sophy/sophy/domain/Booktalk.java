@@ -3,7 +3,10 @@ package org.sophy.sophy.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
+import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
+import org.sophy.sophy.domain.enumerate.BookCategory;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
+import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

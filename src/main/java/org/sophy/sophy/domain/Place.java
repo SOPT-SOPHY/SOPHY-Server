@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sophy.sophy.domain.enumerate.City;
 
 import javax.persistence.*;
 import java.util.ArrayList;

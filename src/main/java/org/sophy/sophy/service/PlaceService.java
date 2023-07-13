@@ -1,9 +1,9 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.dto.request.CityRequestDto;
+import org.sophy.sophy.domain.dto.CityRequestDto;
 import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
-import org.sophy.sophy.domain.City;
+import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
 

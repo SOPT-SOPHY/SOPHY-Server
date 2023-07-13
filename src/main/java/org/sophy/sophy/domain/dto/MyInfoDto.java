@@ -3,7 +3,7 @@ package org.sophy.sophy.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.sophy.sophy.domain.City;
+import org.sophy.sophy.domain.enumerate.City;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;

@@ -2,11 +2,11 @@ package org.sophy.sophy.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
-import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
-import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
-import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
-import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.*;
+import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.CityRequestDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;

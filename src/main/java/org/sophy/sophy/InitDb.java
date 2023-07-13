@@ -2,6 +2,7 @@ package org.sophy.sophy;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.enumerate.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

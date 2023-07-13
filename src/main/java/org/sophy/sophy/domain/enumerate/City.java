@@ -1,4 +1,4 @@
-package org.sophy.sophy.domain;
+package org.sophy.sophy.domain.enumerate;
 
 public enum City {
     UIJEONGBU_SI,

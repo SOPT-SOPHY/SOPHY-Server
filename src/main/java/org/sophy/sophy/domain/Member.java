@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.MyInfoDto;
+import org.sophy.sophy.domain.enumerate.Authority;
+import org.sophy.sophy.domain.enumerate.City;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

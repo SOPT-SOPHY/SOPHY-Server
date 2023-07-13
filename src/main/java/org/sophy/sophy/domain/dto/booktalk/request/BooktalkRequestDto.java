@@ -1,9 +1,12 @@
-package org.sophy.sophy.controller.dto.request;
+package org.sophy.sophy.domain.dto.booktalk.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.enumerate.BookCategory;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
+import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

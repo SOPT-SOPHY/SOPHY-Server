@@ -1,7 +1,7 @@
-package org.sophy.sophy.controller.dto.request;
+package org.sophy.sophy.domain.dto;
 
 import lombok.Getter;
-import org.sophy.sophy.domain.City;
+import org.sophy.sophy.domain.enumerate.City;
 
 import javax.validation.constraints.NotNull;
 

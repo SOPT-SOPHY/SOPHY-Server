@@ -1,12 +1,14 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
-import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
-import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
-import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.*;
+import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.CityRequestDto;
 import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
+import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
 import org.sophy.sophy.exception.model.NotFoundException;
@@ -48,7 +50,7 @@ public class BooktalkService {
     }
 
     @Transactional
-    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) {
+    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
         Booktalk booktalk = getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
