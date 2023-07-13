@@ -18,7 +18,9 @@ public class AuthorProperty {
 
     @OneToMany(mappedBy = "authorProperty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Booktalk> myBookTalkList;
-    //private List<Book> myBookList
+
+    @OneToMany(mappedBy = "authorProperty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Book> myBookList;
     private Integer expectedBookTalkCount; // 개최 예정 북토크
 
     public void deleteBooktalk(Booktalk booktalk) {

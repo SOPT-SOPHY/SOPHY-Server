@@ -47,6 +47,7 @@ public class InitDb {
 
             AuthorProperty memauthor = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
+                    .myBookList(new ArrayList<>())
                     .expectedBookTalkCount(3)
                     .build();
 
@@ -66,6 +67,15 @@ public class InitDb {
             author.setCompleteBookTalkCounto(3);
             author.setWaitingBookTalkCount(3);
             em.persist(author);
+
+            Book book = Book.builder()
+                    .title("테스트 책")
+                    .bookCategory(BookCategory.HUMANITIES)
+                    .booktalkOpenCount(3)
+                    .isRegistration(true)
+                    .build();
+            book.setAuthorProperty(memauthor);
+            em.persist(book);
 
             Place place = Place.builder()
                     .name("장소")

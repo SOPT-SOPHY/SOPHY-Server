@@ -98,7 +98,7 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가 북토크 조회 메서드
+    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
         List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {

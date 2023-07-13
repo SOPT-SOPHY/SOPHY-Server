@@ -15,5 +15,5 @@ public class MyPageDto {
     private Integer waitingBookTalkCount; // 참여 예정 북토크
     private Integer completeBookTalkCount; // 참여 완료 북토크
     private List<MyPageBooktalkDto> myPageBooktalkDtos; //예정된 북토크
-//    private List<Book> books;
+    private List<MyBookDto> myBookDtos; // 내 도서 관리
 }
