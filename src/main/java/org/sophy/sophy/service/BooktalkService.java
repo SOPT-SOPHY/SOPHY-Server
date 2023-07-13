@@ -111,7 +111,7 @@ public class BooktalkService {
     }
 
     @Transactional
-    public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) {
+    public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) { //지역으로 북토크 조회
         City city = cityRequestDto.getCity();
         List<Place> placeList;
 
