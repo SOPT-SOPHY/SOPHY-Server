@@ -55,6 +55,7 @@ public class BooktalkController {
     public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
         booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto);
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_PARTICIPATION_SUCCESS);
+    }
 
     @GetMapping("/deadline-upcoming")
     @ResponseStatus(HttpStatus.OK)
