@@ -72,6 +72,10 @@ public class Booktalk extends AuditingTimeEntity {
     @OneToMany(mappedBy = "booktalk")
     private List<MemberBooktalk> participantList = new ArrayList<>();
 
+    public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
+        this.booktalkStatus = booktalkStatus;
+    }
+
     // 연관 관계 편의 메서드
     public void setPlace(Place place) {
         if (this.place != null) {
