@@ -39,6 +39,7 @@ public class HomeService {
             List<City> cityRank = getCityRank();
             return HomeResponseDto.builder()
                     .name(member.getName())
+                    .isAuthor(true)
                     .booktalkCount(booktalkCount)
                     .cityRanks(cityRank)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
@@ -47,6 +48,7 @@ public class HomeService {
             Integer myCityBooktalkCount = member.getMyCity()!=null ? getMyCityBooktalkCount(member.getMyCity()) : null;
             return HomeResponseDto.builder()
                     .name(member.getName())
+                    .isAuthor(false)
                     .booktalkCount(booktalkCount)
                     .myCityBooktalkCount(myCityBooktalkCount)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
