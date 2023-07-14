@@ -12,8 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class HomeResponseDto {
+    private String name;
     private Integer booktalkCount;
     private Integer myCityBooktalkCount;
+    private Boolean isAuthor;
     private List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming;
     private List<City> cityRanks;
 

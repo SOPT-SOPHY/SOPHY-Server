@@ -38,6 +38,8 @@ public class HomeService {
         if (member.getIsAuthor()){ //작가냐 아니냐에 따라 홈 화면 분리
             List<City> cityRank = getCityRank();
             return HomeResponseDto.builder()
+                    .name(member.getName())
+                    .isAuthor(true)
                     .booktalkCount(booktalkCount)
                     .cityRanks(cityRank)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
@@ -45,6 +47,8 @@ public class HomeService {
         } else {
             Integer myCityBooktalkCount = member.getMyCity()!=null ? getMyCityBooktalkCount(member.getMyCity()) : null;
             return HomeResponseDto.builder()
+                    .name(member.getName())
+                    .isAuthor(false)
                     .booktalkCount(booktalkCount)
                     .myCityBooktalkCount(myCityBooktalkCount)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
@@ -84,7 +88,11 @@ public class HomeService {
     public List<City> getCityRank() {
         Map<City, Integer> rank = new HashMap<City, Integer>();
         for (City city : City.values()) {
-            Integer count = booktalkRepository.countAllByCityAndCreateAtBetween(city, LocalDateTime.of(LocalDate.now().minusDays(30), LocalTime.of(0,0,0)), LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59)));
+            Integer count = booktalkRepository.countAllByCityAndCreateAtBetween(city
+                    , LocalDateTime.of(LocalDate.now().minusDays(30)
+                            , LocalTime.of(0,0,0))
+                    , LocalDateTime.of(LocalDate.now()
+                            , LocalTime.of(23, 59, 59)));
             rank.put(city, count);
         }
         List<Map.Entry<City,Integer>> cityLists = rank.entrySet().stream()

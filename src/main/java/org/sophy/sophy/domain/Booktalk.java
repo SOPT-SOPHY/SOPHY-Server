@@ -42,6 +42,10 @@ public class Booktalk extends AuditingTimeEntity {
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BookCategory bookCategory;
@@ -72,6 +76,10 @@ public class Booktalk extends AuditingTimeEntity {
     @OneToMany(mappedBy = "booktalk")
     private List<MemberBooktalk> participantList = new ArrayList<>();
 
+    public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
+        this.booktalkStatus = booktalkStatus;
+    }
+
     // 연관 관계 편의 메서드
     public void setPlace(Place place) {
         if (this.place != null) {
@@ -99,10 +107,11 @@ public class Booktalk extends AuditingTimeEntity {
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Book book, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
+        this.book = book;
         setAuthor(member);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
