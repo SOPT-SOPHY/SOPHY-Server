@@ -42,7 +42,7 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            citizen.setCompleteBookTalkCounto(8);
+            citizen.setCompleteBookTalkCount(8);
             citizen.setWaitingBookTalkCount(5);
             em.persist(citizen);
 
@@ -65,7 +65,7 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author.setAuthorProperty(memauthor);
-            author.setCompleteBookTalkCounto(3);
+            author.setCompleteBookTalkCount(3);
             author.setWaitingBookTalkCount(3);
             em.persist(author);
 
@@ -97,6 +97,7 @@ public class InitDb {
                     .place(place2)
                     .title("테스트 타이틀")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .book(book)
                     .member(author)
                     .bookCategory(BookCategory.HUMANITIES)
                     .startDate(LocalDateTime.of(2023, 7, 13, 13, 0))
@@ -113,6 +114,7 @@ public class InitDb {
                     .place(place)
                     .title("테스트 타이틀2")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .book(book)
                     .member(author)
                     .bookCategory(BookCategory.HEALTH_COOKING)
                     .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
@@ -129,6 +131,7 @@ public class InitDb {
                     .place(place)
                     .title("테스트 타이틀3 - 낙양동")
                     .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .book(book)
                     .member(author)
                     .bookCategory(BookCategory.HEALTH_COOKING)
                     .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
