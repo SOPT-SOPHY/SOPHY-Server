@@ -156,6 +156,18 @@ public class InitDb {
 
             em.persist(memberBooktalk);
             em.persist(memberBooktalk2);
+
+            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
+                    .title("끝난 북토크")
+                    .bookName("끝난 책")
+                    .authorName("끝난 작가")
+                    .booktalkDate(LocalDateTime.of(2023, 6, 3, 15, 0))
+                    .placeName("북토크가 끝난 장소")
+                    .build();
+
+            completedBooktalk.setMember(citizen);
+            em.persist(completedBooktalk);
+            citizen.getCompletedBookTalkList().add(completedBooktalk);
         }
     }
 }

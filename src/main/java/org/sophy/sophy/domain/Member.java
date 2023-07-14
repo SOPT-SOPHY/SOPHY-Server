@@ -78,6 +78,7 @@ public class Member extends AuditingTimeEntity {
         this.isOperator = isOperator;
         this.authority = authority;
         this.userBookTalkList = new ArrayList<>();
+        this.completedBookTalkList = new ArrayList<>();
     }
 
     public void setAuthorProperty(AuthorProperty authorProperty) {

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -13,6 +13,6 @@ public class SophyStoryDto {
     private String title;
     private String bookName;
     private String authorName;
-    private LocalDate booktalkDate;
+    private LocalDateTime booktalkDate;
     private String placeName;
 }
