@@ -42,6 +42,10 @@ public class Booktalk extends AuditingTimeEntity {
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BookCategory bookCategory;
@@ -103,10 +107,11 @@ public class Booktalk extends AuditingTimeEntity {
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Book book, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;
+        this.book = book;
         setAuthor(member);
         this.bookCategory = bookCategory;
         this.startDate = startDate;
