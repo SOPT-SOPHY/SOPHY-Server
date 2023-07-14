@@ -95,6 +95,7 @@ public class MemberService {
                     .place(booktalk.getPlace().getName())
                     .participant(booktalk.getParticipantList().size())
                     .maximum(booktalk.getMaximum())
+                    .booktalkStatus(booktalk.getBooktalkStatus())
                     .build());
         });
         return booktalkResponseDtoList;

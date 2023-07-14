@@ -5,7 +5,7 @@ public enum BooktalkStatus {
     //매칭 대기중/매칭 거절됨/모집 중/모집 마감/모집 예정
     APPLYING, //매칭 대기중
     PLACE_REFUSED, //매칭 거절됨
-    PLACE_CONFIRMED, //장소 확정
+    PLACE_CONFIRMED, //장소 확정 == 모집예정 아님?
     RECRUITING_EXPECTED, //모집 예정
     RECRUITING, //모집 중
     RECRUITING_CLOSED, //모집 마감
