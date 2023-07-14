@@ -1,4 +1,4 @@
-package org.sophy.sophy.domain.dto;
+package org.sophy.sophy.domain.dto.mypage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

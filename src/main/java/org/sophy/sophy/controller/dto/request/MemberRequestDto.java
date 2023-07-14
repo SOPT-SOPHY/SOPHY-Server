@@ -3,7 +3,7 @@ package org.sophy.sophy.controller.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sophy.sophy.domain.Authority;
+import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.Member;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

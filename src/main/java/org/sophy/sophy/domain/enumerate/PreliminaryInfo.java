@@ -1,4 +1,4 @@
-package org.sophy.sophy.domain;
+package org.sophy.sophy.domain.enumerate;
 
 public enum PreliminaryInfo {
     //미리 읽어와주세요 / 발췌문을 드려요 / 편하게와주세요

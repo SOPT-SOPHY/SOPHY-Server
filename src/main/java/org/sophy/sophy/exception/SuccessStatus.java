@@ -26,6 +26,9 @@ public enum SuccessStatus {
     GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS(HttpStatus.OK, "마감임박 소피 북토크 리스트를 성공적으로 불러왔습니다."),
     GET_MY_BOOKTALKS_SUCCESS(HttpStatus.OK, "예정된 북토크 리스트를 성공적으로 불러왔습니다"),
     GET_AUTHOR_BOOKTALKS_SUCCESS(HttpStatus.OK, "작가 북토크 리스트를 성공적으로 불러왔습니다"),
+    GET_HOME_SUCCESS(HttpStatus.OK, "홈페이지를 성공적으로 불러왔습니다"),
+    GET_GUEST_HOME_SUCCESS(HttpStatus.OK, "게스트 홈페이지를 성공적으로 불러왔습니다"),
+    GET_AUTHOR_HOME_SUCCESS(HttpStatus.OK, "작가 홈페이지를 성공적으로 불러왔습니다"),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created

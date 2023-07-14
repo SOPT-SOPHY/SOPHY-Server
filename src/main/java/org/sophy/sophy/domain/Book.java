@@ -1,6 +1,7 @@
 package org.sophy.sophy.domain;
 
 import lombok.*;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 
 import javax.persistence.*;
 

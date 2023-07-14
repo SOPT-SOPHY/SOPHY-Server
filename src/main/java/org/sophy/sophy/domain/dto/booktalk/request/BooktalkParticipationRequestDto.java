@@ -1,4 +1,4 @@
-package org.sophy.sophy.controller.dto.request;
+package org.sophy.sophy.domain.dto.booktalk.request;
 
 import lombok.Getter;
 import org.sophy.sophy.domain.Booktalk;

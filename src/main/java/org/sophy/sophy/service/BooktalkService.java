@@ -1,12 +1,14 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.controller.dto.BooktalkUpdateDto;
-import org.sophy.sophy.controller.dto.request.BooktalkParticipationRequestDto;
-import org.sophy.sophy.controller.dto.request.BooktalkRequestDto;
-import org.sophy.sophy.controller.dto.request.CityRequestDto;
-import org.sophy.sophy.controller.dto.response.*;
+import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
+import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.CityRequestDto;
 import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
+import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
 import org.sophy.sophy.exception.model.NotFoundException;
@@ -48,7 +50,7 @@ public class BooktalkService {
     }
 
     @Transactional
-    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) {
+    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
         Booktalk booktalk = getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
@@ -109,25 +111,23 @@ public class BooktalkService {
     }
 
     @Transactional
-    public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) {
+    public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) { //지역으로 북토크 조회
         City city = cityRequestDto.getCity();
-        List<Place> placeList;
+
+        List<Booktalk> booktalks;
 
         if (city.equals(City.UIJEONGBU_SI)) {
-            placeList = placeRepository.findAll();
+            booktalks = booktalkRepository.findAll();
         } else {
-            placeList = placeRepository.findAllByCity(city);
+            booktalks = booktalkRepository.findAllByCity(city);
         }
 
         List<BooktalkResponseDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> {
-            place.getBooktalkList().forEach(booktalk -> {
+        booktalks.forEach(booktalk -> {
                         // 모집중인 북토크만 추가
                         if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
                             booktalkList.add(BooktalkResponseDto.of(booktalk));
                         }
-                    }
-            );
         });
 
         // 마감 임박순으로 정렬

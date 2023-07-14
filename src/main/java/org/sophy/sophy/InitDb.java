@@ -2,6 +2,7 @@ package org.sophy.sophy;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.enumerate.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,8 +80,8 @@ public class InitDb {
 
             Place place = Place.builder()
                     .name("장소")
-                    .city(City.UIJEONGBU_SI)
-                    .address("의정부시 무슨동 뭐시기")
+                    .city(City.NAKYANG_DONG)
+                    .address("의정부시 낙양동")
                     .maximum(30)
                     .build();
             Place place2 = Place.builder()
@@ -123,6 +124,22 @@ public class InitDb {
                     .booktalkStatus(BooktalkStatus.PLACE_CONFIRMED)
                     .build();
             em.persist(booktalk2);
+
+            Booktalk booktalk3 = Booktalk.builder()
+                    .place(place)
+                    .title("테스트 타이틀3 - 낙양동")
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .member(author)
+                    .bookCategory(BookCategory.HEALTH_COOKING)
+                    .startDate(LocalDateTime.of(2023, 7, 18, 16, 0))
+                    .endDate(LocalDateTime.of(2023, 7, 18, 18, 0))
+                    .maximum(6)
+                    .participationFee(10000)
+                    .preliminaryInfo(PreliminaryInfo.PRE_READING)
+                    .description("재밌습니다~")
+                    .booktalkStatus(BooktalkStatus.RECRUITING)
+                    .build();
+            em.persist(booktalk3);
 
             MemberBooktalk memberBooktalk = MemberBooktalk.builder()
                     .member(citizen)

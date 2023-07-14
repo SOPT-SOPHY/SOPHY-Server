@@ -1,4 +1,4 @@
-package org.sophy.sophy.domain;
+package org.sophy.sophy.domain.enumerate;
 
 public enum BooktalkStatus {
     //개설 신청/장소 확정/청중 모집 중/모집 마감/완료

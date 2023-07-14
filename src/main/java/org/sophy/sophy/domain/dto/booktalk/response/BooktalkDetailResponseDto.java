@@ -1,11 +1,11 @@
-package org.sophy.sophy.controller.dto.response;
+package org.sophy.sophy.domain.dto.booktalk.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.sophy.sophy.domain.BookCategory;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.PreliminaryInfo;
+import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 import java.time.LocalDateTime;
 

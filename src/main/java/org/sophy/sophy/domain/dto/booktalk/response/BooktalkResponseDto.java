@@ -1,4 +1,4 @@
-package org.sophy.sophy.controller.dto.response;
+package org.sophy.sophy.domain.dto.booktalk.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

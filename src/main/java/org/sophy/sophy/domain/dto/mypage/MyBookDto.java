@@ -1,9 +1,9 @@
-package org.sophy.sophy.domain.dto;
+package org.sophy.sophy.domain.dto.mypage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.sophy.sophy.domain.BookCategory;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 
 @Getter
 @AllArgsConstructor

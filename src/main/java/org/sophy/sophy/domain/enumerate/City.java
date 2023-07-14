@@ -1,0 +1,30 @@
+package org.sophy.sophy.domain.enumerate;
+
+public enum City {
+    UIJEONGBU_SI,
+    UIJEONGBU_DONG,
+    HOWON_DONG,
+    JANGAM_DONG,
+    SINGOK_DONG,
+    YOUNGHYUN_DONG,
+    MINRAK_DONG,
+    NAKYANG_DONG,
+    JAIL_DONG,
+    GEUMO_DONG,
+    GANEUNG_DONG,
+    NOKYANG_DONG,
+    GOSAN_DONG,
+    SANGOK_DONG,
+    UIJEONGBU1_DONG,
+    HOWON1_DONG,
+    HOWON2_DONG,
+    SINGOK1_DONG,
+    SINGOK2_DONG,
+    SONGSAN1_DONG,
+    SONGSAN2_DONG,
+    SONGSAN3_DONG,
+    JAGEUM_DONG,
+    HEUNGSUN_DONG
+
+
+}
