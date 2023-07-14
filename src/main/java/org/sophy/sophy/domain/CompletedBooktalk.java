@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CompletedBooktalk {
+public class CompletedBooktalk extends AuditingTimeEntity{
     @Id
     @GeneratedValue
     @Column(name = "completed_booktalk_id")
