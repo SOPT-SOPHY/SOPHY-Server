@@ -88,7 +88,11 @@ public class HomeService {
     public List<City> getCityRank() {
         Map<City, Integer> rank = new HashMap<City, Integer>();
         for (City city : City.values()) {
-            Integer count = booktalkRepository.countAllByCityAndCreateAtBetween(city, LocalDateTime.of(LocalDate.now().minusDays(30), LocalTime.of(0,0,0)), LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59)));
+            Integer count = booktalkRepository.countAllByCityAndCreateAtBetween(city
+                    , LocalDateTime.of(LocalDate.now().minusDays(30)
+                            , LocalTime.of(0,0,0))
+                    , LocalDateTime.of(LocalDate.now()
+                            , LocalTime.of(23, 59, 59)));
             rank.put(city, count);
         }
         List<Map.Entry<City,Integer>> cityLists = rank.entrySet().stream()
