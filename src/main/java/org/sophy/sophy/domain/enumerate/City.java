@@ -10,5 +10,5 @@ public enum City {
     NOKYANG_DONG,
     MINRAK_DONG,
     SANGOK_DONG,
-    SINGOK_1DONG
+    SINGOK_1DONG,
 }
