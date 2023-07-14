@@ -38,6 +38,7 @@ public class HomeService {
         if (member.getIsAuthor()){ //작가냐 아니냐에 따라 홈 화면 분리
             List<City> cityRank = getCityRank();
             return HomeResponseDto.builder()
+                    .name(member.getName())
                     .booktalkCount(booktalkCount)
                     .cityRanks(cityRank)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
@@ -45,6 +46,7 @@ public class HomeService {
         } else {
             Integer myCityBooktalkCount = member.getMyCity()!=null ? getMyCityBooktalkCount(member.getMyCity()) : null;
             return HomeResponseDto.builder()
+                    .name(member.getName())
                     .booktalkCount(booktalkCount)
                     .myCityBooktalkCount(myCityBooktalkCount)
                     .booktalkDeadlineUpcoming(booktalkDeadlineUpcoming)
