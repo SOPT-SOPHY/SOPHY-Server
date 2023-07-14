@@ -5,7 +5,6 @@ import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.response.*;
-import org.sophy.sophy.domain.dto.CityRequestDto;
 import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
@@ -111,8 +110,7 @@ public class BooktalkService {
     }
 
     @Transactional
-    public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) { //지역으로 북토크 조회
-        City city = cityRequestDto.getCity();
+    public List<BooktalkResponseDto> getBooktalksByCity(City city) { //지역으로 북토크 조회
 
         List<Booktalk> booktalks;
 

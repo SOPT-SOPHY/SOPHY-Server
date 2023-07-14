@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    public List<PlaceResponseDto> getPlacesByCity(CityRequestDto cityRequestDto) {
-        City city = cityRequestDto.getCity();
+    public List<PlaceResponseDto> getPlacesByCity(City city) {
         //의정부 시이면 전체 조회
         if (city == City.UIJEONGBU_SI) {
             return placeRepository.findAll().stream()

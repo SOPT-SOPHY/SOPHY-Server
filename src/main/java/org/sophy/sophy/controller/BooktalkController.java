@@ -6,7 +6,7 @@ import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.response.*;
-import org.sophy.sophy.domain.dto.CityRequestDto;
+import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;
@@ -45,10 +45,10 @@ public class BooktalkController {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/{city}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @RequestBody CityRequestDto cityRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(cityRequestDto));
+    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @PathVariable(name = "city") City city) {
+        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(city));
     }
     @PostMapping("/participation")
     @ResponseStatus(HttpStatus.CREATED)
