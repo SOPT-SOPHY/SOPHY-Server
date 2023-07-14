@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
+import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class Booktalk extends AuditingTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
+
+    private City city;
 
     @Column(nullable = false)
     private String title;
@@ -76,6 +79,7 @@ public class Booktalk extends AuditingTimeEntity {
         }
 
         this.place = place;
+        this.city = place.getCity();
 
         if (!place.getBooktalkList().contains(this)) {
             place.getBooktalkList().add(this);

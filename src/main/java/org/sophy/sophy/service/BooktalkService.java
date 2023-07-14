@@ -113,23 +113,21 @@ public class BooktalkService {
     @Transactional
     public List<BooktalkResponseDto> getBooktalksByCity(CityRequestDto cityRequestDto) { //지역으로 북토크 조회
         City city = cityRequestDto.getCity();
-        List<Place> placeList;
+
+        List<Booktalk> booktalks;
 
         if (city.equals(City.UIJEONGBU_SI)) {
-            placeList = placeRepository.findAll();
+            booktalks = booktalkRepository.findAll();
         } else {
-            placeList = placeRepository.findAllByCity(city);
+            booktalks = booktalkRepository.findAllByCity(city);
         }
 
         List<BooktalkResponseDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> {
-            place.getBooktalkList().forEach(booktalk -> {
+        booktalks.forEach(booktalk -> {
                         // 모집중인 북토크만 추가
                         if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
                             booktalkList.add(BooktalkResponseDto.of(booktalk));
                         }
-                    }
-            );
         });
 
         // 마감 임박순으로 정렬
