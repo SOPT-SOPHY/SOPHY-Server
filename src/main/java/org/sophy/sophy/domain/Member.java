@@ -88,6 +88,9 @@ public class Member extends AuditingTimeEntity {
     public void setAuthorProperty(AuthorProperty authorProperty) {
         this.authorProperty = authorProperty;
     }
+    public void setOperatorProperty(OperatorProperty operatorProperty) {
+        this.operatorProperty = operatorProperty;
+    }
 
     public void setWaitingBookTalkCount(int count) {
         this.waitingBookTalkCount = count;
