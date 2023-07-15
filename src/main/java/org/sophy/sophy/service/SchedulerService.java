@@ -1,10 +1,7 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.CompletedBooktalk;
-import org.sophy.sophy.domain.Member;
-import org.sophy.sophy.domain.MemberBooktalk;
+import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,7 +18,7 @@ public class SchedulerService {
 
     @Scheduled(fixedDelay = 60000)
     @Transactional
-    public void updateBooktalkStatus() {
+    public void updateBooktalkStatus() { //1분마다 북토크 상태 측정
         List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING);
         List<Booktalk> closedBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING_CLOSED);
 
@@ -46,5 +43,21 @@ public class SchedulerService {
                 completedBooktalk.setMember(member);
             }
         }
+    }
+
+    @Scheduled(cron = "0 0 10 * * *")
+    @Transactional
+    public void changeApprovedBooktalkStatus() { //오전 10시에 승인된 북토크들 모집중으로 변경
+        List<Booktalk> scheduledBooktalk = ScheduledBooktalkConverter.getScheduledBooktalk();
+        scheduledBooktalk.forEach(booktalk -> {
+            booktalk.setBooktalkStatus(BooktalkStatus.RECRUITING);
+        });
+        scheduledBooktalk.clear();
+        //스케줄러 포트 변경(이틀 뒤 변경부터 필요)
+//        if (ScheduledBooktalkConverter.getPort() == 0) {
+//            ScheduledBooktalkConverter.setPort(1);
+//        } else {
+//            ScheduledBooktalkConverter.setPort(0);
+//        }
     }
 }

@@ -34,7 +34,7 @@ public class Booktalk extends AuditingTimeEntity {
 
     private String booktalkImageUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member; //작가 = 북토크당 1명
 
@@ -75,6 +75,14 @@ public class Booktalk extends AuditingTimeEntity {
 
     @OneToMany(mappedBy = "booktalk")
     private List<MemberBooktalk> participantList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scheduled_booktalk_id")
+    private ScheduledBooktalk scheduledBooktalk;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operator_property_id")
+    private OperatorProperty operatorProperty;
 
     public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
         this.booktalkStatus = booktalkStatus;

@@ -67,6 +67,10 @@ public class Member extends AuditingTimeEntity {
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
+    @OneToOne
+    @JoinColumn(name = "operator_property_id")
+    private OperatorProperty operatorProperty;
+
     @Builder
     public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
         this.name = name;
@@ -83,6 +87,9 @@ public class Member extends AuditingTimeEntity {
 
     public void setAuthorProperty(AuthorProperty authorProperty) {
         this.authorProperty = authorProperty;
+    }
+    public void setOperatorProperty(OperatorProperty operatorProperty) {
+        this.operatorProperty = operatorProperty;
     }
 
     public void setWaitingBookTalkCount(int count) {

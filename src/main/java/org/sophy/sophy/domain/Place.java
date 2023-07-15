@@ -22,9 +22,13 @@ public class Place extends AuditingTimeEntity {
     private City city;
 
     //공간 운영자
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-    //private Member operator;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id",nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    private Member member; //공간 운영자
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operator_property_id")
+    private OperatorProperty operatorProperty;
 
     @Column(nullable = false)
     private String name;
@@ -41,8 +45,10 @@ public class Place extends AuditingTimeEntity {
     private List<Booktalk> booktalkList = new ArrayList<>();
 
     @Builder
-    public Place(City city, String name, String address, Integer maximum, String placeImage) {
+    public Place(City city, Member member,String name, String address, Integer maximum, String placeImage) {
         this.city = city;
+        this.member = member;
+        setOperator(member);
         this.name = name;
         this.address = address;
         this.maximum = maximum;
@@ -52,5 +58,14 @@ public class Place extends AuditingTimeEntity {
 
     public void deleteBooktalk(Booktalk booktalk) {
         booktalkList.remove(booktalk);
+    }
+
+    public void setOperator(Member member) {
+        if (this.member != null) {
+            this.member.getOperatorProperty().getMyPlaceList().remove(this);
+        }
+        this.member = member;
+        this.operatorProperty = member.getOperatorProperty();
+        member.getOperatorProperty().getMyPlaceList().add(this);
     }
 }
