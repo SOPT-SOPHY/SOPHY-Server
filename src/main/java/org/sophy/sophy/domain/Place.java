@@ -49,6 +49,7 @@ public class Place extends AuditingTimeEntity {
         this.city = city;
         this.member = member;
         setOperator(member);
+        this.name = name;
         this.address = address;
         this.maximum = maximum;
         this.placeImage = placeImage;
