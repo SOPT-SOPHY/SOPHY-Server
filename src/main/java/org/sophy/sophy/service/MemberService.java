@@ -10,8 +10,6 @@ import org.sophy.sophy.domain.dto.mypage.MyBookDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
-import org.sophy.sophy.exception.ErrorStatus;
-import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,7 @@ public class MemberService {
 
     @Transactional
     public MyPageDto getMyPage(Long memberId) {
-        Member member = getMemberById(memberId);
+        Member member = memberRepository.getMemberById(memberId);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
         if(member.getIsAuthor()){
             return MyPageDto.builder()
@@ -49,7 +47,7 @@ public class MemberService {
     }
     @Transactional
     public MyInfoDto getMyInfo(Long memberId) {
-        Member member = getMemberById(memberId);
+        Member member = memberRepository.getMemberById(memberId);
         return MyInfoDto.builder()
                 .email(member.getEmail())
                 .name(member.getName())
@@ -62,26 +60,21 @@ public class MemberService {
     }
     @Transactional
     public MemberAdditionalInfoDto postAdditionalInfo(Long memberId, MemberAdditionalInfoDto memberAdditionalInfoDto) {
-        Member member = getMemberById(memberId);
+        Member member = memberRepository.getMemberById(memberId);
         member.setAdditionalInfo(memberAdditionalInfoDto);
         return memberAdditionalInfoDto;
     }
 
     @Transactional
     public MyInfoDto patchMyInfo(Long memberId, MyInfoDto myInfoDto) {
-        Member member = getMemberById(memberId);
+        Member member = memberRepository.getMemberById(memberId);
         member.patchMyInfo(myInfoDto);
         return myInfoDto;
     }
 
-    private Member getMemberById(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
-    }
-
     @Transactional
     public List<MyPageBooktalkDto>  getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
-        List<MemberBooktalk> userBookTalkList = getMemberById(memberId).getUserBookTalkList();
+        List<MemberBooktalk> userBookTalkList = memberRepository.getMemberById(memberId).getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         userBookTalkList.forEach(memberBooktalk -> {
             Booktalk booktalk = memberBooktalk.getBooktalk();
@@ -103,7 +96,7 @@ public class MemberService {
 
     @Transactional
     public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
-        List<Booktalk> authorBookTalkList = getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
+        List<Booktalk> authorBookTalkList = memberRepository.getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
@@ -124,7 +117,7 @@ public class MemberService {
 
     @Transactional
     public List<MyBookDto> getAuthorBooksByMemberId(Long memberId) { //작가가 쓴 책 조회 메서드
-        List<Book> authorBookList = getMemberById(memberId).getAuthorProperty().getMyBookList();
+        List<Book> authorBookList = memberRepository.getMemberById(memberId).getAuthorProperty().getMyBookList();
         List<MyBookDto> bookResponseDtoList = new ArrayList<>();
         authorBookList.forEach(book -> {
             bookResponseDtoList.add(MyBookDto.builder()

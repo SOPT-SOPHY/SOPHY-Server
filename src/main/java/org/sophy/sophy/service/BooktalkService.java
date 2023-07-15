@@ -33,7 +33,7 @@ public class BooktalkService {
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
         Place place = getPlaceById(booktalkRequestDto.getPlaceId());
-        Member member = getMemberById(booktalkRequestDto.getMemberId());
+        Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
         if (!member.getIsAuthor()) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
@@ -66,7 +66,7 @@ public class BooktalkService {
 
     @Transactional
     public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
-        Member member = getMemberById(booktalkParticipationRequestDto.getMemberId());
+        Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
         Booktalk booktalk = getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
         MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
@@ -92,11 +92,6 @@ public class BooktalkService {
 
         return booktalkList;
 
-    }
-
-    private Member getMemberById(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
     }
 
     private Place getPlaceById(Long placeId) {
