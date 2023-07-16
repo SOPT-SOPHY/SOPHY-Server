@@ -11,10 +11,7 @@ import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
 import org.sophy.sophy.exception.model.NotFoundException;
-import org.sophy.sophy.infrastructure.BooktalkRepository;
-import org.sophy.sophy.infrastructure.MemberBooktalkRepository;
-import org.sophy.sophy.infrastructure.MemberRepository;
-import org.sophy.sophy.infrastructure.PlaceRepository;
+import org.sophy.sophy.infrastructure.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +26,7 @@ public class BooktalkService {
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
     private final MemberBooktalkRepository memberBooktalkRepository;
+    private final CompletedBooktalkRepository completedBooktalkRepository;
 
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
@@ -127,5 +125,26 @@ public class BooktalkService {
         booktalkList.sort(Comparator.comparing(BooktalkResponseDto::getEndDate));
 
         return booktalkList;
+    }
+
+    @Transactional
+    public CompletedBooktalk completeBooktalk(Long booktalkId) {
+        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
+        booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
+        CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
+                .title(booktalk.getTitle())
+                .bookName(booktalk.getBook().getTitle())
+                .authorName(booktalk.getMember().getName())
+                .booktalkDate(booktalk.getEndDate())
+                .placeName(booktalk.getPlace().getName())
+                .build();
+        completedBooktalkRepository.save(completedBooktalk); //완료된 북토크 엔티티를 영속화 시켜야 다음 작업들에 사용 가능
+        for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){
+            Member member = memberBooktalk.getMember();
+            member.getCompletedBookTalkList().add(completedBooktalk);
+            completedBooktalk.setMember(member);
+        }
+        booktalkRepository.delete(booktalk);
+        return completedBooktalk;
     }
 }
