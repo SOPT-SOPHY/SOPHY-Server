@@ -3,6 +3,8 @@ package org.sophy.sophy.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE booktalk SET deleted = true WHERE booktalk_id=?")
+@Where(clause = "deleted=false")
 public class Booktalk extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +45,10 @@ public class Booktalk extends AuditingTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operator_property_id")
+    private OperatorProperty operatorProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
@@ -73,16 +81,14 @@ public class Booktalk extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private BooktalkStatus booktalkStatus;
 
-    @OneToMany(mappedBy = "booktalk")
+    @OneToMany(mappedBy = "booktalk", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberBooktalk> participantList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scheduled_booktalk_id")
     private ScheduledBooktalk scheduledBooktalk;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "operator_property_id")
-    private OperatorProperty operatorProperty;
+    private Boolean deleted = Boolean.FALSE;
 
     public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
         this.booktalkStatus = booktalkStatus;

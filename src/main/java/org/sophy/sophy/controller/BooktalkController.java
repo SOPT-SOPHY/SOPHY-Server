@@ -2,6 +2,7 @@ package org.sophy.sophy.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
+import org.sophy.sophy.domain.CompletedBooktalk;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
@@ -61,5 +62,11 @@ public class BooktalkController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<BooktalkDeadlineUpcomingDto>> getBooktalkDeadlineUpcoming() {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS, booktalkService.getBooktalkDeadlineUpcoming());
+    }
+
+    @PostMapping("/{booktalkId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<CompletedBooktalk> completeBooktalk(@PathVariable("booktalkId") Long booktalkId) {
+        return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.completeBooktalk(booktalkId));
     }
 }

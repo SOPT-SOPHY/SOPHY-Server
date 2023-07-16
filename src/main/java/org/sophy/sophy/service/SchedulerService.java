@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
+import org.sophy.sophy.infrastructure.CompletedBooktalkRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SchedulerService {
     private final BooktalkRepository booktalkRepository;
+    private final CompletedBooktalkRepository completedBooktalkRepository;
 
     @Scheduled(fixedDelay = 60000)
     @Transactional
@@ -22,13 +24,17 @@ public class SchedulerService {
         List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING);
         List<Booktalk> closedBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING_CLOSED);
 
-        recrutingBooktalks.forEach(SchedulerService::booktalkToCompletedBooktalk);
+        recrutingBooktalks.forEach(booktalk -> {
+            booktalkToCompletedBooktalk(booktalk);
+        });
 
-        closedBooktalks.forEach(SchedulerService::booktalkToCompletedBooktalk);
+        closedBooktalks.forEach(booktalk -> {
+            booktalkToCompletedBooktalk(booktalk);
+        });
     }
 
-    private static void booktalkToCompletedBooktalk(Booktalk booktalk) { //북토크가 기간이 지났을 때 지난 북토크로 매핑하면서 객체들 상태 및 연관관계 변경
-        if(booktalk.getEndDate().isBefore(LocalDateTime.now())){
+    private void booktalkToCompletedBooktalk(Booktalk booktalk) { //북토크가 기간이 지났을 때 지난 북토크로 매핑하면서 객체들 상태 및 연관관계 변경
+        if(booktalk.getEndDate().isBefore(LocalDateTime.now())){ //북토크 마감일이 현재시간보다 이전이라면
             booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
             CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
                     .title(booktalk.getTitle())
@@ -37,11 +43,13 @@ public class SchedulerService {
                     .booktalkDate(booktalk.getEndDate())
                     .placeName(booktalk.getPlace().getName())
                     .build();
+            completedBooktalkRepository.save(completedBooktalk);
             for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){
                 Member member = memberBooktalk.getMember();
                 member.getCompletedBookTalkList().add(completedBooktalk);
                 completedBooktalk.setMember(member);
             }
+            booktalkRepository.delete(booktalk);
         }
     }
 
