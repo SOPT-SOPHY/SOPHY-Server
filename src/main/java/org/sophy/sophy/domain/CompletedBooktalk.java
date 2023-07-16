@@ -19,7 +19,8 @@ public class CompletedBooktalk extends AuditingTimeEntity{
     private String authorName;
     private LocalDateTime booktalkDate;
     private String placeName;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
