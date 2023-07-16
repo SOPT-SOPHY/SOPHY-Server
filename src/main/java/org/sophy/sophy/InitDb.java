@@ -899,6 +899,23 @@ public class InitDb {
                     .build();
             em.persist(booktalk27);
 
+            Booktalk booktalk28 = Booktalk.builder()
+                    .place(place1)
+                    .title("테스트용 북토크")
+                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
+                    .book(book5)
+                    .member(author2)
+                    .bookCategory(book11.getBookCategory())
+                    .startDate(LocalDateTime.of(2023, 8, 24, 11, 0))
+                    .endDate(LocalDateTime.of(2023, 8, 24, 12, 0))
+                    .maximum(4)
+                    .participationFee(0)
+                    .preliminaryInfo(PreliminaryInfo.COMFORTABLE_COMING)
+                    .description("항상 새로운 아이디어가 쏟아지는 시대, 아이디어를 찾는 방법도 여러 가지. 하루하루 아이디어를 위해 새로움을 찾는 마케터들은 어떤 방법을 쓸까요? 마케터 이승희의 영감을 만나보세요!")
+                    .booktalkStatus(BooktalkStatus.RECRUITING)
+                    .build();
+            em.persist(booktalk28);
+
             MemberBooktalk memberBooktalk = MemberBooktalk.builder()
                     .member(citizen)
                     .booktalk(booktalk1)
@@ -909,8 +926,14 @@ public class InitDb {
                     .booktalk(booktalk2)
                     .build();
 
+            MemberBooktalk memberBooktalk28 = MemberBooktalk.builder()
+                    .member(citizen)
+                    .booktalk(booktalk28)
+                    .build();
+
             em.persist(memberBooktalk);
             em.persist(memberBooktalk2);
+            em.persist(memberBooktalk28);
 
             CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
                     .title("끝난 북토크")
