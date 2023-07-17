@@ -10,7 +10,6 @@ import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
-import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +29,7 @@ public class BooktalkService {
 
     @Transactional
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
-        Place place = getPlaceById(booktalkRequestDto.getPlaceId());
+        Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
         if (!member.getIsAuthor()) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
@@ -41,14 +40,14 @@ public class BooktalkService {
 
     @Transactional
     public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
-        Booktalk booktalk = getBooktalkById(booktalkId);
-        booktalk.patchBooktalk(booktalkUpdateDto, getPlaceById(booktalkUpdateDto.getPlaceId()));
+        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
+        booktalk.patchBooktalk(booktalkUpdateDto, placeRepository.getPlaceById(booktalkUpdateDto.getPlaceId()));
         return booktalkUpdateDto;
     }
 
     @Transactional
     public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
-        Booktalk booktalk = getBooktalkById(booktalkId);
+        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
         booktalk.getPlace().deleteBooktalk(booktalk);
@@ -58,14 +57,14 @@ public class BooktalkService {
     }
 
     public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
-        Booktalk booktalk = getBooktalkById(booktalkId);
+        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         return BooktalkDetailResponseDto.of(booktalk);
     }
 
     @Transactional
     public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
         Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
-        Booktalk booktalk = getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
+        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
         MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
         memberBooktalkRepository.save(memberBooktalk);
@@ -90,16 +89,6 @@ public class BooktalkService {
 
         return booktalkList;
 
-    }
-
-    private Place getPlaceById(Long placeId) {
-        return placeRepository.findById(placeId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_PLACE_EXCEPTION, ErrorStatus.NOT_FOUND_PLACE_EXCEPTION.getMessage()));
-    }
-
-    private Booktalk getBooktalkById(Long booktalkId) {
-        return booktalkRepository.findById(booktalkId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION, ErrorStatus.NOT_FOUND_BOOKTALK_EXCEPTION.getMessage()));
     }
 
     @Transactional
@@ -128,7 +117,7 @@ public class BooktalkService {
     }
 
     @Transactional
-    public CompletedBooktalk completeBooktalk(Long booktalkId) {
+    public CompletedBooktalk completeBooktalk(Long booktalkId) { //작가가 자신의 북토크를 완료상태로 변경하는 메서드
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
         CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
