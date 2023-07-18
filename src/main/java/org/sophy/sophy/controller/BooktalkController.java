@@ -22,36 +22,36 @@ import java.util.List;
 public class BooktalkController {
     private final BooktalkService booktalkService;
 
-    @PostMapping
+    @PostMapping //북토크 생성
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @RequestBody BooktalkRequestDto booktalkRequestDto) {
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto));
     }
 
-    @PatchMapping("/{booktalkId}")
+    @PatchMapping("/{booktalkId}") //북토크 수정
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkUpdateDto> updateBooktalk(@PathVariable("booktalkId") Long booktalkId, @Valid @RequestBody BooktalkUpdateDto booktalkUpdateDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_BOOKTALK_SUCCESS, booktalkService.updateBooktalk(booktalkId, booktalkUpdateDto));
     }
 
-    @DeleteMapping("/{booktalkId}")
+    @DeleteMapping("/{booktalkId}") //북토크 삭제
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.deleteBooktalk(booktalkId));
     }
 
-    @GetMapping("/{booktalkId}/detail")
+    @GetMapping("/{booktalkId}/detail") //북토크 상세 조회
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));
     }
 
-    @GetMapping("/search/{city}")
+    @GetMapping("/search/{city}") //지역으로 북토크 조회
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @PathVariable(name = "city") City city) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(city));
     }
-    @PostMapping("/participation")
+    @PostMapping("/participation") //북토크 참가
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
         booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto);
@@ -64,7 +64,7 @@ public class BooktalkController {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS, booktalkService.getBooktalkDeadlineUpcoming());
     }
 
-    @PostMapping("/{booktalkId}")
+    @PostMapping("/{booktalkId}") //북토크 완료
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<CompletedBooktalk> completeBooktalk(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.completeBooktalk(booktalkId));

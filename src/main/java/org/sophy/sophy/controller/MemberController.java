@@ -20,7 +20,7 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/my-page/{memberId}") //
+    @GetMapping("/my-page/{memberId}") // 마이페이지 조회
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<MyPageDto> getMyPage(@PathVariable("memberId") Long memberId) {
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyPage(memberId));

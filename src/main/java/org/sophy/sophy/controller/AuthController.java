@@ -21,23 +21,23 @@ import javax.validation.Valid;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/signup")
+    @PostMapping("/signup") //회원가입
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDto<MemberResponseDto> signup(@RequestBody @Valid MemberRequestDto memberRequestDto) {
         return ApiResponseDto.success(SuccessStatus.SIGNUP_SUCCESS, authService.signup(memberRequestDto));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login") //로그인
     public ApiResponseDto<TokenDto> login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 
-    @PostMapping("/reissue")
+    @PostMapping("/reissue") //액세스 토큰 재발행
     public ApiResponseDto<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));
     }
 
-    @PostMapping("/dupl-check")
+    @PostMapping("/dupl-check") //이메일 중복 체크
     public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS, authService.duplCheck(email));
     }
