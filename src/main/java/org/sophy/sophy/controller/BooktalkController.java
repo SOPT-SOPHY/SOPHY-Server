@@ -58,12 +58,6 @@ public class BooktalkController {
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_PARTICIPATION_SUCCESS);
     }
 
-    @GetMapping("/deadline-upcoming")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<List<BooktalkDeadlineUpcomingDto>> getBooktalkDeadlineUpcoming() {
-        return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_DEADLINE_UPCOMING_SUCCESS, booktalkService.getBooktalkDeadlineUpcoming());
-    }
-
     @PostMapping("/{booktalkId}") //북토크 완료
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<CompletedBooktalk> completeBooktalk(@PathVariable("booktalkId") Long booktalkId) {
