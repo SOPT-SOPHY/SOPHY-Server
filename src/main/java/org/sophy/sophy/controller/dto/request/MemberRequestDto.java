@@ -27,8 +27,8 @@ public class MemberRequestDto {
 
     @NotBlank
     @Pattern(
-            regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
-            message = "비밀번호는 영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다."
+            regexp="(?=.*[0-9])(?=.*[a-zA-Z]).{8,16}",
+            message = "비밀번호는 영문과 숫자가 포함된 8자 ~ 16자의 비밀번호여야 합니다."
     )
     private String password;
 
@@ -36,7 +36,6 @@ public class MemberRequestDto {
     @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phoneNum;
 
-    @NotBlank
     private boolean marketingAgree;
 
     public Member toMember(PasswordEncoder passwordEncoder) {

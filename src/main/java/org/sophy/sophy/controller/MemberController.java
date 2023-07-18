@@ -11,6 +11,7 @@ import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,13 +34,13 @@ public class MemberController {
 
     @PostMapping("/my-info/{memberId}") //추가 정보 입력
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@PathVariable("memberId") Long memberId, @RequestBody MemberAdditionalInfoDto memberAdditionalInfoDto) {
+    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@PathVariable("memberId") Long memberId, @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
         return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS, memberService.postAdditionalInfo(memberId, memberAdditionalInfoDto));
     }
 
     @PatchMapping("/my-info/{memberId}") //내 정보 업데이트
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyInfoDto> patchInfo(@PathVariable("memberId") Long memberId, @RequestBody MyInfoDto myInfoDto) {
+    public ApiResponseDto<MyInfoDto> patchInfo(@PathVariable("memberId") Long memberId, @RequestBody @Valid MyInfoDto myInfoDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(memberId, myInfoDto));
     }
 
