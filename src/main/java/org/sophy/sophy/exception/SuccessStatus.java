@@ -37,6 +37,7 @@ public enum SuccessStatus {
     SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입이 완료되었습니다."),
     CREATE_BOOKTALK_SUCCESS(HttpStatus.CREATED, "북토크를 생성했습니다."),
     CREATE_BOOKTALK_PARTICIPATION_SUCCESS(HttpStatus.CREATED, "북토크 참여 신청을 성공했습니다."),
+    CREATE_PLACE_SUCCESS(HttpStatus.CREATED, "공간을 생성했습니다."),
 
     ;
 
