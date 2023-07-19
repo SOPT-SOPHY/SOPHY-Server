@@ -1,8 +1,9 @@
 package org.sophy.sophy.domain.enumerate;
 
 public enum PreliminaryInfo {
-    //미리 읽어와주세요 / 발췌문을 드려요 / 편하게와주세요
+    //미리 읽어와주세요 / 발췌문을 드려요 / 편하게와주세요 / 질문을 준비해주세요
     PRE_READING,
     PROVIDE_EXCERPT,
-    COMFORTABLE_COMING
+    COMFORTABLE_COMING,
+    PREPARE_QUESTION
 }
