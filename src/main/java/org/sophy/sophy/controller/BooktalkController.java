@@ -6,7 +6,10 @@ import org.sophy.sophy.domain.CompletedBooktalk;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
-import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkCreateResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeleteResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDetailResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
@@ -24,7 +27,7 @@ public class BooktalkController {
 
     @PostMapping //북토크 생성
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @RequestBody BooktalkRequestDto booktalkRequestDto) {
+    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto) {
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto));
     }
 
@@ -51,6 +54,7 @@ public class BooktalkController {
     public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(@Valid @PathVariable(name = "city") City city) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS, booktalkService.getBooktalksByCity(city));
     }
+
     @PostMapping("/participation") //북토크 참가
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {

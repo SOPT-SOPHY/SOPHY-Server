@@ -1,15 +1,16 @@
 package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.response.*;
-import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
+import org.sophy.sophy.external.client.aws.S3Service;
 import org.sophy.sophy.infrastructure.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class BooktalkService {
     private final MemberRepository memberRepository;
     private final MemberBooktalkRepository memberBooktalkRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
+    private final S3Service s3Service;
 
     // 북토크 생성
     @Transactional
@@ -35,7 +37,10 @@ public class BooktalkService {
         if (!member.getIsAuthor()) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
-        Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
+        String booktalkImageUrl = null;
+        if (!booktalkRequestDto.getBooktalkImage().isEmpty())
+            booktalkImageUrl = s3Service.uploadImage(booktalkRequestDto.getBooktalkImage(), "image");
+        Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member, booktalkImageUrl);
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
 
@@ -111,10 +116,10 @@ public class BooktalkService {
 
         List<BooktalkResponseDto> booktalkList = new ArrayList<>();
         booktalks.forEach(booktalk -> {
-                        // 모집중인 북토크만 추가
-                        if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                            booktalkList.add(BooktalkResponseDto.of(booktalk));
-                        }
+            // 모집중인 북토크만 추가
+            if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
+                booktalkList.add(BooktalkResponseDto.of(booktalk));
+            }
         });
 
         // 마감 임박순으로 정렬
@@ -135,7 +140,7 @@ public class BooktalkService {
                 .placeName(booktalk.getPlace().getName())
                 .build();
         completedBooktalkRepository.save(completedBooktalk); //완료된 북토크 엔티티를 영속화 시켜야 다음 작업들에 사용 가능
-        for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){
+        for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) {
             Member member = memberBooktalk.getMember();
             member.getCompletedBookTalkList().add(completedBooktalk);
             completedBooktalk.setMember(member);
