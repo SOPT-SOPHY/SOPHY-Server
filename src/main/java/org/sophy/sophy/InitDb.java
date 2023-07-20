@@ -941,6 +941,7 @@ public class InitDb {
                     .authorName("끝난 작가")
                     .booktalkDate(LocalDateTime.of(2023, 6, 3, 15, 0))
                     .placeName("북토크가 끝난 장소")
+                    .bookCategory(BookCategory.HUMANITIES)
                     .build();
 
             completedBooktalk.setMember(citizen);

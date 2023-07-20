@@ -53,8 +53,8 @@ public class SophyStoryService {
                 .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
 
         List<CompletedBooktalk> completedBooktalkList = member.getCompletedBookTalkList();
-
         List<SophyStoryDto> sophyStoryDtos = new ArrayList<>();
+
         completedBooktalkList.forEach(completedBooktalk -> {
             sophyStoryDtos.add(SophyStoryDto.builder()
                     .title(completedBooktalk.getTitle())
@@ -62,6 +62,7 @@ public class SophyStoryService {
                     .authorName(completedBooktalk.getAuthorName())
                     .booktalkDate(completedBooktalk.getBooktalkDate())
                     .placeName(completedBooktalk.getPlaceName())
+                    .bookCategory(completedBooktalk.getBookCategory())
                     .build());
         });
         return sophyStoryDtos;

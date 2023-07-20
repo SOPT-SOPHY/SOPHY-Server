@@ -126,6 +126,7 @@ public class BooktalkService {
                 .authorName(booktalk.getMember().getName())
                 .booktalkDate(booktalk.getEndDate())
                 .placeName(booktalk.getPlace().getName())
+                .bookCategory(booktalk.getBookCategory())
                 .build();
         completedBooktalkRepository.save(completedBooktalk); //완료된 북토크 엔티티를 영속화 시켜야 다음 작업들에 사용 가능
         for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){

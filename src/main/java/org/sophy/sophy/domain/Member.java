@@ -55,7 +55,7 @@ public class Member extends AuditingTimeEntity {
     private Authority authority;
 
     private Integer waitingBookTalkCount; // 참여 예정 북토크
-    private Integer completeBookTalkCount; // 참여 완료 북토크
+    private Integer completeBookTalkCount; // 참여 완료 북토크 ( 북토크 complete 시킬 때 숫자 증가시키는거 필요함)
 
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;

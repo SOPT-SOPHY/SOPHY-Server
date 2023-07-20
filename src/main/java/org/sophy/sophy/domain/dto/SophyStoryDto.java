@@ -3,6 +3,7 @@ package org.sophy.sophy.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 
 import java.time.LocalDateTime;
 
@@ -15,4 +16,5 @@ public class SophyStoryDto {
     private String authorName;
     private LocalDateTime booktalkDate;
     private String placeName;
+    private BookCategory bookCategory;
 }
