@@ -935,18 +935,41 @@ public class InitDb {
             em.persist(memberBooktalk2);
             em.persist(memberBooktalk28);
 
-            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
-                    .title("끝난 북토크")
-                    .bookName("끝난 책")
-                    .authorName("끝난 작가")
-                    .booktalkDate(LocalDateTime.of(2023, 6, 3, 15, 0))
-                    .placeName("북토크가 끝난 장소")
-                    .bookCategory(BookCategory.HUMANITIES)
+            CompletedBooktalk completedBooktalk1 = CompletedBooktalk.builder()
+                    .title("지구에 종말이 온다해도")
+                    .bookName("지구 끝 온실")
+                    .authorName("김초엽")
+                    .booktalkDate(LocalDateTime.of(2023, 6, 22, 15, 0))
+                    .placeName("의정부시 과학도서관")
+                    .bookCategory(BookCategory.LITERATURE)
                     .build();
 
-            completedBooktalk.setMember(citizen);
-            em.persist(completedBooktalk);
-            citizen.getCompletedBookTalkList().add(completedBooktalk);
+            CompletedBooktalk completedBooktalk2 = CompletedBooktalk.builder()
+                    .title("일상에서 영감 찾는 법")
+                    .bookName("별게 다 영감")
+                    .authorName("이승희")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 1, 15, 0))
+                    .placeName("의정부시 책이랑나랑 작은도서관")
+                    .bookCategory(BookCategory.ESSAY)
+                    .build();
+            CompletedBooktalk completedBooktalk3 = CompletedBooktalk.builder()
+                    .title("양자학이 궁금해!")
+                    .bookName("김상욱의 양자공부")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 19, 15, 0))
+                    .placeName("의정부시 미술도서관")
+                    .bookCategory(BookCategory.SCIENCE)
+                    .build();
+
+            completedBooktalk1.setMember(citizen);
+            completedBooktalk2.setMember(citizen);
+            completedBooktalk3.setMember(citizen);
+            em.persist(completedBooktalk1);
+            em.persist(completedBooktalk2);
+            em.persist(completedBooktalk3);
+            citizen.getCompletedBookTalkList().add(completedBooktalk1);
+            citizen.getCompletedBookTalkList().add(completedBooktalk2);
+            citizen.getCompletedBookTalkList().add(completedBooktalk3);
         }
     }
 }
