@@ -28,7 +28,7 @@ public class BooktalkService {
     private final CompletedBooktalkRepository completedBooktalkRepository;
 
     @Transactional
-    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
+    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) { // 북토크 생성
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
         if (!member.getIsAuthor()) {
@@ -39,14 +39,14 @@ public class BooktalkService {
     }
 
     @Transactional
-    public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
+    public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) { //북토크 상태 업뎃
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         booktalk.patchBooktalk(booktalkUpdateDto, placeRepository.getPlaceById(booktalkUpdateDto.getPlaceId()));
         return booktalkUpdateDto;
     }
 
     @Transactional
-    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
+    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함 (소프트 삭제로 변경)
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
@@ -56,13 +56,13 @@ public class BooktalkService {
         return BooktalkDeleteResponseDto.of(booktalkId);
     }
 
-    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
+    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) { //북토크 상세 조회
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         return BooktalkDetailResponseDto.of(booktalk);
     }
 
     @Transactional
-    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
+    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) { //북토크 참가신청
         Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
