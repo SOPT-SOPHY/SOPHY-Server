@@ -222,7 +222,6 @@ public class InitDb {
             em.persist(oper);
 
 
-
             Place place1 = Place.builder()
                     .name("북부경기문화창조허브")
                     .member(oper)
@@ -961,6 +960,32 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .build();
 
+            CompletedBooktalk completedBooktalk4 = CompletedBooktalk.builder()
+                    .title("야 너도 기록할 수 있어!")
+                    .bookName("기록의 쓸모")
+                    .authorName("이승희")
+                    .booktalkDate(LocalDateTime.of(2023, 5, 15, 15, 0))
+                    .placeName("민락 푸르지오 푸른 도서관")
+                    .bookCategory(BookCategory.ESSAY)
+                    .build();
+
+            CompletedBooktalk completedBooktalk5 = CompletedBooktalk.builder()
+                    .title("다정한 물리를 원해?")
+                    .bookName("떨림과 울림")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 6, 10, 15, 0))
+                    .placeName("자금동 작은도서관")
+                    .bookCategory(BookCategory.CHILDREN)
+                    .build();
+            CompletedBooktalk completedBooktalk6 = CompletedBooktalk.builder()
+                    .title("해피해피해피 싸이언스")
+                    .bookName("과학은 논쟁이다")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 19, 15, 0))
+                    .placeName("금강 작은도서관")
+                    .bookCategory(BookCategory.SCIENCE)
+                    .build();
+
             completedBooktalk1.setMember(citizen);
             completedBooktalk2.setMember(citizen);
             completedBooktalk3.setMember(citizen);
@@ -970,6 +995,16 @@ public class InitDb {
             citizen.getCompletedBookTalkList().add(completedBooktalk1);
             citizen.getCompletedBookTalkList().add(completedBooktalk2);
             citizen.getCompletedBookTalkList().add(completedBooktalk3);
+
+            completedBooktalk4.setMember(author1);
+            completedBooktalk5.setMember(author1);
+            completedBooktalk6.setMember(author1);
+            em.persist(completedBooktalk4);
+            em.persist(completedBooktalk5);
+            em.persist(completedBooktalk6);
+            author1.getCompletedBookTalkList().add(completedBooktalk4);
+            author1.getCompletedBookTalkList().add(completedBooktalk5);
+            author1.getCompletedBookTalkList().add(completedBooktalk6);
         }
     }
 }
