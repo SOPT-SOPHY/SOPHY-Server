@@ -27,8 +27,9 @@ public class BooktalkService {
     private final MemberBooktalkRepository memberBooktalkRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
 
+    // 북토크 생성
     @Transactional
-    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) { // 북토크 생성
+    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
         if (!member.getIsAuthor()) {
@@ -38,15 +39,17 @@ public class BooktalkService {
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
 
+    // 북토크 수정
     @Transactional
-    public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) { //북토크 상태 업뎃
+    public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         booktalk.patchBooktalk(booktalkUpdateDto, placeRepository.getPlaceById(booktalkUpdateDto.getPlaceId()));
         return booktalkUpdateDto;
     }
 
+    // 북토크 삭제
     @Transactional
-    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함 (소프트 삭제로 변경)
+    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
@@ -56,13 +59,15 @@ public class BooktalkService {
         return BooktalkDeleteResponseDto.of(booktalkId);
     }
 
-    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) { //북토크 상세 조회
+    // 북토크 상세 조회
+    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         return BooktalkDetailResponseDto.of(booktalk);
     }
 
+    // 북토크 참여 신청
     @Transactional
-    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) { //북토크 참가신청
+    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
         Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
@@ -70,6 +75,7 @@ public class BooktalkService {
         memberBooktalkRepository.save(memberBooktalk);
     }
 
+    // 마감임박 북토크 조회
     public List<BooktalkDeadlineUpcomingDto> getBooktalkDeadlineUpcoming() {
         List<Place> placeList = placeRepository.findAll();
 
@@ -91,8 +97,9 @@ public class BooktalkService {
 
     }
 
+    //지역으로 북토크 조회
     @Transactional
-    public List<BooktalkResponseDto> getBooktalksByCity(City city) { //지역으로 북토크 조회
+    public List<BooktalkResponseDto> getBooktalksByCity(City city) {
 
         List<Booktalk> booktalks;
 

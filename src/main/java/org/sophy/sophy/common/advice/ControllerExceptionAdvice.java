@@ -39,6 +39,12 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(InvalidFormatException.class)
     protected ApiResponseDto handleInvalidFormatException(final InvalidFormatException e) {
+        return ApiResponseDto.error(ErrorStatus.INVALID_FORMAT_EXCEPTION);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ApiResponseDto handleIllegalArgumentException(final IllegalArgumentException e) {
         return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
     }
 
