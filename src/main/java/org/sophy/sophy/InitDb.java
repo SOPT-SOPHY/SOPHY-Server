@@ -958,7 +958,7 @@ public class InitDb {
                     .authorName("김상욱")
                     .booktalkDate(LocalDateTime.of(2023, 7, 19, 15, 0))
                     .placeName("의정부시 미술도서관")
-                    .bookCategory(BookCategory.SCIENCE)
+                    .bookCategory(BookCategory.LITERATURE)
                     .build();
 
             completedBooktalk1.setMember(citizen);
