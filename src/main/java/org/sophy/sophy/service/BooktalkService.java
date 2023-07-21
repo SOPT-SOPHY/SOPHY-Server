@@ -36,6 +36,9 @@ public class BooktalkService {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
+        //작가 정보에 북토크 업데이트
+        member.getAuthorProperty().getMyBookTalkList().add(booktalk);
+        member.getAuthorProperty().increaseBooktalkCount();
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
 
@@ -68,10 +71,15 @@ public class BooktalkService {
     // 북토크 참여 신청
     @Transactional
     public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
+        //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드 필요할듯
         Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         // 복합키?
         MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
+        //연관 객체 변경 ( member 객체 북토크 수 표시하는 메서드 리팩터 필요 )
+        booktalk.getParticipantList().add(memberBooktalk);
+        member.getUserBookTalkList().add(memberBooktalk);
+        member.increaseWaitingBooktalkCount();
         memberBooktalkRepository.save(memberBooktalk);
     }
 

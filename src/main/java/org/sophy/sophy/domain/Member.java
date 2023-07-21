@@ -57,11 +57,13 @@ public class Member extends AuditingTimeEntity {
     private Integer waitingBookTalkCount; // 참여 예정 북토크
     private Integer completeBookTalkCount; // 참여 완료 북토크 ( 북토크 complete 시킬 때 숫자 증가시키는거 필요함)
 
+    public void increaseWaitingBooktalkCount(){ this.waitingBookTalkCount +=1; }
+
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList;
 
     @OneToMany(mappedBy = "member")
-    private List<CompletedBooktalk> completedBookTalkList;
+    private List<CompletedBooktalk> completedBookTalkList; //이거 길이로 북토크 수 보여줄 수 있지 않을까?
 
     @OneToOne
     @JoinColumn(name = "author_property_id")

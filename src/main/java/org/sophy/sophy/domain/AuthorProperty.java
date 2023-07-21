@@ -30,4 +30,5 @@ public class AuthorProperty {
     public void setExpectedBookTalkCount(Integer count) {
         this.expectedBookTalkCount = count;
     }
+    public void increaseBooktalkCount(){ this.expectedBookTalkCount +=1; }
 }
