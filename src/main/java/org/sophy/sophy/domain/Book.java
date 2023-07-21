@@ -20,6 +20,8 @@ public class Book {
     private BookCategory bookCategory;
     private Integer booktalkOpenCount;
     private Boolean isRegistration;
+    @Column(length = 1000)
+    private String bookImageUrl;
     @ManyToOne
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty;

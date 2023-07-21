@@ -125,6 +125,7 @@ public class MemberService {
                     .bookCategory(book.getBookCategory())
                     .booktalkOpenCount(book.getBooktalkOpenCount())
                     .isRegistration(book.getIsRegistration())
+                    .bookImageUrl(book.getBookImageUrl())
                     .build());
         });
         return bookResponseDtoList;

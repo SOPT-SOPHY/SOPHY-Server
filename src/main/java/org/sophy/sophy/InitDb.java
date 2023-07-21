@@ -106,6 +106,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(0)
                     .isRegistration(false)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3e806fb3-1d00-43bf-965a-c2feed78592e%2FUntitled.png?id=e1e12bac-87fc-4a18-ab28-96bc2b666461&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book1.setAuthorProperty(memauthor1);
             Book book2 = Book.builder()
@@ -113,6 +114,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(5)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F50dcc45e-c830-41be-94bb-01851ba262e0%2FUntitled.png?id=7300b623-d30f-4e9b-8946-d3f04b271528&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book2.setAuthorProperty(memauthor1);
             Book book3 = Book.builder()
@@ -120,6 +122,7 @@ public class InitDb {
                     .bookCategory(BookCategory.SOCIETY)
                     .booktalkOpenCount(3)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8478d342-3f80-4ae5-b8d9-b64d42e7f5c3%2FUntitled.png?id=29801121-bbac-4cd5-b19c-b928c4544f6c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book3.setAuthorProperty(memauthor1);
             Book book4 = Book.builder()
@@ -127,6 +130,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(3)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8478d342-3f80-4ae5-b8d9-b64d42e7f5c3%2FUntitled.png?id=29801121-bbac-4cd5-b19c-b928c4544f6c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book4.setAuthorProperty(memauthor1);
             Book book5 = Book.builder()
