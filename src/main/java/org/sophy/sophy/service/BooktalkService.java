@@ -38,7 +38,6 @@ public class BooktalkService {
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member);
         //작가 정보에 북토크 업데이트
         member.getAuthorProperty().getMyBookTalkList().add(booktalk);
-        member.getAuthorProperty().increaseBooktalkCount();
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
 
@@ -79,7 +78,6 @@ public class BooktalkService {
         //연관 객체 변경 ( member 객체 북토크 수 표시하는 메서드 리팩터 필요 )
         booktalk.getParticipantList().add(memberBooktalk);
         member.getUserBookTalkList().add(memberBooktalk);
-        member.increaseWaitingBooktalkCount();
         memberBooktalkRepository.save(memberBooktalk);
     }
 
