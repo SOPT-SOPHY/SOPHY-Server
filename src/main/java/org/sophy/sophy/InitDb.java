@@ -42,24 +42,19 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            citizen.setCompleteBookTalkCount(8);
-            citizen.setWaitingBookTalkCount(5);
             em.persist(citizen);
 
             AuthorProperty memauthor1 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(10)
                     .build();
             AuthorProperty memauthor2 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(10)
                     .build();
             AuthorProperty memauthor3 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(7)
                     .build();
 
             em.persist(memauthor1);
@@ -77,8 +72,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author1.setAuthorProperty(memauthor1);
-            author1.setCompleteBookTalkCount(1);
-            author1.setWaitingBookTalkCount(0);
 
             Member author2 = Member.builder()
                     .name("이승희")
@@ -91,8 +84,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author2.setAuthorProperty(memauthor2);
-            author2.setCompleteBookTalkCount(2);
-            author2.setWaitingBookTalkCount(1);
 
             Member author3 = Member.builder()
                     .name("김상욱")
@@ -105,8 +96,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author3.setAuthorProperty(memauthor3);
-            author3.setCompleteBookTalkCount(1);
-            author3.setWaitingBookTalkCount(0);
 
             em.persist(author1);
             em.persist(author2);
@@ -992,9 +981,6 @@ public class InitDb {
             em.persist(completedBooktalk1);
             em.persist(completedBooktalk2);
             em.persist(completedBooktalk3);
-            citizen.getCompletedBookTalkList().add(completedBooktalk1);
-            citizen.getCompletedBookTalkList().add(completedBooktalk2);
-            citizen.getCompletedBookTalkList().add(completedBooktalk3);
 
             completedBooktalk4.setMember(author1);
             completedBooktalk5.setMember(author1);
@@ -1002,9 +988,6 @@ public class InitDb {
             em.persist(completedBooktalk4);
             em.persist(completedBooktalk5);
             em.persist(completedBooktalk6);
-            author1.getCompletedBookTalkList().add(completedBooktalk4);
-            author1.getCompletedBookTalkList().add(completedBooktalk5);
-            author1.getCompletedBookTalkList().add(completedBooktalk6);
         }
     }
 }

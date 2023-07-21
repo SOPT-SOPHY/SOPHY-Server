@@ -43,6 +43,7 @@ public enum ErrorStatus {
      * 409 CONFLICT
      */
     ALREADY_EXIST_USER_EXCEPTION(HttpStatus.CONFLICT, "이미 존재하는 유저입니다"),
+    OVER_MAX_PARTICIPATION_EXCEPTION(HttpStatus.CONFLICT, "북토크 참여 가능 인원을 초과하였습니다."),
 
     /**
      * 500 INTERNAL SERVER ERROR

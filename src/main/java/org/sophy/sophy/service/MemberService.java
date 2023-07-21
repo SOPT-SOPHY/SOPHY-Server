@@ -30,17 +30,17 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-                    .expectedBookTalkCount(member.getAuthorProperty().getExpectedBookTalkCount())
-                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
-                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
+                    .waitingBookTalkCount(member.getUserBookTalkList().size())
+                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
                     .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .myBookDtos(getAuthorBooksByMemberId(memberId))
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
-                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .waitingBookTalkCount(member.getUserBookTalkList().size())
+                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
                     .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .build();
         }

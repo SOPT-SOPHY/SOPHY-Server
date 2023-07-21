@@ -115,9 +115,6 @@ public class Booktalk extends AuditingTimeEntity {
         this.member = member;
         this.authorProperty = member.getAuthorProperty();
         member.getAuthorProperty().getMyBookTalkList().add(this);
-//        if (!member.getAuthorProperty().getMyBookTalkList().contains(this)) {
-//            member.getAuthorProperty().getMyBookTalkList().add(this);
-//        }
     }
 
     @Builder
