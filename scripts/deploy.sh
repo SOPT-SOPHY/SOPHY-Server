@@ -46,7 +46,7 @@ else
 fi
 
 echo "> $IDLE_PROFILE 배포"
-nohup java -jar -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH  1>/dev/null 2>/home/ubuntu/app/nohup.out &
+nohup java -jar -Duser.timezone=Asia/Seoul -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH  1>/home/ubuntu/app/console.log 2>/home/ubuntu/app/nohup.out &
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
 echo "> curl -sL http://localhost:$IDLE_PORT/health "
