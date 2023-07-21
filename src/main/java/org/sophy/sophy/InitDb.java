@@ -130,7 +130,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(3)
                     .isRegistration(true)
-                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8478d342-3f80-4ae5-b8d9-b64d42e7f5c3%2FUntitled.png?id=29801121-bbac-4cd5-b19c-b928c4544f6c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8e0ece4-fb34-4553-bf3f-4bc2e8e89e4d%2FUntitled.png?id=b43c767e-ae15-407e-95cd-73e0a52c72cb&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book4.setAuthorProperty(memauthor1);
             Book book5 = Book.builder()
