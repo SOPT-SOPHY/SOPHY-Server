@@ -981,9 +981,6 @@ public class InitDb {
             em.persist(completedBooktalk1);
             em.persist(completedBooktalk2);
             em.persist(completedBooktalk3);
-            citizen.getCompletedBookTalkList().add(completedBooktalk1);
-            citizen.getCompletedBookTalkList().add(completedBooktalk2);
-            citizen.getCompletedBookTalkList().add(completedBooktalk3);
 
             completedBooktalk4.setMember(author1);
             completedBooktalk5.setMember(author1);
@@ -991,9 +988,6 @@ public class InitDb {
             em.persist(completedBooktalk4);
             em.persist(completedBooktalk5);
             em.persist(completedBooktalk6);
-            author1.getCompletedBookTalkList().add(completedBooktalk4);
-            author1.getCompletedBookTalkList().add(completedBooktalk5);
-            author1.getCompletedBookTalkList().add(completedBooktalk6);
         }
     }
 }
