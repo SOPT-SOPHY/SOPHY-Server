@@ -36,6 +36,7 @@ public class Booktalk extends AuditingTimeEntity {
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 1000)
     private String booktalkImageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
