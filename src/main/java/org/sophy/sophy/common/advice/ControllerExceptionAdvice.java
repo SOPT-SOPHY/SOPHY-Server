@@ -36,7 +36,7 @@ public class ControllerExceptionAdvice {
         return ApiResponseDto.error(ErrorStatus.REFRESH_TOKEN_TIME_EXPIRED_EXCEPTION);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException.class)
     protected ApiResponseDto handleInvalidFormatException(final InvalidFormatException e) {
         return ApiResponseDto.error(ErrorStatus.INVALID_FORMAT_EXCEPTION);
