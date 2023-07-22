@@ -277,7 +277,7 @@ public class InitDb {
                     .city(City.JANGAM_DONG)
                     .address("경기 의정부시 누원로 52 수락리버시티2단지 207동 1층")
                     .maximum(5)
-                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8be07ae5-208e-41a5-baa3-cc784bbc20fb%2FUntitled.png?table=block&id=611e10ab-6122-4dd7-ba0b-b03e0c052aca&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd6251f8b-4a8e-4933-860a-f25459a7d81a%2FUntitled.png?table=block&id=0a99a4a4-4d85-4cbd-b835-f08cf07fab9e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place9 = Place.builder()
                     .name("의정부 과학도서관")
@@ -285,7 +285,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 추동로 124번길 52")
                     .maximum(20)
-                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45d47421-d990-4ae4-b56f-fa00ae41690a%2FUntitled.png?table=block&id=4febe76d-600b-410f-855d-5abc51116b4d&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8be07ae5-208e-41a5-baa3-cc784bbc20fb%2FUntitled.png?table=block&id=611e10ab-6122-4dd7-ba0b-b03e0c052aca&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place10 = Place.builder()
                     .name("의정부 음악도서관")
@@ -293,7 +293,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 장곡로 280")
                     .maximum(20)
-                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F757ce1bd-33ff-4ffb-9a54-06177c13fccd%2FUntitled.png?table=block&id=f0b9ebc4-f041-42c5-8473-2228af8608bd&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45d47421-d990-4ae4-b56f-fa00ae41690a%2FUntitled.png?table=block&id=4febe76d-600b-410f-855d-5abc51116b4d&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place11 = Place.builder()
                     .name("참다운어린이도서관")
