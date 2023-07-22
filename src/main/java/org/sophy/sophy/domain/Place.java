@@ -39,6 +39,7 @@ public class Place extends AuditingTimeEntity {
     @Column(nullable = false)
     private Integer maximum;
 
+    @Column(length = 1000)
     private String placeImage;
 
     @OneToMany(mappedBy = "place")

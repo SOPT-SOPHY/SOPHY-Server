@@ -221,6 +221,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 신흥로 234 10층~13층")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa4c288a7-88b0-431e-9ac6-a5b839fc2dca%2FUntitled.png?table=block&id=ab90066b-1fc5-4393-a4cd-8322f49845bf&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place2 = Place.builder()
                     .name("의정부시 청년센터")
@@ -228,6 +229,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 둔야로 9 3,4층")
                     .maximum(10)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8e00c724-3f88-4aff-9472-9232d45c0564%2FUntitled.png?table=block&id=7256291e-3ac6-44fc-bef2-764036e1ed0b&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place3 = Place.builder()
                     .name("의정부 정보도서관")
@@ -235,6 +237,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 의정로41")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Feb6e54ae-2ee5-4e40-a906-a90623ffd65f%2FUntitled.png?table=block&id=8dd51f2a-5c0e-4a2a-af4b-ba3d7c91b350&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place4 = Place.builder()
                     .name("의정부 바이브")
@@ -242,6 +245,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 평화로483번길 43")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f9f7781-a630-4174-beff-be71abd1ce6c%2FUntitled.png?table=block&id=04ca3b4a-6d29-42b3-b2ea-7b4f9b1833d6&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place5 = Place.builder()
                     .name("의정부 영어도서관")
