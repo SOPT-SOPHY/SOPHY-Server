@@ -429,7 +429,7 @@ public class InitDb {
                     .city(City.NOKYANG_DONG)
                     .address("경기 의정부시 녹양로 87번길 38-20")
                     .maximum(4)
-                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2327c89d-c52c-44c5-9c23-4dfcd2d5eac4%2FUntitled.png?table=block&id=6e115dbc-1d05-4763-9fe9-cb664b31526e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb5c82b98-cfc5-4512-aadf-7e4b734a3c93%2FUntitled.png?table=block&id=ee627307-19af-44d2-984b-9801c076914e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             em.persist(place1);
             em.persist(place2);
