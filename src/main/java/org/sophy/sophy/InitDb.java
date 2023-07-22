@@ -253,6 +253,7 @@ public class InitDb {
                     .city(City.HOWON_DONG)
                     .address("경기 의정부시 회룡로 79")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F340e0894-79cf-4095-8c36-21a1f7a3f719%2FUntitled.png?table=block&id=c962284e-6f58-49ef-a352-fa4a5a2c74fc&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place6 = Place.builder()
                     .name("책읽는 행복도서관")
@@ -260,6 +261,7 @@ public class InitDb {
                     .city(City.HOWON_DONG)
                     .address("경기 의정부시 평화로 324 한주프라자 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4af168f4-8e5c-44fc-95cd-839d7cb5aba1%2FUntitled.png?table=block&id=cc17e221-1435-46dd-9b3e-abed0035d2eb&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place7 = Place.builder()
                     .name("장암동 작은도서관")
@@ -267,6 +269,7 @@ public class InitDb {
                     .city(City.JANGAM_DONG)
                     .address("경기 의정부시 장곡로250번길 23")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46df927-68ad-4493-8434-20fa9c407561%2FUntitled.png?table=block&id=c24225a2-1a61-4c6b-8879-fac86684098a&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place8 = Place.builder()
                     .name("나누미 작은도서관")
@@ -274,6 +277,7 @@ public class InitDb {
                     .city(City.JANGAM_DONG)
                     .address("경기 의정부시 누원로 52 수락리버시티2단지 207동 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8be07ae5-208e-41a5-baa3-cc784bbc20fb%2FUntitled.png?table=block&id=611e10ab-6122-4dd7-ba0b-b03e0c052aca&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place9 = Place.builder()
                     .name("의정부 과학도서관")
@@ -281,6 +285,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 추동로 124번길 52")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45d47421-d990-4ae4-b56f-fa00ae41690a%2FUntitled.png?table=block&id=4febe76d-600b-410f-855d-5abc51116b4d&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place10 = Place.builder()
                     .name("의정부 음악도서관")
@@ -288,6 +293,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 장곡로 280")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F757ce1bd-33ff-4ffb-9a54-06177c13fccd%2FUntitled.png?table=block&id=f0b9ebc4-f041-42c5-8473-2228af8608bd&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place11 = Place.builder()
                     .name("참다운어린이도서관")
@@ -295,6 +301,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 금신로 204 지하 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F757ce1bd-33ff-4ffb-9a54-06177c13fccd%2FUntitled.png?table=block&id=f0b9ebc4-f041-42c5-8473-2228af8608bd&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place12 = Place.builder()
                     .name("맑은샘 도서관")
@@ -302,6 +309,7 @@ public class InitDb {
                     .city(City.YOUNGHYUN_DONG)
                     .address("경기 의정부시 오목로 21-1 의정부교회 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1bd595fd-9204-492e-a7a1-c3edbebec0dc%2FUntitled.png?table=block&id=40e5d6b2-6fb1-4187-a8b7-aca88c6cdaa7&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place13 = Place.builder()
                     .name("송산1동 작은도서관")
@@ -309,6 +317,7 @@ public class InitDb {
                     .city(City.YOUNGHYUN_DONG)
                     .address("경기 의정부시 민락로 13")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc0434427-b7b2-4502-b404-a3fa5f68af20%2FUntitled.png?table=block&id=06606987-1b92-45ca-82b1-0c0eb4d3c7f5&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place14 = Place.builder()
                     .name("송산2동 작은도서관")
@@ -316,6 +325,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 용민로 115 6층")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc6b5f865-4a5c-419e-9eb8-0c4fcc33266d%2FUntitled.png?table=block&id=8c9e82b7-a19e-426f-b3f3-abfffa3d2946&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place15 = Place.builder()
                     .name("의정부 미술도서관")
@@ -323,6 +333,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 민락로 248")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff1dbbe88-d006-4643-9cab-61f6c2c4e44b%2FUntitled.png?table=block&id=9ff0eb66-b918-424e-8adb-91b683203247&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place16 = Place.builder()
                     .name("민락복합문화 작은도서관")
@@ -330,6 +341,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 오목로205번길 61 로데오프라자 8층 801호")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8585729-112b-414e-a7f3-9939cadf0b87%2FUntitled.png?table=block&id=02fca598-c5c3-429d-ae68-c2a61607bae9&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place17 = Place.builder()
                     .name("금강 작은도서관")
@@ -337,6 +349,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 263 404동 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F65cca3e0-867f-4a37-ac5c-91b6ddee0853%2FUntitled.png?table=block&id=3bc2a968-d70c-4029-aaac-6b16ec1c29ed&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place18 = Place.builder()
                     .name("휴스토리 꿈자람 도서관")
@@ -344,6 +357,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 오목로 252 LH휴스토리 205동 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbe70bcbd-e591-4b6c-9d36-4c3a66f8e09f%2FUntitled.png?table=block&id=3ba75500-6ae2-4029-8faf-6f4834ba477b&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place19 = Place.builder()
                     .name("LH 햇볕뜰 작은도서관")
@@ -351,6 +365,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 373-17 3층")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fde293bf6-6e65-4195-b6b1-b3854a3dc9a3%2FUntitled.png?table=block&id=39cf7bea-8296-450d-8268-2ddbf5a04843&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place20 = Place.builder()
                     .name("민락 푸르지오 푸른 도서관")
@@ -358,6 +373,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 송양로 46 의정부 민락푸르지오아파트")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2a853b9a-107d-49fb-a231-60c437f332ad%2FUntitled.png?table=block&id=f606f0ca-5244-4164-85fc-77c0eaddaa8a&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place21 = Place.builder()
                     .name("반딧불이 작은도서관")
@@ -365,6 +381,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 419 주민공동시설 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F39e698f5-7667-40f6-9580-90ac5f12b27e%2FUntitled.png?table=block&id=c3f28ceb-47f9-43aa-981b-aa4b46f0a337&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place22 = Place.builder()
                     .name("자금동 작은도서관")
@@ -372,6 +389,7 @@ public class InitDb {
                     .city(City.GEUMO_DONG)
                     .address("경기 의정부시 거북로 13 자금동주민센터 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb76013b4-ee80-4c67-8b86-27d61c24debf%2FUntitled.png?table=block&id=9540fa08-fc34-434f-a832-179973c09a11&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place23 = Place.builder()
                     .name("홈플러스 주민센터")
@@ -379,6 +397,7 @@ public class InitDb {
                     .city(City.GEUMO_DONG)
                     .address("경기 의정부시 청사로 38")
                     .maximum(10)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcffd0d61-8831-4508-a364-a21c721ff8b3%2FUntitled.png?table=block&id=fd1b35b1-3d85-4b3d-aaea-8149f9b84b32&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place24 = Place.builder()
                     .name("가능동 작은도서관")
@@ -386,6 +405,7 @@ public class InitDb {
                     .city(City.GANEUNG_DONG)
                     .address("경기 의정부시 신촌로 35 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe82d9c36-0de4-4d55-af27-f5b09be3c029%2FUntitled.png?table=block&id=57622766-5feb-41dd-94a3-0b945232e3bc&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place25 = Place.builder()
                     .name("흥선동 행정복지센터")
@@ -393,6 +413,7 @@ public class InitDb {
                     .city(City.GANEUNG_DONG)
                     .address("경기 의정부시 흥선로 20")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F35af2ab9-26f7-452e-9824-551fcaac6659%2FUntitled.png?table=block&id=54599de2-04dc-4a89-858b-01fe9d6775b8&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place26 = Place.builder()
                     .name("녹양동 작은도서관")
@@ -400,6 +421,7 @@ public class InitDb {
                     .city(City.NOKYANG_DONG)
                     .address("경기 의정부시 진등로 21 2층")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2327c89d-c52c-44c5-9c23-4dfcd2d5eac4%2FUntitled.png?table=block&id=6e115dbc-1d05-4763-9fe9-cb664b31526e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place27 = Place.builder()
                     .name("책이랑나랑 작은도서관")
@@ -407,6 +429,7 @@ public class InitDb {
                     .city(City.NOKYANG_DONG)
                     .address("경기 의정부시 녹양로 87번길 38-20")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2327c89d-c52c-44c5-9c23-4dfcd2d5eac4%2FUntitled.png?table=block&id=6e115dbc-1d05-4763-9fe9-cb664b31526e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             em.persist(place1);
             em.persist(place2);
