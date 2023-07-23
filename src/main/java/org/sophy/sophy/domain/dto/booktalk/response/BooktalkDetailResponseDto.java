@@ -32,7 +32,7 @@ public class BooktalkDetailResponseDto {
                 booktalk.getTitle(),
                 booktalk.getMember().getName(),
                 booktalk.getBookCategory(),
-                "책이름", //TODO 추후 연결
+                booktalk.getBook().getTitle(),
                 booktalk.getStartDate(),
                 booktalk.getEndDate(),
                 booktalk.getParticipantList().size(),

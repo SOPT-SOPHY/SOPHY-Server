@@ -42,24 +42,19 @@ public class InitDb {
                     .isOperator(false)
                     .authority(Authority.ROLE_USER)
                     .build();
-            citizen.setCompleteBookTalkCount(8);
-            citizen.setWaitingBookTalkCount(5);
             em.persist(citizen);
 
             AuthorProperty memauthor1 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(10)
                     .build();
             AuthorProperty memauthor2 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(10)
                     .build();
             AuthorProperty memauthor3 = AuthorProperty.builder()
                     .myBookTalkList(new ArrayList<>())
                     .myBookList(new ArrayList<>())
-                    .expectedBookTalkCount(7)
                     .build();
 
             em.persist(memauthor1);
@@ -77,8 +72,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author1.setAuthorProperty(memauthor1);
-            author1.setCompleteBookTalkCount(1);
-            author1.setWaitingBookTalkCount(0);
 
             Member author2 = Member.builder()
                     .name("이승희")
@@ -91,8 +84,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author2.setAuthorProperty(memauthor2);
-            author2.setCompleteBookTalkCount(2);
-            author2.setWaitingBookTalkCount(1);
 
             Member author3 = Member.builder()
                     .name("김상욱")
@@ -105,8 +96,6 @@ public class InitDb {
                     .authority(Authority.ROLE_USER)
                     .build();
             author3.setAuthorProperty(memauthor3);
-            author3.setCompleteBookTalkCount(1);
-            author3.setWaitingBookTalkCount(0);
 
             em.persist(author1);
             em.persist(author2);
@@ -117,6 +106,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(0)
                     .isRegistration(false)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3e806fb3-1d00-43bf-965a-c2feed78592e%2FUntitled.png?id=e1e12bac-87fc-4a18-ab28-96bc2b666461&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book1.setAuthorProperty(memauthor1);
             Book book2 = Book.builder()
@@ -124,6 +114,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(5)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F50dcc45e-c830-41be-94bb-01851ba262e0%2FUntitled.png?id=7300b623-d30f-4e9b-8946-d3f04b271528&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book2.setAuthorProperty(memauthor1);
             Book book3 = Book.builder()
@@ -131,6 +122,7 @@ public class InitDb {
                     .bookCategory(BookCategory.SOCIETY)
                     .booktalkOpenCount(3)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8478d342-3f80-4ae5-b8d9-b64d42e7f5c3%2FUntitled.png?id=29801121-bbac-4cd5-b19c-b928c4544f6c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book3.setAuthorProperty(memauthor1);
             Book book4 = Book.builder()
@@ -138,6 +130,7 @@ public class InitDb {
                     .bookCategory(BookCategory.LITERATURE)
                     .booktalkOpenCount(3)
                     .isRegistration(true)
+                    .bookImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8e0ece4-fb34-4553-bf3f-4bc2e8e89e4d%2FUntitled.png?id=b43c767e-ae15-407e-95cd-73e0a52c72cb&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=380&userId=&cache=v2")
                     .build();
             book4.setAuthorProperty(memauthor1);
             Book book5 = Book.builder()
@@ -228,6 +221,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 신흥로 234 10층~13층")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa4c288a7-88b0-431e-9ac6-a5b839fc2dca%2FUntitled.png?table=block&id=ab90066b-1fc5-4393-a4cd-8322f49845bf&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place2 = Place.builder()
                     .name("의정부시 청년센터")
@@ -235,6 +229,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 둔야로 9 3,4층")
                     .maximum(10)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8e00c724-3f88-4aff-9472-9232d45c0564%2FUntitled.png?table=block&id=7256291e-3ac6-44fc-bef2-764036e1ed0b&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place3 = Place.builder()
                     .name("의정부 정보도서관")
@@ -242,6 +237,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 의정로41")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Feb6e54ae-2ee5-4e40-a906-a90623ffd65f%2FUntitled.png?table=block&id=8dd51f2a-5c0e-4a2a-af4b-ba3d7c91b350&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place4 = Place.builder()
                     .name("의정부 바이브")
@@ -249,6 +245,7 @@ public class InitDb {
                     .city(City.UIJEONGBU_DONG)
                     .address("경기 의정부시 평화로483번길 43")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f9f7781-a630-4174-beff-be71abd1ce6c%2FUntitled.png?table=block&id=04ca3b4a-6d29-42b3-b2ea-7b4f9b1833d6&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place5 = Place.builder()
                     .name("의정부 영어도서관")
@@ -256,6 +253,7 @@ public class InitDb {
                     .city(City.HOWON_DONG)
                     .address("경기 의정부시 회룡로 79")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F340e0894-79cf-4095-8c36-21a1f7a3f719%2FUntitled.png?table=block&id=c962284e-6f58-49ef-a352-fa4a5a2c74fc&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place6 = Place.builder()
                     .name("책읽는 행복도서관")
@@ -263,6 +261,7 @@ public class InitDb {
                     .city(City.HOWON_DONG)
                     .address("경기 의정부시 평화로 324 한주프라자 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4af168f4-8e5c-44fc-95cd-839d7cb5aba1%2FUntitled.png?table=block&id=cc17e221-1435-46dd-9b3e-abed0035d2eb&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place7 = Place.builder()
                     .name("장암동 작은도서관")
@@ -270,6 +269,7 @@ public class InitDb {
                     .city(City.JANGAM_DONG)
                     .address("경기 의정부시 장곡로250번길 23")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46df927-68ad-4493-8434-20fa9c407561%2FUntitled.png?table=block&id=c24225a2-1a61-4c6b-8879-fac86684098a&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place8 = Place.builder()
                     .name("나누미 작은도서관")
@@ -277,6 +277,7 @@ public class InitDb {
                     .city(City.JANGAM_DONG)
                     .address("경기 의정부시 누원로 52 수락리버시티2단지 207동 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd6251f8b-4a8e-4933-860a-f25459a7d81a%2FUntitled.png?table=block&id=0a99a4a4-4d85-4cbd-b835-f08cf07fab9e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place9 = Place.builder()
                     .name("의정부 과학도서관")
@@ -284,6 +285,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 추동로 124번길 52")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8be07ae5-208e-41a5-baa3-cc784bbc20fb%2FUntitled.png?table=block&id=611e10ab-6122-4dd7-ba0b-b03e0c052aca&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place10 = Place.builder()
                     .name("의정부 음악도서관")
@@ -291,6 +293,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 장곡로 280")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F45d47421-d990-4ae4-b56f-fa00ae41690a%2FUntitled.png?table=block&id=4febe76d-600b-410f-855d-5abc51116b4d&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place11 = Place.builder()
                     .name("참다운어린이도서관")
@@ -298,6 +301,7 @@ public class InitDb {
                     .city(City.SINGOK_DONG)
                     .address("경기 의정부시 금신로 204 지하 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F757ce1bd-33ff-4ffb-9a54-06177c13fccd%2FUntitled.png?table=block&id=f0b9ebc4-f041-42c5-8473-2228af8608bd&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place12 = Place.builder()
                     .name("맑은샘 도서관")
@@ -305,6 +309,7 @@ public class InitDb {
                     .city(City.YOUNGHYUN_DONG)
                     .address("경기 의정부시 오목로 21-1 의정부교회 1층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1bd595fd-9204-492e-a7a1-c3edbebec0dc%2FUntitled.png?table=block&id=40e5d6b2-6fb1-4187-a8b7-aca88c6cdaa7&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place13 = Place.builder()
                     .name("송산1동 작은도서관")
@@ -312,6 +317,7 @@ public class InitDb {
                     .city(City.YOUNGHYUN_DONG)
                     .address("경기 의정부시 민락로 13")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc0434427-b7b2-4502-b404-a3fa5f68af20%2FUntitled.png?table=block&id=06606987-1b92-45ca-82b1-0c0eb4d3c7f5&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place14 = Place.builder()
                     .name("송산2동 작은도서관")
@@ -319,6 +325,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 용민로 115 6층")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc6b5f865-4a5c-419e-9eb8-0c4fcc33266d%2FUntitled.png?table=block&id=8c9e82b7-a19e-426f-b3f3-abfffa3d2946&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place15 = Place.builder()
                     .name("의정부 미술도서관")
@@ -326,6 +333,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 민락로 248")
                     .maximum(20)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff1dbbe88-d006-4643-9cab-61f6c2c4e44b%2FUntitled.png?table=block&id=9ff0eb66-b918-424e-8adb-91b683203247&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place16 = Place.builder()
                     .name("민락복합문화 작은도서관")
@@ -333,6 +341,7 @@ public class InitDb {
                     .city(City.MINRAK_DONG)
                     .address("경기 의정부시 오목로205번길 61 로데오프라자 8층 801호")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe8585729-112b-414e-a7f3-9939cadf0b87%2FUntitled.png?table=block&id=02fca598-c5c3-429d-ae68-c2a61607bae9&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place17 = Place.builder()
                     .name("금강 작은도서관")
@@ -340,6 +349,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 263 404동 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F65cca3e0-867f-4a37-ac5c-91b6ddee0853%2FUntitled.png?table=block&id=3bc2a968-d70c-4029-aaac-6b16ec1c29ed&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place18 = Place.builder()
                     .name("휴스토리 꿈자람 도서관")
@@ -347,6 +357,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 오목로 252 LH휴스토리 205동 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbe70bcbd-e591-4b6c-9d36-4c3a66f8e09f%2FUntitled.png?table=block&id=3ba75500-6ae2-4029-8faf-6f4834ba477b&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place19 = Place.builder()
                     .name("LH 햇볕뜰 작은도서관")
@@ -354,6 +365,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 373-17 3층")
                     .maximum(8)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fde293bf6-6e65-4195-b6b1-b3854a3dc9a3%2FUntitled.png?table=block&id=39cf7bea-8296-450d-8268-2ddbf5a04843&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place20 = Place.builder()
                     .name("민락 푸르지오 푸른 도서관")
@@ -361,6 +373,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 송양로 46 의정부 민락푸르지오아파트")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2a853b9a-107d-49fb-a231-60c437f332ad%2FUntitled.png?table=block&id=f606f0ca-5244-4164-85fc-77c0eaddaa8a&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place21 = Place.builder()
                     .name("반딧불이 작은도서관")
@@ -368,6 +381,7 @@ public class InitDb {
                     .city(City.NAKYANG_DONG)
                     .address("경기 의정부시 용민로 419 주민공동시설 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F39e698f5-7667-40f6-9580-90ac5f12b27e%2FUntitled.png?table=block&id=c3f28ceb-47f9-43aa-981b-aa4b46f0a337&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place22 = Place.builder()
                     .name("자금동 작은도서관")
@@ -375,6 +389,7 @@ public class InitDb {
                     .city(City.GEUMO_DONG)
                     .address("경기 의정부시 거북로 13 자금동주민센터 2층")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb76013b4-ee80-4c67-8b86-27d61c24debf%2FUntitled.png?table=block&id=9540fa08-fc34-434f-a832-179973c09a11&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place23 = Place.builder()
                     .name("홈플러스 주민센터")
@@ -382,6 +397,7 @@ public class InitDb {
                     .city(City.GEUMO_DONG)
                     .address("경기 의정부시 청사로 38")
                     .maximum(10)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcffd0d61-8831-4508-a364-a21c721ff8b3%2FUntitled.png?table=block&id=fd1b35b1-3d85-4b3d-aaea-8149f9b84b32&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place24 = Place.builder()
                     .name("가능동 작은도서관")
@@ -389,6 +405,7 @@ public class InitDb {
                     .city(City.GANEUNG_DONG)
                     .address("경기 의정부시 신촌로 35 1층")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe82d9c36-0de4-4d55-af27-f5b09be3c029%2FUntitled.png?table=block&id=57622766-5feb-41dd-94a3-0b945232e3bc&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place25 = Place.builder()
                     .name("흥선동 행정복지센터")
@@ -396,6 +413,7 @@ public class InitDb {
                     .city(City.GANEUNG_DONG)
                     .address("경기 의정부시 흥선로 20")
                     .maximum(5)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F35af2ab9-26f7-452e-9824-551fcaac6659%2FUntitled.png?table=block&id=54599de2-04dc-4a89-858b-01fe9d6775b8&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place26 = Place.builder()
                     .name("녹양동 작은도서관")
@@ -403,6 +421,7 @@ public class InitDb {
                     .city(City.NOKYANG_DONG)
                     .address("경기 의정부시 진등로 21 2층")
                     .maximum(6)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2327c89d-c52c-44c5-9c23-4dfcd2d5eac4%2FUntitled.png?table=block&id=6e115dbc-1d05-4763-9fe9-cb664b31526e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             Place place27 = Place.builder()
                     .name("책이랑나랑 작은도서관")
@@ -410,6 +429,7 @@ public class InitDb {
                     .city(City.NOKYANG_DONG)
                     .address("경기 의정부시 녹양로 87번길 38-20")
                     .maximum(4)
+                    .placeImage("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb5c82b98-cfc5-4512-aadf-7e4b734a3c93%2FUntitled.png?table=block&id=ee627307-19af-44d2-984b-9801c076914e&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=290&userId=&cache=v2")
                     .build();
             em.persist(place1);
             em.persist(place2);
@@ -442,7 +462,7 @@ public class InitDb {
             Booktalk booktalk1 = Booktalk.builder()
                     .place(place1)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -459,7 +479,7 @@ public class InitDb {
             Booktalk booktalk2 = Booktalk.builder()
                     .place(place2)
                     .title("김상욱의 양자 공부")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/quantum+study.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff725c906-ce23-45cd-802c-c9114f2c467a%2FUntitled.png?id=f23867ae-ea7f-4810-a23d-4c7d267b50d4&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book11)
                     .member(author3)
                     .bookCategory(book11.getBookCategory())
@@ -476,7 +496,7 @@ public class InitDb {
             Booktalk booktalk3 = Booktalk.builder()
                     .place(place3)
                     .title("별게 다 영감")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/Inspiration.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46cf5bf-42d5-4f10-89bd-cd188944a519%2FUntitled.png?id=bc1e32e5-4a8d-4db5-bc7d-e3437225ac76&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book5)
                     .member(author2)
                     .bookCategory(book11.getBookCategory())
@@ -493,7 +513,7 @@ public class InitDb {
             Booktalk booktalk4 = Booktalk.builder()
                     .place(place4)
                     .title("기록의 쓸모")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/record.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8588350-419c-4698-9c55-fbb8d1f81b60%2FUntitled.png?id=5e27057e-d695-4a04-9dee-b9dbbbf3704f&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book6)
                     .member(author2)
                     .bookCategory(book6.getBookCategory())
@@ -510,7 +530,7 @@ public class InitDb {
             Booktalk booktalk5 = Booktalk.builder()
                     .place(place5)
                     .title("지구 끝에 온실")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/earth.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1b491b1b-756b-4450-ac7a-97a72e6ab43b%2FUntitled.png?id=93eccc64-b674-4871-90a5-a7579e109165&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book2)
                     .member(author1)
                     .bookCategory(book2.getBookCategory())
@@ -527,7 +547,7 @@ public class InitDb {
             Booktalk booktalk6 = Booktalk.builder()
                     .place(place6)
                     .title("별게 다 영감")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/Inspiration.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46cf5bf-42d5-4f10-89bd-cd188944a519%2FUntitled.png?id=bc1e32e5-4a8d-4db5-bc7d-e3437225ac76&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book5)
                     .member(author2)
                     .bookCategory(book11.getBookCategory())
@@ -544,7 +564,7 @@ public class InitDb {
             Booktalk booktalk7 = Booktalk.builder()
                     .place(place7)
                     .title("기록의 쓸모")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/record.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8588350-419c-4698-9c55-fbb8d1f81b60%2FUntitled.png?id=5e27057e-d695-4a04-9dee-b9dbbbf3704f&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book6)
                     .member(author2)
                     .bookCategory(book6.getBookCategory())
@@ -561,7 +581,7 @@ public class InitDb {
             Booktalk booktalk8 = Booktalk.builder()
                     .place(place8)
                     .title("과학은 논쟁이다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/science.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F98f0e79a-e3ec-4541-95d3-0193a2c2269b%2FUntitled.png?id=15eb495d-4a1f-4f1d-8b0e-a7fcdbfe254e&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book8)
                     .member(author3)
                     .bookCategory(book8.getBookCategory())
@@ -578,7 +598,7 @@ public class InitDb {
             Booktalk booktalk9 = Booktalk.builder()
                     .place(place9)
                     .title("지구 끝에 온실")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/earth.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1b491b1b-756b-4450-ac7a-97a72e6ab43b%2FUntitled.png?id=93eccc64-b674-4871-90a5-a7579e109165&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book2)
                     .member(author1)
                     .bookCategory(book2.getBookCategory())
@@ -595,7 +615,7 @@ public class InitDb {
             Booktalk booktalk10 = Booktalk.builder()
                     .place(place10)
                     .title("떨림과 울림")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/shaking.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff39305e8-f927-4c47-87cd-e72c935ede26%2FUntitled.png?id=b0226716-30e9-4fbf-9d28-92b52b12d1cb&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book9)
                     .member(author3)
                     .bookCategory(book9.getBookCategory())
@@ -612,7 +632,7 @@ public class InitDb {
             Booktalk booktalk11 = Booktalk.builder()
                     .place(place11)
                     .title("김상욱의 양자 공부")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/quantum+study.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff725c906-ce23-45cd-802c-c9114f2c467a%2FUntitled.png?id=f23867ae-ea7f-4810-a23d-4c7d267b50d4&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book11)
                     .member(author3)
                     .bookCategory(book11.getBookCategory())
@@ -629,7 +649,7 @@ public class InitDb {
             Booktalk booktalk12 = Booktalk.builder()
                     .place(place12)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -646,7 +666,7 @@ public class InitDb {
             Booktalk booktalk13 = Booktalk.builder()
                     .place(place13)
                     .title("기록의 쓸모")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/record.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8588350-419c-4698-9c55-fbb8d1f81b60%2FUntitled.png?id=5e27057e-d695-4a04-9dee-b9dbbbf3704f&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book6)
                     .member(author2)
                     .bookCategory(book6.getBookCategory())
@@ -663,7 +683,7 @@ public class InitDb {
             Booktalk booktalk14 = Booktalk.builder()
                     .place(place14)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -680,7 +700,7 @@ public class InitDb {
             Booktalk booktalk15 = Booktalk.builder()
                     .place(place15)
                     .title("김상욱의 양자 공부")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/quantum+study.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff725c906-ce23-45cd-802c-c9114f2c467a%2FUntitled.png?id=f23867ae-ea7f-4810-a23d-4c7d267b50d4&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book11)
                     .member(author3)
                     .bookCategory(book11.getBookCategory())
@@ -697,7 +717,7 @@ public class InitDb {
             Booktalk booktalk16 = Booktalk.builder()
                     .place(place16)
                     .title("별게 다 영감")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/Inspiration.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46cf5bf-42d5-4f10-89bd-cd188944a519%2FUntitled.png?id=bc1e32e5-4a8d-4db5-bc7d-e3437225ac76&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book5)
                     .member(author2)
                     .bookCategory(book11.getBookCategory())
@@ -714,7 +734,7 @@ public class InitDb {
             Booktalk booktalk17 = Booktalk.builder()
                     .place(place17)
                     .title("과학은 논쟁이다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/science.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F98f0e79a-e3ec-4541-95d3-0193a2c2269b%2FUntitled.png?id=15eb495d-4a1f-4f1d-8b0e-a7fcdbfe254e&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book2)
                     .member(author1)
                     .bookCategory(book2.getBookCategory())
@@ -731,7 +751,7 @@ public class InitDb {
             Booktalk booktalk18 = Booktalk.builder()
                     .place(place18)
                     .title("지구 끝에 온실")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/earth.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1b491b1b-756b-4450-ac7a-97a72e6ab43b%2FUntitled.png?id=93eccc64-b674-4871-90a5-a7579e109165&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book2)
                     .member(author1)
                     .bookCategory(book2.getBookCategory())
@@ -748,7 +768,7 @@ public class InitDb {
             Booktalk booktalk19 = Booktalk.builder()
                     .place(place19)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -765,7 +785,7 @@ public class InitDb {
             Booktalk booktalk20 = Booktalk.builder()
                     .place(place20)
                     .title("기록의 쓸모")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/record.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8588350-419c-4698-9c55-fbb8d1f81b60%2FUntitled.png?id=5e27057e-d695-4a04-9dee-b9dbbbf3704f&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book6)
                     .member(author2)
                     .bookCategory(book6.getBookCategory())
@@ -782,7 +802,7 @@ public class InitDb {
             Booktalk booktalk21 = Booktalk.builder()
                     .place(place21)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -799,7 +819,7 @@ public class InitDb {
             Booktalk booktalk22 = Booktalk.builder()
                     .place(place22)
                     .title("떨림과 울림")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/shaking.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff39305e8-f927-4c47-87cd-e72c935ede26%2FUntitled.png?id=b0226716-30e9-4fbf-9d28-92b52b12d1cb&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book9)
                     .member(author3)
                     .bookCategory(book9.getBookCategory())
@@ -816,7 +836,7 @@ public class InitDb {
             Booktalk booktalk23 = Booktalk.builder()
                     .place(place23)
                     .title("별게 다 영감")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/Inspiration.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46cf5bf-42d5-4f10-89bd-cd188944a519%2FUntitled.png?id=bc1e32e5-4a8d-4db5-bc7d-e3437225ac76&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book5)
                     .member(author2)
                     .bookCategory(book11.getBookCategory())
@@ -833,7 +853,7 @@ public class InitDb {
             Booktalk booktalk24 = Booktalk.builder()
                     .place(place24)
                     .title("지구 끝에 온실")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/earth.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1b491b1b-756b-4450-ac7a-97a72e6ab43b%2FUntitled.png?id=93eccc64-b674-4871-90a5-a7579e109165&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book2)
                     .member(author1)
                     .bookCategory(book2.getBookCategory())
@@ -850,7 +870,7 @@ public class InitDb {
             Booktalk booktalk25 = Booktalk.builder()
                     .place(place25)
                     .title("사이보그가 되다")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/cyborg.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcf5d0cb8-3d40-40ff-a4e4-13a16b9afd18%2FUntitled.png?id=629f1cfd-7c2c-44c0-bbfb-db3f9295625c&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book1)
                     .member(author1)
                     .bookCategory(book1.getBookCategory())
@@ -867,7 +887,7 @@ public class InitDb {
             Booktalk booktalk26 = Booktalk.builder()
                     .place(place26)
                     .title("기록의 쓸모")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/record.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd8588350-419c-4698-9c55-fbb8d1f81b60%2FUntitled.png?id=5e27057e-d695-4a04-9dee-b9dbbbf3704f&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book6)
                     .member(author2)
                     .bookCategory(book6.getBookCategory())
@@ -884,7 +904,7 @@ public class InitDb {
             Booktalk booktalk27 = Booktalk.builder()
                     .place(place27)
                     .title("별게 다 영감")
-                    .booktalkImageUrl("https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/image/Inspiration.png")
+                    .booktalkImageUrl("https://spicy-gatsby-1c7.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb46cf5bf-42d5-4f10-89bd-cd188944a519%2FUntitled.png?id=bc1e32e5-4a8d-4db5-bc7d-e3437225ac76&table=block&spaceId=6e5cda1d-8fe4-4662-9a20-1d9546982dc5&width=400&userId=&cache=v2")
                     .book(book5)
                     .member(author2)
                     .bookCategory(book11.getBookCategory())
@@ -898,23 +918,6 @@ public class InitDb {
                     .build();
             em.persist(booktalk27);
 
-            Booktalk booktalk28 = Booktalk.builder()
-                    .place(place1)
-                    .title("테스트용 북토크")
-                    .booktalkImageUrl("dwqE@EWQDQFQEWQ")
-                    .book(book5)
-                    .member(author2)
-                    .bookCategory(book11.getBookCategory())
-                    .startDate(LocalDateTime.of(2023, 8, 24, 11, 0))
-                    .endDate(LocalDateTime.of(2023, 8, 24, 12, 0))
-                    .maximum(4)
-                    .participationFee(0)
-                    .preliminaryInfo(PreliminaryInfo.COMFORTABLE_COMING)
-                    .description("항상 새로운 아이디어가 쏟아지는 시대, 아이디어를 찾는 방법도 여러 가지. 하루하루 아이디어를 위해 새로움을 찾는 마케터들은 어떤 방법을 쓸까요? 마케터 이승희의 영감을 만나보세요!")
-                    .booktalkStatus(BooktalkStatus.RECRUITING)
-                    .build();
-            em.persist(booktalk28);
-
             MemberBooktalk memberBooktalk = MemberBooktalk.builder()
                     .member(citizen)
                     .booktalk(booktalk1)
@@ -925,26 +928,75 @@ public class InitDb {
                     .booktalk(booktalk2)
                     .build();
 
-            MemberBooktalk memberBooktalk28 = MemberBooktalk.builder()
-                    .member(citizen)
-                    .booktalk(booktalk28)
-                    .build();
 
             em.persist(memberBooktalk);
             em.persist(memberBooktalk2);
-            em.persist(memberBooktalk28);
 
-            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder()
-                    .title("끝난 북토크")
-                    .bookName("끝난 책")
-                    .authorName("끝난 작가")
-                    .booktalkDate(LocalDateTime.of(2023, 6, 3, 15, 0))
-                    .placeName("북토크가 끝난 장소")
+            CompletedBooktalk completedBooktalk1 = CompletedBooktalk.builder()
+                    .title("지구에 종말이 온다해도")
+                    .bookName("지구 끝 온실")
+                    .authorName("김초엽")
+                    .booktalkDate(LocalDateTime.of(2023, 6, 22, 15, 0))
+                    .placeName("의정부시 과학도서관")
+                    .bookCategory(BookCategory.LITERATURE)
                     .build();
 
-            completedBooktalk.setMember(citizen);
-            em.persist(completedBooktalk);
-            citizen.getCompletedBookTalkList().add(completedBooktalk);
+            CompletedBooktalk completedBooktalk2 = CompletedBooktalk.builder()
+                    .title("일상에서 영감 찾는 법")
+                    .bookName("별게 다 영감")
+                    .authorName("이승희")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 1, 15, 0))
+                    .placeName("의정부시 책이랑나랑 작은도서관")
+                    .bookCategory(BookCategory.ESSAY)
+                    .build();
+            CompletedBooktalk completedBooktalk3 = CompletedBooktalk.builder()
+                    .title("양자학이 궁금해!")
+                    .bookName("김상욱의 양자공부")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 19, 15, 0))
+                    .placeName("의정부시 미술도서관")
+                    .bookCategory(BookCategory.LITERATURE)
+                    .build();
+
+            CompletedBooktalk completedBooktalk4 = CompletedBooktalk.builder()
+                    .title("야 너도 기록할 수 있어!")
+                    .bookName("기록의 쓸모")
+                    .authorName("이승희")
+                    .booktalkDate(LocalDateTime.of(2023, 5, 15, 15, 0))
+                    .placeName("민락 푸르지오 푸른 도서관")
+                    .bookCategory(BookCategory.ESSAY)
+                    .build();
+
+            CompletedBooktalk completedBooktalk5 = CompletedBooktalk.builder()
+                    .title("다정한 물리를 원해?")
+                    .bookName("떨림과 울림")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 6, 10, 15, 0))
+                    .placeName("자금동 작은도서관")
+                    .bookCategory(BookCategory.CHILDREN)
+                    .build();
+            CompletedBooktalk completedBooktalk6 = CompletedBooktalk.builder()
+                    .title("해피해피해피 싸이언스")
+                    .bookName("과학은 논쟁이다")
+                    .authorName("김상욱")
+                    .booktalkDate(LocalDateTime.of(2023, 7, 19, 15, 0))
+                    .placeName("금강 작은도서관")
+                    .bookCategory(BookCategory.SCIENCE)
+                    .build();
+
+            completedBooktalk1.setMember(citizen);
+            completedBooktalk2.setMember(citizen);
+            completedBooktalk3.setMember(citizen);
+            em.persist(completedBooktalk1);
+            em.persist(completedBooktalk2);
+            em.persist(completedBooktalk3);
+
+            completedBooktalk4.setMember(author1);
+            completedBooktalk5.setMember(author1);
+            completedBooktalk6.setMember(author1);
+            em.persist(completedBooktalk4);
+            em.persist(completedBooktalk5);
+            em.persist(completedBooktalk6);
         }
     }
 }

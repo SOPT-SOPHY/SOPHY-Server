@@ -54,14 +54,11 @@ public class Member extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private Integer waitingBookTalkCount; // 참여 예정 북토크
-    private Integer completeBookTalkCount; // 참여 완료 북토크
+    @OneToMany(mappedBy = "member")
+    private List<MemberBooktalk> userBookTalkList; // -> 참여 예정 북토크 수
 
     @OneToMany(mappedBy = "member")
-    private List<MemberBooktalk> userBookTalkList;
-
-    @OneToMany(mappedBy = "member")
-    private List<CompletedBooktalk> completedBookTalkList;
+    private List<CompletedBooktalk> completedBookTalkList; //이거 길이로 북토크 수 보여줄 수 있지 않을까? -> 참여 완료 북토크 수
 
     @OneToOne
     @JoinColumn(name = "author_property_id")
@@ -92,13 +89,6 @@ public class Member extends AuditingTimeEntity {
         this.operatorProperty = operatorProperty;
     }
 
-    public void setWaitingBookTalkCount(int count) {
-        this.waitingBookTalkCount = count;
-    }
-
-    public void setCompleteBookTalkCount(int count) {
-        this.completeBookTalkCount = count;
-    }
 
     public void setAdditionalInfo(MemberAdditionalInfoDto memberAdditionalInfoDto) {
         this.gender = memberAdditionalInfoDto.getGender();

@@ -43,7 +43,7 @@ public class BooktalkController {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.deleteBooktalk(booktalkId));
     }
 
-    @GetMapping("/{booktalkId}/detail") //북토크 상세 조회
+    @GetMapping("/search/{booktalkId}/detail") //북토크 상세 조회
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS, booktalkService.getBooktalkDetail(booktalkId));

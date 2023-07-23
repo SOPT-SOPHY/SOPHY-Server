@@ -13,4 +13,5 @@ public class MyBookDto {
     private BookCategory bookCategory;
     private Integer booktalkOpenCount;
     private Boolean isRegistration;
+    private String bookImageUrl;
 }

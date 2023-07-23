@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -30,17 +31,17 @@ public class MemberService {
         if(member.getIsAuthor()){
             return MyPageDto.builder()
                     .name(member.getName())
-                    .expectedBookTalkCount(member.getAuthorProperty().getExpectedBookTalkCount())
-                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
-                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
+                    .waitingBookTalkCount(member.getUserBookTalkList().size())
+                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
                     .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .myBookDtos(getAuthorBooksByMemberId(memberId))
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
-                    .waitingBookTalkCount(member.getWaitingBookTalkCount())
-                    .completeBookTalkCount(member.getCompleteBookTalkCount())
+                    .waitingBookTalkCount(member.getUserBookTalkList().size())
+                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
                     .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
                     .build();
         }
@@ -91,6 +92,8 @@ public class MemberService {
                     .booktalkStatus(booktalk.getBooktalkStatus())
                     .build());
         });
+
+        booktalkResponseDtoList.sort(Comparator.comparing(MyPageBooktalkDto::getEndDate));
         return booktalkResponseDtoList;
     }
 
@@ -125,6 +128,7 @@ public class MemberService {
                     .bookCategory(book.getBookCategory())
                     .booktalkOpenCount(book.getBooktalkOpenCount())
                     .isRegistration(book.getIsRegistration())
+                    .bookImageUrl(book.getBookImageUrl())
                     .build());
         });
         return bookResponseDtoList;
