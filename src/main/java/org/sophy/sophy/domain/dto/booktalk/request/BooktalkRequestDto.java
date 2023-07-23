@@ -1,35 +1,41 @@
 package org.sophy.sophy.domain.dto.booktalk.request;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.Booktalk;
+import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkRequestDto {
     @NotNull
     private Long memberId;
     @NotNull
     private Long placeId;
 
-    private String booktalkImageUrl;
+    private MultipartFile booktalkImage;
     @NotBlank
     private String title;
     @NotNull
     private BookCategory bookCategory;
     @NotNull
-    private Long bookId; //TODO 추후 연결
+    private Long bookId;
     @NotNull
-    private LocalDateTime startDate; //TODO 시작 시간은 오늘날짜 이전은 안되도록?
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime startDate;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endDate;
     @NotNull
     private Integer participant;
@@ -40,7 +46,7 @@ public class BooktalkRequestDto {
     @NotBlank
     private String description;
 
-    public Booktalk toBooktalk(Place place, Member member) {
+    public Booktalk toBooktalk(Place place, Member member, String booktalkImageUrl) {
         return Booktalk.builder()
                 .title(title)
                 .booktalkImageUrl(booktalkImageUrl)

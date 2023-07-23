@@ -54,15 +54,11 @@ public class S3Service {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize()); //TODO: 파일 크기 제한
         objectMetadata.setContentType(multipartFile.getContentType());
-        System.out.println("filename" + fileName);
-        try(InputStream inputStream = multipartFile.getInputStream()) { //Statement Class의 인스턴스나 Stream 타입의 클래스들이 동작 후 필요로하는 close() 메소드를 자동실행해주는 공간
-            System.out.println("inputStream 보내");
+        try (InputStream inputStream = multipartFile.getInputStream()) { //Statement Class의 인스턴스나 Stream 타입의 클래스들이 동작 후 필요로하는 close() 메소드를 자동실행해주는 공간
             amazonS3.putObject(new PutObjectRequest(bucket + "/" + folder + "/image", fileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
-            System.out.println("put 완료");
             return amazonS3.getUrl(bucket + "/" + folder + "/image", fileName).toString();
         } catch (IOException e) {
-            System.out.println("IOException 발생");
             throw new NotFoundException(ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION, ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION.getMessage());
         }
     }
@@ -74,7 +70,7 @@ public class S3Service {
 
     // 파일 유효성 검사
     private String getFileExtension(String fileName) {
-        if(fileName.length() == 0) {
+        if (fileName.length() == 0) {
             throw new NotFoundException(ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION, ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION.getMessage());
         }
         ArrayList<String> fileValidate = new ArrayList<>();
@@ -85,7 +81,7 @@ public class S3Service {
         fileValidate.add(".JPEG");
         fileValidate.add(".PNG");
         String idxFileName = fileName.substring(fileName.lastIndexOf("."));
-        if(!fileValidate.contains(idxFileName)) {
+        if (!fileValidate.contains(idxFileName)) {
             throw new BadRequestException(ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION, ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION.getMessage());
         }
         return fileName.substring(fileName.lastIndexOf("."));
