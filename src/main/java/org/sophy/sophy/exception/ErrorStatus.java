@@ -23,6 +23,7 @@ public enum ErrorStatus {
      */
     INVALID_ACCESS_TOKEN_EXCEPTION(HttpStatus.UNAUTHORIZED, "유효하지 않은 액세스 토큰입니다."),
     REFRESH_TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 리프레시 토큰입니다."),
+    LOGOUT_REFRESH_TOKEN_EXCEPTION(HttpStatus.UNAUTHORIZED, "로그아웃 하여 리프레시 토큰이 존재하지 않는 상태입니다."),
 
     /**
      * 403 FORBIDDEN

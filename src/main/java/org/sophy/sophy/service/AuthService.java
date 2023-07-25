@@ -10,6 +10,8 @@ import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ExistEmailException;
+import org.sophy.sophy.exception.model.LogoutRefreshtokenException;
+import org.sophy.sophy.exception.model.SophyException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -80,14 +83,44 @@ public class AuthService {
     }
 
     @Transactional
+    public String logout(TokenRequestDto tokenRequestDto) {
+        // 1. Access Token 검증
+        if (!tokenProvider.validateToken(tokenRequestDto.getAccessToken())) {
+            throw new SophyException(ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION, ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION.getMessage());
+        }
+
+        // 2. Access Token 에서 User email 을 가져옵니다.
+        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+
+        // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
+        if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
+            // Refresh Token 삭제
+            redisTemplate.delete("RT:" + authentication.getName());
+        }
+
+        // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
+        Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
+        redisTemplate.opsForValue()
+                .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+
+        // 5. 토큰 발급
+        return "로그아웃 되었습니다.";
+    }
+
+    @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto){
         // 1. Refresh Token 검증
         tokenProvider.validateToken(tokenRequestDto.getRefreshToken());
 
-        // 2. Access Token 에서 Member ID 가져오기
+        // 2. Access Token 에서 Member ID(user email) 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
+
+        //로그아웃 되어 Redis에 RefreshToken이 존재하지 않는 경우 처리
+        if (ObjectUtils.isEmpty(refreshToken)) {
+            throw new LogoutRefreshtokenException(ErrorStatus.LOGOUT_REFRESH_TOKEN_EXCEPTION, ErrorStatus.LOGOUT_REFRESH_TOKEN_EXCEPTION.getMessage());
+        }
 
         // 4. Refresh Token 일치하는지 검사
         if(!refreshToken.equals(tokenRequestDto.getRefreshToken())) {

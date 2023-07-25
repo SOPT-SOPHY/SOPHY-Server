@@ -32,6 +32,11 @@ public class AuthController {
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 
+    @PostMapping("/logout") //로그인
+    public ApiResponseDto<String> logout(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ApiResponseDto.success(SuccessStatus.LOGOUT_SUCCESS, authService.logout(tokenRequestDto));
+    }
+
     @PostMapping("/reissue") //액세스 토큰 재발행
     public ApiResponseDto<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));

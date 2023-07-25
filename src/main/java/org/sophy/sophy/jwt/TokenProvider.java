@@ -126,4 +126,11 @@ public class TokenProvider {
             throw new JwtException("JWT 토큰이 잘못되었습니다.");
         }
     }
+
+    public Long getExpiration(String accessToken) {
+        //access Token 남은 유효시간
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
+    }
 }
