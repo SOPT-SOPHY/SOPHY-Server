@@ -13,12 +13,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import static org.sophy.sophy.jwt.JwtFilter.AUTHORIZATION_HEADER;
+import static org.sophy.sophy.jwt.JwtFilter.BEARER_PREFIX;
 
 
 @Slf4j
@@ -26,9 +31,11 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
+    public static final String REFRESH_HEADER = "Refresh";
 
-    private static long ACCESS_TOKEN_EXPIRE_TIME;
-    private static long REFRESH_TOKEN_EXPIRE_TIME;
+
+    private static Long ACCESS_TOKEN_EXPIRE_TIME;
+    private static Long REFRESH_TOKEN_EXPIRE_TIME;
     private final Key key;
 
     //빈 생성 때 key 값 세팅
@@ -132,5 +139,23 @@ public class TokenProvider {
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
+    }
+
+    // Request Header에 Access Token 정보를 추출하는 메서드
+    public String resolveAccessToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    // Request Header에 Refresh Token 정보를 추출하는 메서드
+    public String resolveRefreshToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(REFRESH_HEADER);
+        if (StringUtils.hasText(bearerToken)) {
+            return bearerToken;
+        }
+        return null;
     }
 }
