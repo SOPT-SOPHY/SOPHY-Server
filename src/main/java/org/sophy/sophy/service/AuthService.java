@@ -79,14 +79,14 @@ public class AuthService {
     }
 
     @Transactional
-    public String logout(TokenRequestDto tokenRequestDto) {
+    public String logout(String accessToken) {
         // 1. Access Token 검증
-        if (!tokenProvider.validateToken(tokenRequestDto.getAccessToken())) {
+        if (!tokenProvider.validateToken(accessToken)) {
             throw new SophyException(ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION, ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION.getMessage());
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
-        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
@@ -95,9 +95,9 @@ public class AuthService {
         }
 
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
-        Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
+        Long expiration = tokenProvider.getExpiration(accessToken);
         redisTemplate.opsForValue()
-                .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+                .set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
 
         // 5. 토큰 발급
         return "로그아웃 되었습니다.";
