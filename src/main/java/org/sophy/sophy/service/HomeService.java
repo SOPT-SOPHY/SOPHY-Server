@@ -6,6 +6,7 @@ import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeadlineUpcomingDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
+import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
@@ -35,7 +36,7 @@ public class HomeService {
         Integer booktalkCount = member.getUserBookTalkList().size();
         List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming = booktalkService.getBooktalkDeadlineUpcoming();
 
-        if (member.getIsAuthor()){ //작가냐 아니냐에 따라 홈 화면 분리
+        if (member.getAuthority().equals(Authority.ROLE_AUTHOR)){ //작가냐 아니냐에 따라 홈 화면 분리
             List<City> cityRank = getCityRank();
             return HomeResponseDto.builder()
                     .name(member.getName())

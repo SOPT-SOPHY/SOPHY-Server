@@ -5,6 +5,7 @@ import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.dto.place.request.PlaceRequestDto;
+import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
@@ -28,7 +29,7 @@ public class PlaceService {
     @Transactional
     public PlaceResponseDto createPlace(PlaceRequestDto placeRequestDto) {
         Member member = memberRepository.getMemberById(placeRequestDto.getMemberId());
-        if (!member.getIsOperator()) {
+        if (!member.getAuthority().equals(Authority.ROLE_OPERATOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
         String placeImageUrl = null;

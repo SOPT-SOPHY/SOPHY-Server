@@ -45,8 +45,6 @@ public class MemberRequestDto {
                 .password(passwordEncoder.encode(password))
                 .phoneNum(phoneNum)
                 .marketingAgree(marketingAgree)
-                .isAuthor(false)
-                .isOperator(false)
                 .authority(Authority.ROLE_USER)
                 .build();
     }

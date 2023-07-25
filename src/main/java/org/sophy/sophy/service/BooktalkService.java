@@ -6,6 +6,7 @@ import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
@@ -35,7 +36,7 @@ public class BooktalkService {
     public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
-        if (!member.getIsAuthor()) {
+        if (!member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
 

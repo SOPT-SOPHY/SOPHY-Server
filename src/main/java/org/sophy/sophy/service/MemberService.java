@@ -10,6 +10,7 @@ import org.sophy.sophy.domain.dto.mypage.MyBookDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
+import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class MemberService {
     public MyPageDto getMyPage(Long memberId) {
         Member member = memberRepository.getMemberById(memberId);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
-        if(member.getIsAuthor()){
+        if(member.getAuthority().equals(Authority.ROLE_AUTHOR)){
             return MyPageDto.builder()
                     .name(member.getName())
                     .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
@@ -96,7 +97,7 @@ public class MemberService {
         booktalkResponseDtoList.sort(Comparator.comparing(MyPageBooktalkDto::getEndDate));
         return booktalkResponseDtoList;
     }
-
+    
     @Transactional
     public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
         List<Booktalk> authorBookTalkList = memberRepository.getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
