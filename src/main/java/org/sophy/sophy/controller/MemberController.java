@@ -3,7 +3,6 @@ package org.sophy.sophy.controller;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
-import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
 import org.sophy.sophy.exception.SuccessStatus;
@@ -15,7 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,17 +50,12 @@ public class MemberController {
         return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(memberId, myInfoDto));
     }
 
-    @GetMapping("/my-booktalks") //예정된 북토크 조회 (신청)
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<List<MyPageBooktalkDto>> getMyBooktalks(@AuthenticationPrincipal User user) {
-        Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
-        return ApiResponseDto.success(SuccessStatus.GET_MY_BOOKTALKS_SUCCESS, memberService.getBooktalksByMemberId(memberId));
-    }
+//    @GetMapping("/my-booktalks") //예정된 북토크 조회 (신청)
+//    @ResponseStatus(HttpStatus.OK)
+//    public ApiResponseDto<List<MyPageBooktalkDto>> getMyBooktalks(@AuthenticationPrincipal User user) {
+//        Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
+//        return ApiResponseDto.success(SuccessStatus.GET_MY_BOOKTALKS_SUCCESS, memberService.getBooktalksByMemberId(memberId));
+//    }
 
-    @GetMapping("/author-booktalks") //개설한 북토크 조회
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@AuthenticationPrincipal User user) {
-        Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
-        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByMemberId(memberId));
-    }
+
 }
