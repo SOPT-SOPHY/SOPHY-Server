@@ -136,4 +136,9 @@ public class AuthService {
         return tokenDto;
     }
 
+    @Transactional
+    public String withdrawal(String email) {
+        memberRepository.delete(memberRepository.getMemberByEmail(email));
+        return "회원 탈퇴가 성공하였습니다";
+    }
 }

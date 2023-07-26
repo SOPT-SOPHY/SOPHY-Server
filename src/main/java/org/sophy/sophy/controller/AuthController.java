@@ -9,9 +9,12 @@ import org.sophy.sophy.controller.dto.request.TokenRequestDto;
 import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.SuccessStatus;
+import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.sophy.sophy.service.AuthService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ import javax.validation.Valid;
 public class AuthController {
     private final AuthService authService;
     private final TokenProvider tokenProvider;
+    private final MemberRepository memberRepository;
 
     @PostMapping("/signup") //회원가입
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,5 +57,10 @@ public class AuthController {
     @PostMapping("/dupl-check") //이메일 중복 체크
     public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS, authService.duplCheck(email));
+    }
+
+    @PostMapping("/withdrawal")
+    public ApiResponseDto<String> withdrawal(@AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.WITHDRAWAL_SUCCESS, authService.withdrawal(user.getUsername()));
     }
 }
