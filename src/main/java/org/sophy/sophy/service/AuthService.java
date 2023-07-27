@@ -18,7 +18,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,9 +68,6 @@ public class AuthService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication, memberLoginRequestDto.getAccessTokenExpiredTime(),  memberLoginRequestDto.getRefreshTokenExpiredTime());
 
-        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 데이터베이스에서 찾을 수 없습니다."));
-        tokenDto.setMemberId(member.getId());
-
         // 4. RefreshToken 저장
         redisTemplate.opsForValue().set("RT:" + authentication.getName(),
                         tokenDto.getRefreshToken(),
@@ -83,14 +79,14 @@ public class AuthService {
     }
 
     @Transactional
-    public String logout(TokenRequestDto tokenRequestDto) {
+    public String logout(String accessToken) {
         // 1. Access Token 검증
-        if (!tokenProvider.validateToken(tokenRequestDto.getAccessToken())) {
+        if (!tokenProvider.validateToken(accessToken)) {
             throw new SophyException(ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION, ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION.getMessage());
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
-        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
@@ -99,9 +95,9 @@ public class AuthService {
         }
 
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
-        Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
+        Long expiration = tokenProvider.getExpiration(accessToken);
         redisTemplate.opsForValue()
-                .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+                .set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
 
         // 5. 토큰 발급
         return "로그아웃 되었습니다.";

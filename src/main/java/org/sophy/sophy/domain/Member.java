@@ -44,13 +44,7 @@ public class Member extends AuditingTimeEntity {
     private City myCity;
 
     private Boolean marketingAgree;
-
-    @Column(nullable = false)
-    private Boolean isAuthor;
-
-    @Column(nullable = false)
-    private Boolean isOperator;
-
+    
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
@@ -69,14 +63,12 @@ public class Member extends AuditingTimeEntity {
     private OperatorProperty operatorProperty;
 
     @Builder
-    public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, boolean isAuthor, boolean isOperator, Authority authority) {
+    public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, Authority authority) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNum = phoneNum;
         this.marketingAgree = marketingAgree;
-        this.isAuthor = isAuthor;
-        this.isOperator = isOperator;
         this.authority = authority;
         this.userBookTalkList = new ArrayList<>();
         this.completedBookTalkList = new ArrayList<>();

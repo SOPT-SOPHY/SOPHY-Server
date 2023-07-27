@@ -9,10 +9,12 @@ import org.sophy.sophy.controller.dto.request.TokenRequestDto;
 import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.SuccessStatus;
+import org.sophy.sophy.jwt.TokenProvider;
 import org.sophy.sophy.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final TokenProvider tokenProvider;
 
     @PostMapping("/signup") //회원가입
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,13 +35,18 @@ public class AuthController {
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 
-    @PostMapping("/logout") //로그인
-    public ApiResponseDto<String> logout(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.LOGOUT_SUCCESS, authService.logout(tokenRequestDto));
+    @PostMapping("/logout") //로그아웃
+    public ApiResponseDto<String> logout(HttpServletRequest request) {
+        /**
+         * HttpServletRequest나 HttpServletResponse 객체가 Service 계층으로 넘어가는 것은 좋지 않다.
+         * request, response는 컨트롤러 계층에서 사용되는 객체이며, Service 계층이 request와 response를 알 필요가 없다.
+         */
+        String accessToken = tokenProvider.resolveAccessToken(request);
+        return ApiResponseDto.success(SuccessStatus.LOGOUT_SUCCESS, authService.logout(accessToken));
     }
 
     @PostMapping("/reissue") //액세스 토큰 재발행
-    public ApiResponseDto<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+    public ApiResponseDto<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));
     }
 

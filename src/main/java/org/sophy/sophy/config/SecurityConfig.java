@@ -68,6 +68,7 @@ public class SecurityConfig {
                 .antMatchers("/health/**").permitAll()
                 .antMatchers("/home/**").permitAll()
                 .antMatchers("/booktalk/search/**").permitAll()
+                .antMatchers("/author/**").hasRole("AUTHOR")
                 .anyRequest().authenticated() //나머지 API는 전부 인증 필요
 
                 //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
