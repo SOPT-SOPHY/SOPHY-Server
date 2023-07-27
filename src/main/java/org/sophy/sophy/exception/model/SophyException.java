@@ -12,7 +12,7 @@ public class SophyException extends RuntimeException {
         this.errorStatus = errorStatus;
     }
 
-    public int getHttpStatus() {
+    public Integer getHttpStatus() {
         return errorStatus.getHttpStatusCode();
     }
 }

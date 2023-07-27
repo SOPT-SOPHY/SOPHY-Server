@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
 import org.sophy.sophy.domain.enumerate.Authority;
@@ -19,6 +21,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE member SET deleted = true WHERE member_id=?")
+@Where(clause = "deleted=false")
 public class Member extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +65,8 @@ public class Member extends AuditingTimeEntity {
     @OneToOne
     @JoinColumn(name = "operator_property_id")
     private OperatorProperty operatorProperty;
+
+    private Boolean deleted = Boolean.FALSE;
 
     @Builder
     public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, Authority authority) {
