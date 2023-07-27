@@ -1,6 +1,7 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -21,7 +22,7 @@ public class HomeController {
 
     @GetMapping("/myhome") //작가와 주민 구분은 서비스 단 내에서
     @Operation(summary = "회원 홈 조회")
-    public ApiResponseDto<HomeResponseDto> getHome(@AuthenticationPrincipal User user) {
+    public ApiResponseDto<HomeResponseDto> getHome(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_HOME_SUCCESS, homeService.getHome(user.getUsername()));
     }
 
