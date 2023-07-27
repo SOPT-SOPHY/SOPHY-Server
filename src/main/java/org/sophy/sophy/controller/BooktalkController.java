@@ -1,6 +1,7 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -11,6 +12,8 @@ import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.BooktalkService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,8 +43,8 @@ public class BooktalkController {
     @PostMapping("/participation")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "북토크 참가")
-    public ApiResponseDto postBooktalkParticipation(@Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
-        booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto);
+    public ApiResponseDto postBooktalkParticipation(@Parameter @Valid @RequestBody BooktalkParticipationRequestDto booktalkParticipationRequestDto, @AuthenticationPrincipal User user) {
+        booktalkService.postBooktalkParticipation(booktalkParticipationRequestDto, user.getUsername());
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_PARTICIPATION_SUCCESS);
     }
 }

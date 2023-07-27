@@ -20,8 +20,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkRequestDto {
     @NotNull
-    private Long memberId;
-    @NotNull
     private Long placeId;
 
     private MultipartFile booktalkImage;

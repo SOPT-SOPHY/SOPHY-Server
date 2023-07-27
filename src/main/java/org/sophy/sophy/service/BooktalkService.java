@@ -33,9 +33,9 @@ public class BooktalkService {
 
     // 북토크 생성
     @Transactional
-    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto) {
+    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto, String email) {
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
-        Member member = memberRepository.getMemberById(booktalkRequestDto.getMemberId());
+        Member member = memberRepository.getMemberByEmail(email);
         if (!member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
@@ -77,8 +77,8 @@ public class BooktalkService {
 
     // 북토크 참여 신청
     @Transactional
-    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto) {
-        Member member = memberRepository.getMemberById(booktalkParticipationRequestDto.getMemberId());
+    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto, String email) {
+        Member member = memberRepository.getMemberByEmail(email);
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
         //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드 필요할듯
         if (booktalk.getMaximum() == booktalk.getParticipantList().size()) {

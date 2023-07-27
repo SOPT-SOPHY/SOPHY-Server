@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 public class BooktalkParticipationRequestDto {
     @NotNull
     private Long booktalkId;
-    @NotNull
-    private Long memberId;
 
     public MemberBooktalk toMemberBooktalk(Booktalk booktalk, Member member) {
         return MemberBooktalk.builder()

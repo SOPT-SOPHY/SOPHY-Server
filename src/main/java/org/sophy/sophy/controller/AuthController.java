@@ -62,7 +62,7 @@ public class AuthController {
             @SecurityRequirement(name = "JWT Auth"),
             @SecurityRequirement(name = "Refresh")
     })
-    public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
+    public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request) {
         String accessToken = tokenProvider.resolveAccessToken(request);
         String refreshToken = tokenProvider.resolveRefreshToken(request);
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(accessToken, refreshToken));
@@ -70,7 +70,7 @@ public class AuthController {
 
     @PostMapping("/dupl-check")
     @Operation(summary = "이메일 중복 체크")
-    public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
+    public ApiResponseDto<String> duplCheck(@Parameter @RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS, authService.duplCheck(email));
     }
 

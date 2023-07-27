@@ -16,8 +16,6 @@ import javax.validation.constraints.NotNull;
 public class PlaceRequestDto {
     @NotNull
     private City city;
-    @NotNull
-    private Long memberId;
     @NotBlank
     private String name;
 

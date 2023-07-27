@@ -27,8 +27,8 @@ public class PlaceService {
 
     // 공간 생성
     @Transactional
-    public PlaceResponseDto createPlace(PlaceRequestDto placeRequestDto) {
-        Member member = memberRepository.getMemberById(placeRequestDto.getMemberId());
+    public PlaceResponseDto createPlace(PlaceRequestDto placeRequestDto, String email) {
+        Member member = memberRepository.getMemberByEmail(email);
         if (!member.getAuthority().equals(Authority.ROLE_OPERATOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }

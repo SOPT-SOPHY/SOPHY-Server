@@ -9,8 +9,6 @@ import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
-import org.sophy.sophy.exception.ErrorStatus;
-import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.infrastructure.PlaceRepository;
@@ -30,9 +28,8 @@ public class HomeService {
     private final BooktalkService booktalkService;
     private final BooktalkRepository booktalkRepository;
 
-    public HomeResponseDto getHome(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION, ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+    public HomeResponseDto getHome(String email) {
+        Member member = memberRepository.getMemberByEmail(email);
         Integer booktalkCount = member.getUserBookTalkList().size();
         List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming = booktalkService.getBooktalkDeadlineUpcoming();
 

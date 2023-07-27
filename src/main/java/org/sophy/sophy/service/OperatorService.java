@@ -18,8 +18,8 @@ public class OperatorService {
     private final MemberRepository memberRepository;
     private final BooktalkRepository booktalkRepository;
 
-    public List<Booktalk> getWaitingBooktalks(Long memberId) { //승인 대기중 북토크 조회
-        Member member = memberRepository.getMemberById(memberId);
+    public List<Booktalk> getWaitingBooktalks(String email) { //승인 대기중 북토크 조회
+        Member member = memberRepository.getMemberByEmail(email);
         return member.getOperatorProperty().getRecruitScheduledBooktalks();
     }
 

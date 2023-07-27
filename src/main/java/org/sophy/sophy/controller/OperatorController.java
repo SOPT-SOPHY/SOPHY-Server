@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.service.OperatorService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -19,13 +18,11 @@ import java.util.List;
 public class OperatorController {
 
     private final OperatorService operatorService;
-    private final MemberRepository memberRepository;
 
     @GetMapping
     @Operation(summary = "승인 대기중 북토크 조회")
     public List<Booktalk> getWaitingBooktalks(@AuthenticationPrincipal User user) {
-        Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
-        return operatorService.getWaitingBooktalks(memberId);
+        return operatorService.getWaitingBooktalks(user.getUsername());
     }
 
     @PostMapping("/{booktalkId}")

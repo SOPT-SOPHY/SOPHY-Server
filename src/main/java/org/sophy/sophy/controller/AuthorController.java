@@ -1,6 +1,8 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -25,21 +27,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/author")
 @Tag(name = "작가", description = "작가 관련 API docs")
+@SecurityRequirement(name = "JWT Auth")
 public class AuthorController { private final MemberService memberService;
     private final BooktalkService booktalkService;
 
     @GetMapping("/my-booktalks")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "개설한 북토크 조회")
-    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@AuthenticationPrincipal User user) {
+    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByEmail(user.getUsername()));
     }
 
     @PostMapping("/booktalk")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "북토크 생성")
-    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto));
+    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Parameter @Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto, @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto, user.getUsername()));
     }
 
     @PatchMapping("/booktalk/{booktalkId}")

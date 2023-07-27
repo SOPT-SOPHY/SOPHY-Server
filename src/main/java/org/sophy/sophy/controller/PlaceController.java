@@ -10,6 +10,8 @@ import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.PlaceService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,8 +27,8 @@ public class PlaceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "공간 생성")
-    public ApiResponseDto<PlaceResponseDto> createPlace(@Valid @ModelAttribute PlaceRequestDto placeRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.CREATE_PLACE_SUCCESS, placeService.createPlace(placeRequestDto));
+    public ApiResponseDto<PlaceResponseDto> createPlace(@Valid @ModelAttribute PlaceRequestDto placeRequestDto, @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.CREATE_PLACE_SUCCESS, placeService.createPlace(placeRequestDto, user.getUsername()));
     }
 
     @GetMapping("/search/{city}")
