@@ -34,13 +34,13 @@ public class AuthController {
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "회원가입")
-    public ApiResponseDto<MemberResponseDto> signup(@Parameter @RequestBody @Valid MemberRequestDto memberRequestDto) {
+    public ApiResponseDto<MemberResponseDto> signup(@RequestBody @Valid MemberRequestDto memberRequestDto) {
         return ApiResponseDto.success(SuccessStatus.SIGNUP_SUCCESS, authService.signup(memberRequestDto));
     }
 
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ApiResponseDto<TokenDto> login(@Parameter @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+    public ApiResponseDto<TokenDto> login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 
@@ -70,7 +70,7 @@ public class AuthController {
 
     @PostMapping("/dupl-check")
     @Operation(summary = "이메일 중복 체크")
-    public ApiResponseDto<String> duplCheck(@Parameter @RequestBody DuplCheckDto email) {
+    public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS, authService.duplCheck(email));
     }
 

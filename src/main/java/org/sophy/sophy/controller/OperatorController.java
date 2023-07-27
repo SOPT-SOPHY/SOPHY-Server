@@ -30,7 +30,7 @@ public class OperatorController {
 
     @PostMapping("/{booktalkId}")
     @Operation(summary = "북토크 승인")
-    public void approveBooktalk(@Parameter(description = "북토크 Id", example = "1")@PathVariable(name = "booktalkId") Long booktalkId) {
+    public void approveBooktalk(@PathVariable(name = "booktalkId") Long booktalkId) {
         operatorService.approveBooktalk(booktalkId);
     }
 }

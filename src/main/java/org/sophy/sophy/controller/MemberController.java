@@ -43,14 +43,14 @@ public class MemberController {
     @PostMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "추가 정보 입력")
-    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @Parameter @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
+    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
         return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS, memberService.postAdditionalInfo(user.getUsername(), memberAdditionalInfoDto));
     }
 
     @PatchMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "내 정보 수정")
-    public ApiResponseDto<MyInfoDto> patchInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @Parameter @RequestBody @Valid MyInfoDto myInfoDto) {
+    public ApiResponseDto<MyInfoDto> patchInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody @Valid MyInfoDto myInfoDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(user.getUsername(), myInfoDto));
     }
 

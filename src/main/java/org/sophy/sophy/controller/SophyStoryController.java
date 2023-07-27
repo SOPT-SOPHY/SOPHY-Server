@@ -24,7 +24,7 @@ public class SophyStoryController {
     private final SophyStoryService sophyStoryService;
 
     @GetMapping //소피스토리 연, 월로 조회
-    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(@Parameter(hidden = true) @AuthenticationPrincipal User user, @Parameter @RequestBody SophyStoryRequestDto sophyStoryRequestDto) {
+    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody SophyStoryRequestDto sophyStoryRequestDto) {
         return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS, sophyStoryService.getMySophyStory(user.getUsername(), sophyStoryRequestDto));
     }
 

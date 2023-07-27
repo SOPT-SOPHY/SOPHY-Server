@@ -41,28 +41,28 @@ public class AuthorController { private final MemberService memberService;
     @PostMapping("/booktalk")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "북토크 생성")
-    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Parameter @Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto, user.getUsername()));
     }
 
     @PatchMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 수정")
-    public ApiResponseDto<BooktalkUpdateDto> updateBooktalk(@Parameter(description = "북토크 Id", example = "1") @PathVariable("booktalkId") Long booktalkId, @Parameter @Valid @RequestBody BooktalkUpdateDto booktalkUpdateDto) {
+    public ApiResponseDto<BooktalkUpdateDto> updateBooktalk(@PathVariable("booktalkId") Long booktalkId, @Valid @RequestBody BooktalkUpdateDto booktalkUpdateDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_BOOKTALK_SUCCESS, booktalkService.updateBooktalk(booktalkId, booktalkUpdateDto));
     }
 
     @DeleteMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 삭제")
-    public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(@Parameter(description = "북토크 Id", example = "1") @PathVariable("booktalkId") Long booktalkId) {
+    public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.deleteBooktalk(booktalkId));
     }
 
     @PostMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 완료")
-    public ApiResponseDto<CompletedBooktalk> completeBooktalk(@Parameter(description = "북토크 Id", example = "1") @PathVariable("booktalkId") Long booktalkId) {
+    public ApiResponseDto<CompletedBooktalk> completeBooktalk(@PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.completeBooktalk(booktalkId));
     }
 }

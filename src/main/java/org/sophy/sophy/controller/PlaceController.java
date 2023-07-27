@@ -30,7 +30,7 @@ public class PlaceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "공간 생성")
-    public ApiResponseDto<PlaceResponseDto> createPlace(@Parameter @Valid @ModelAttribute PlaceRequestDto placeRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+    public ApiResponseDto<PlaceResponseDto> createPlace(@Valid @ModelAttribute PlaceRequestDto placeRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.CREATE_PLACE_SUCCESS, placeService.createPlace(placeRequestDto, user.getUsername()));
     }
 
