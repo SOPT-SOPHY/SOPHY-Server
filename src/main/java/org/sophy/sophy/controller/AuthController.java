@@ -40,7 +40,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ApiResponseDto<TokenDto> login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+    public ApiResponseDto<TokenDto> login(@Parameter @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
         return ApiResponseDto.success(SuccessStatus.LOGIN_SUCCESS, authService.login(memberLoginRequestDto));
     }
 

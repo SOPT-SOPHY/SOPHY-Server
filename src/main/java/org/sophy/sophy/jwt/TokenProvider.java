@@ -34,8 +34,8 @@ public class TokenProvider {
     public static final String REFRESH_HEADER = "Refresh";
 
 
-    private static Long ACCESS_TOKEN_EXPIRE_TIME;
-    private static Long REFRESH_TOKEN_EXPIRE_TIME;
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L;
+    private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
     private final Key key;
 
     //빈 생성 때 key 값 세팅
@@ -49,14 +49,11 @@ public class TokenProvider {
     }
 
     //로그인 시
-    public TokenDto generateTokenDto(Authentication authentication, long accessTokenExpiredTime, long refreshTokenExpiredTime) {
+    public TokenDto generateTokenDto(Authentication authentication) {
         //권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-
-        ACCESS_TOKEN_EXPIRE_TIME = accessTokenExpiredTime * 1000;
-        REFRESH_TOKEN_EXPIRE_TIME = refreshTokenExpiredTime * 1000;
         long now = (new Date()).getTime();
 
         //Access Token 생성
