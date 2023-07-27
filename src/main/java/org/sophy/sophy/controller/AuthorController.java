@@ -9,7 +9,6 @@ import org.sophy.sophy.domain.dto.booktalk.response.BooktalkCreateResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeleteResponseDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.service.BooktalkService;
 import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;
@@ -23,16 +22,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/author")
-public class AuthorController {
-    private final MemberRepository memberRepository;
-    private final MemberService memberService;
+public class AuthorController { private final MemberService memberService;
     private final BooktalkService booktalkService;
 
     @GetMapping("/my-booktalks") //개설한 북토크 조회
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@AuthenticationPrincipal User user) {
-        Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
-        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByMemberId(memberId));
+        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByEmail(user.getUsername()));
     }
 
     @PostMapping("/booktalk") //북토크 생성

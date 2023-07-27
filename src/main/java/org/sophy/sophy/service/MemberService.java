@@ -26,8 +26,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public MyPageDto getMyPage(Long memberId) {
-        Member member = memberRepository.getMemberById(memberId);
+    public MyPageDto getMyPage(String email) {
+        Member member = memberRepository.getMemberByEmail(email);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
         if(member.getAuthority().equals(Authority.ROLE_AUTHOR)){
             return MyPageDto.builder()
@@ -35,21 +35,21 @@ public class MemberService {
                     .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
                     .waitingBookTalkCount(member.getUserBookTalkList().size())
                     .completeBookTalkCount(member.getCompletedBookTalkList().size())
-                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
-                    .myBookDtos(getAuthorBooksByMemberId(memberId))
+                    .myPageBooktalkDtos(getBooktalksByMember(member))
+                    .myBookDtos(getAuthorBooksByMember(member))
                     .build();
         } else {
             return MyPageDto.builder()
                     .name(member.getName())
                     .waitingBookTalkCount(member.getUserBookTalkList().size())
                     .completeBookTalkCount(member.getCompletedBookTalkList().size())
-                    .myPageBooktalkDtos(getBooktalksByMemberId(memberId))
+                    .myPageBooktalkDtos(getBooktalksByMember(member))
                     .build();
         }
     }
     @Transactional
-    public MyInfoDto getMyInfo(Long memberId) {
-        Member member = memberRepository.getMemberById(memberId);
+    public MyInfoDto getMyInfo(String email) {
+        Member member = memberRepository.getMemberByEmail(email);
         return MyInfoDto.builder()
                 .email(member.getEmail())
                 .name(member.getName())
@@ -61,22 +61,22 @@ public class MemberService {
                 .build();
     }
     @Transactional
-    public MemberAdditionalInfoDto postAdditionalInfo(Long memberId, MemberAdditionalInfoDto memberAdditionalInfoDto) {
-        Member member = memberRepository.getMemberById(memberId);
+    public MemberAdditionalInfoDto postAdditionalInfo(String email, MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        Member member = memberRepository.getMemberByEmail(email);
         member.setAdditionalInfo(memberAdditionalInfoDto);
         return memberAdditionalInfoDto;
     }
 
     @Transactional
-    public MyInfoDto patchMyInfo(Long memberId, MyInfoDto myInfoDto) {
-        Member member = memberRepository.getMemberById(memberId);
+    public MyInfoDto patchMyInfo(String email, MyInfoDto myInfoDto) {
+        Member member = memberRepository.getMemberByEmail(email);
         member.patchMyInfo(myInfoDto);
         return myInfoDto;
     }
 
     @Transactional
-    public List<MyPageBooktalkDto>  getBooktalksByMemberId(Long memberId) { //예정된 북토크 조회 메서드
-        List<MemberBooktalk> userBookTalkList = memberRepository.getMemberById(memberId).getUserBookTalkList();
+    public List<MyPageBooktalkDto> getBooktalksByMember(Member member) { //예정된 북토크 조회 메서드
+        List<MemberBooktalk> userBookTalkList = member.getUserBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         userBookTalkList.forEach(memberBooktalk -> {
             Booktalk booktalk = memberBooktalk.getBooktalk();
@@ -99,8 +99,8 @@ public class MemberService {
     }
     
     @Transactional
-    public List<MyPageBooktalkDto> getAuthorBooktalksByMemberId(Long memberId) { //작가가 개최한 북토크 조회 메서드
-        List<Booktalk> authorBookTalkList = memberRepository.getMemberById(memberId).getAuthorProperty().getMyBookTalkList();
+    public List<MyPageBooktalkDto> getAuthorBooktalksByEmail(String email) { //작가가 개최한 북토크 조회 메서드
+        List<Booktalk> authorBookTalkList = memberRepository.getMemberByEmail(email).getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
@@ -120,8 +120,8 @@ public class MemberService {
     }
 
     @Transactional
-    public List<MyBookDto> getAuthorBooksByMemberId(Long memberId) { //작가가 쓴 책 조회 메서드
-        List<Book> authorBookList = memberRepository.getMemberById(memberId).getAuthorProperty().getMyBookList();
+    public List<MyBookDto> getAuthorBooksByMember(Member member) { //작가가 쓴 책 조회 메서드
+        List<Book> authorBookList = member.getAuthorProperty().getMyBookList();
         List<MyBookDto> bookResponseDtoList = new ArrayList<>();
         authorBookList.forEach(book -> {
             bookResponseDtoList.add(MyBookDto.builder()
