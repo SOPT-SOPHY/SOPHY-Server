@@ -1,6 +1,7 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
@@ -21,13 +22,13 @@ public class OperatorController {
 
     @GetMapping
     @Operation(summary = "승인 대기중 북토크 조회")
-    public List<Booktalk> getWaitingBooktalks(@AuthenticationPrincipal User user) {
+    public List<Booktalk> getWaitingBooktalks(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return operatorService.getWaitingBooktalks(user.getUsername());
     }
 
     @PostMapping("/{booktalkId}")
     @Operation(summary = "북토크 승인")
-    public void approveBooktalk(@PathVariable(name = "booktalkId") Long booktalkId) {
+    public void approveBooktalk(@Parameter(description = "북토크 Id", example = "1")@PathVariable(name = "booktalkId") Long booktalkId) {
         operatorService.approveBooktalk(booktalkId);
     }
 }

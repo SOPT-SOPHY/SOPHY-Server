@@ -1,6 +1,7 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -27,13 +28,13 @@ public class PlaceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "공간 생성")
-    public ApiResponseDto<PlaceResponseDto> createPlace(@Valid @ModelAttribute PlaceRequestDto placeRequestDto, @AuthenticationPrincipal User user) {
+    public ApiResponseDto<PlaceResponseDto> createPlace(@Parameter @Valid @ModelAttribute PlaceRequestDto placeRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.CREATE_PLACE_SUCCESS, placeService.createPlace(placeRequestDto, user.getUsername()));
     }
 
     @GetMapping("/search/{city}")
     @Operation(summary = "지역으로 공간 조회")
-    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(@Valid @PathVariable(name = "city") City city) {
+    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(@Parameter(description = "지역 이름", example = "UIJEONGBU_DONG")@Valid @PathVariable(name = "city") City city) {
         return ApiResponseDto.success(SuccessStatus.GET_PLACES_BY_CITY_SUCCESS, placeService.getPlacesByCity(city));
     }
 }
