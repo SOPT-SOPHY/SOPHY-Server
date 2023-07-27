@@ -2,6 +2,7 @@ package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/place")
 @Tag(name = "공간", description = "공간 관련 API docs")
+@SecurityRequirement(name = "JWT Auth")
 public class PlaceController {
     private final PlaceService placeService;
 

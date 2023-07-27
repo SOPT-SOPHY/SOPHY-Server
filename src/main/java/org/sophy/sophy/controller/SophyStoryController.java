@@ -1,6 +1,7 @@
 package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/sophy-story")
 @RequiredArgsConstructor
 @Tag(name = "소피 스토리", description = "소피 스토리 관련 API docs")
+@SecurityRequirement(name = "JWT Auth")
 public class SophyStoryController {
     private final SophyStoryService sophyStoryService;
 

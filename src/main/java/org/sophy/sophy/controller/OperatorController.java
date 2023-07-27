@@ -2,6 +2,7 @@ package org.sophy.sophy.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/operator")
 @Tag(name = "공간 운영자", description = "공간 운영자 관련 API docs")
+@SecurityRequirement(name = "JWT Auth")
 public class OperatorController {
 
     private final OperatorService operatorService;
