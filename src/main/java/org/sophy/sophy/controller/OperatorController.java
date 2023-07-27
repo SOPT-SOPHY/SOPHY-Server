@@ -1,5 +1,7 @@
 package org.sophy.sophy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.infrastructure.MemberRepository;
@@ -13,19 +15,22 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/operator")
+@Tag(name = "공간 운영자", description = "공간 운영자 관련 API docs")
 public class OperatorController {
 
     private final OperatorService operatorService;
     private final MemberRepository memberRepository;
 
     @GetMapping
-    public List<Booktalk> getWaitingBooktalks(@AuthenticationPrincipal User user) { //승인 대기중 북토크 조회
+    @Operation(summary = "승인 대기중 북토크 조회")
+    public List<Booktalk> getWaitingBooktalks(@AuthenticationPrincipal User user) {
         Long memberId = memberRepository.getMemberByEmail(user.getUsername()).getId();
         return operatorService.getWaitingBooktalks(memberId);
     }
 
     @PostMapping("/{booktalkId}")
-    public void approveBooktalk(@PathVariable(name = "booktalkId") Long booktalkId) { //북토크 승인
+    @Operation(summary = "북토크 승인")
+    public void approveBooktalk(@PathVariable(name = "booktalkId") Long booktalkId) {
         operatorService.approveBooktalk(booktalkId);
     }
 }

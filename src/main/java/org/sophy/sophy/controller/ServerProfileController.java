@@ -1,5 +1,6 @@
 package org.sophy.sophy.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 
 @RestController
 @RequiredArgsConstructor
+@Hidden
 public class ServerProfileController {
 
     private final Environment env;

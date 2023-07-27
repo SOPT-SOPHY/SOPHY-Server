@@ -1,5 +1,6 @@
 package org.sophy.sophy.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.SophyStoryDto;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sophy-story")
 @RequiredArgsConstructor
+@Tag(name = "소피 스토리", description = "소피 스토리 관련 API docs")
 public class SophyStoryController {
     private final SophyStoryService sophyStoryService;
     private final MemberRepository memberRepository;
