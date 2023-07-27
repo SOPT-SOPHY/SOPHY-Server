@@ -3,13 +3,13 @@ package org.sophy.sophy.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
 import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
-import org.sophy.sophy.controller.dto.request.TokenRequestDto;
 import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.SuccessStatus;
@@ -58,8 +58,14 @@ public class AuthController {
 
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발행")
-    public ApiResponseDto<TokenDto> reissue(@Parameter @RequestBody TokenRequestDto tokenRequestDto) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
-        return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));
+    @SecurityRequirements({
+            @SecurityRequirement(name = "JWT Auth"),
+            @SecurityRequirement(name = "Refresh")
+    })
+    public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
+        String accessToken = tokenProvider.resolveAccessToken(request);
+        String refreshToken = tokenProvider.resolveRefreshToken(request);
+        return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(accessToken, refreshToken));
     }
 
     @PostMapping("/dupl-check")

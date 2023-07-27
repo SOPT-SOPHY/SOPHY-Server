@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
 import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
-import org.sophy.sophy.controller.dto.request.TokenRequestDto;
 import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.domain.Member;
@@ -104,22 +103,22 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDto reissue(TokenRequestDto tokenRequestDto){
+    public TokenDto reissue(String accessToken, String refreshToken){
         // 1. Refresh Token 검증
-        tokenProvider.validateToken(tokenRequestDto.getRefreshToken());
+        tokenProvider.validateToken(refreshToken);
 
         // 2. Access Token 에서 Member ID(user email) 가져오기
-        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
+        String existRefreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
 
         //로그아웃 되어 Redis에 RefreshToken이 존재하지 않는 경우 처리
-        if (ObjectUtils.isEmpty(refreshToken)) {
+        if (ObjectUtils.isEmpty(existRefreshToken)) {
             throw new LogoutRefreshtokenException(ErrorStatus.LOGOUT_REFRESH_TOKEN_EXCEPTION, ErrorStatus.LOGOUT_REFRESH_TOKEN_EXCEPTION.getMessage());
         }
 
         // 4. Refresh Token 일치하는지 검사
-        if(!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
+        if(!existRefreshToken.equals(refreshToken)) {
             throw new RuntimeException("Refresh Token의 정보가 일치하지 않습니다.");
         }
 
