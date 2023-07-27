@@ -46,7 +46,8 @@ public class AuthController {
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃")
-    public ApiResponseDto<String> logout(HttpServletRequest request) {
+    @SecurityRequirement(name = "JWT Auth")
+    public ApiResponseDto<String> logout(@Parameter(hidden = true) HttpServletRequest request) {
         /**
          * HttpServletRequest나 HttpServletResponse 객체가 Service 계층으로 넘어가는 것은 좋지 않다.
          * request, response는 컨트롤러 계층에서 사용되는 객체이며, Service 계층이 request와 response를 알 필요가 없다.
@@ -57,7 +58,7 @@ public class AuthController {
 
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발행")
-    public ApiResponseDto<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
+    public ApiResponseDto<TokenDto> reissue(@Parameter @RequestBody TokenRequestDto tokenRequestDto) { //추후 토큰 만료시간 설정하고 Refresh 토큰 헤더로 받게 변경 필요
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS, authService.reissue(tokenRequestDto));
     }
 
@@ -70,7 +71,7 @@ public class AuthController {
     @PostMapping("/withdrawal")
     @Operation(summary = "회원 탈퇴")
     @SecurityRequirement(name = "JWT Auth")
-    public ApiResponseDto<String> withdrawal(@AuthenticationPrincipal User user) {
+    public ApiResponseDto<String> withdrawal(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.WITHDRAWAL_SUCCESS, authService.withdrawal(user.getUsername()));
     }
 }
