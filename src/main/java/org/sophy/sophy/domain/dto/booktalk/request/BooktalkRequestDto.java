@@ -35,12 +35,10 @@ public class BooktalkRequestDto {
     @Schema(description = "책 Id", example = "1")
     private Long bookId;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Schema(description = "북토크 시작시간", example = "2023-08-12 15:00:00")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startDate;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Schema(description = "북토크 종료시간", example = "2023-08-12 17:00:00")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
     @NotNull
     @Schema(description = "북토크 참가 인원", example = "8")
