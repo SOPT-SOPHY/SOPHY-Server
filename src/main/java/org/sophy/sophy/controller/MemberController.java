@@ -24,34 +24,45 @@ import javax.validation.Valid;
 @Tag(name = "나의 소피", description = "마이페이지 관련 API docs")
 @SecurityRequirement(name = "JWT Auth")
 public class MemberController {
+
     private final MemberService memberService;
 
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "마이페이지 조회")
-    public ApiResponseDto<MyPageDto> getMyPage(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyPage(user.getUsername()));
+    public ApiResponseDto<MyPageDto> getMyPage(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
+            memberService.getMyPage(user.getUsername()));
     }
 
     @GetMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "내 정보 조회")
-    public ApiResponseDto<MyInfoDto> getInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyInfo(user.getUsername()));
+    public ApiResponseDto<MyInfoDto> getInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
+            memberService.getMyInfo(user.getUsername()));
     }
 
     @PostMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "추가 정보 입력")
-    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
-        return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS, memberService.postAdditionalInfo(user.getUsername(), memberAdditionalInfoDto));
+    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS,
+            memberService.postAdditionalInfo(user.getUsername(), memberAdditionalInfoDto));
     }
 
     @PatchMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "내 정보 수정")
-    public ApiResponseDto<MyInfoDto> patchInfo(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody @Valid MyInfoDto myInfoDto) {
-        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(user.getUsername(), myInfoDto));
+    public ApiResponseDto<MyInfoDto> patchInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @RequestBody @Valid MyInfoDto myInfoDto) {
+        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS,
+            memberService.patchMyInfo(user.getUsername(), myInfoDto));
     }
 
 }

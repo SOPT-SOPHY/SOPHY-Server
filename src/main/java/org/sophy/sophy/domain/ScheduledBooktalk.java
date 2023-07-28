@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ScheduledBooktalk {
+
     @Id
     @GeneratedValue
     @Column(name = "scheduled_booktalk_id")

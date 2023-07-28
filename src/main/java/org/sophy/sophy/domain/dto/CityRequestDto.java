@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 public class CityRequestDto {
+
     @NotNull
     private City city;
 }

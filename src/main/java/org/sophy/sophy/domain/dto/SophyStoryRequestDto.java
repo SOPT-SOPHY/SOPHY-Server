@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class SophyStoryRequestDto {
+
     @Schema(description = "연도", example = "2023")
     private Integer year;
     @Schema(description = "월", example = "7")

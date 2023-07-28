@@ -29,6 +29,7 @@ import static org.sophy.sophy.jwt.JwtFilter.BEARER_PREFIX;
 @Slf4j
 @Component
 public class TokenProvider {
+
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
     public static final String REFRESH_HEADER = "Refresh";
@@ -52,31 +53,31 @@ public class TokenProvider {
     public TokenDto generateTokenDto(Authentication authentication) {
         //권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
         long now = (new Date()).getTime();
 
         //Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName()) // payload "sub" : "name"
-                .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
-                .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+            .setSubject(authentication.getName()) // payload "sub" : "name"
+            .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
+            .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
+            .signWith(key, SignatureAlgorithm.HS512)
+            .compact();
 
         //Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+            .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+            .signWith(key, SignatureAlgorithm.HS512)
+            .compact();
 
         return TokenDto.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
-                .refreshToken(refreshToken)
-                .build();
+            .grantType(BEARER_TYPE)
+            .accessToken(accessToken)
+            .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+            .refreshToken(refreshToken)
+            .build();
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -89,9 +90,9 @@ public class TokenProvider {
 
         //클레임에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+            Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
@@ -102,10 +103,10 @@ public class TokenProvider {
         try {
             //parser builder를 만들고 accesstoken을 넣어 claim(본문 내용) 획득
             return Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(accessToken)
-                    .getBody();
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
@@ -115,9 +116,9 @@ public class TokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
@@ -133,7 +134,8 @@ public class TokenProvider {
 
     public Long getExpiration(String accessToken) {
         //access Token 남은 유효시간
-        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build()
+            .parseClaimsJws(accessToken).getBody().getExpiration();
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
     }

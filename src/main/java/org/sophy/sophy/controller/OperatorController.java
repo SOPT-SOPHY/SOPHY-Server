@@ -24,7 +24,8 @@ public class OperatorController {
 
     @GetMapping
     @Operation(summary = "승인 대기중 북토크 조회")
-    public List<Booktalk> getWaitingBooktalks(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
+    public List<Booktalk> getWaitingBooktalks(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return operatorService.getWaitingBooktalks(user.getUsername());
     }
 

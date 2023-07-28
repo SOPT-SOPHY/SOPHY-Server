@@ -22,25 +22,30 @@ public class SophyStoryService {
     private final MemberRepository memberRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
 
-    public List<SophyStoryDto> getMySophyStory(String email, SophyStoryRequestDto sophyStoryRequestDto) { //연, 월 선택했을 때 반환하는 소피스토리
+    public List<SophyStoryDto> getMySophyStory(String email,
+        SophyStoryRequestDto sophyStoryRequestDto) { //연, 월 선택했을 때 반환하는 소피스토리
         Member member = memberRepository.getMemberByEmail(email);
 
-        LocalDate targetDate = LocalDate.of(sophyStoryRequestDto.getYear(), sophyStoryRequestDto.getMonth(), 1);
-        List<CompletedBooktalk> completedBooktalkList = completedBooktalkRepository.findAllByMemberAndCreateAtBetween(member //선택한 연 월에 해당되는 북토크 조회
-                , LocalDateTime.of(targetDate
-                        , LocalTime.of(0, 0, 0))
-                , LocalDateTime.of(LocalDate.of(sophyStoryRequestDto.getYear(), sophyStoryRequestDto.getMonth(), targetDate.lengthOfMonth())
-                        , LocalTime.of(23, 59, 59)));
+        LocalDate targetDate = LocalDate.of(sophyStoryRequestDto.getYear(),
+            sophyStoryRequestDto.getMonth(), 1);
+        List<CompletedBooktalk> completedBooktalkList = completedBooktalkRepository.findAllByMemberAndCreateAtBetween(
+            member //선택한 연 월에 해당되는 북토크 조회
+            , LocalDateTime.of(targetDate
+                , LocalTime.of(0, 0, 0))
+            , LocalDateTime.of(
+                LocalDate.of(sophyStoryRequestDto.getYear(), sophyStoryRequestDto.getMonth(),
+                    targetDate.lengthOfMonth())
+                , LocalTime.of(23, 59, 59)));
 
         List<SophyStoryDto> sophyStoryDtos = new ArrayList<>();
         completedBooktalkList.forEach(completedBooktalk -> {
             sophyStoryDtos.add(SophyStoryDto.builder()
-                    .title(completedBooktalk.getTitle())
-                    .bookName(completedBooktalk.getBookName())
-                    .authorName(completedBooktalk.getAuthorName())
-                    .booktalkDate(completedBooktalk.getBooktalkDate())
-                    .placeName(completedBooktalk.getPlaceName())
-                    .build());
+                .title(completedBooktalk.getTitle())
+                .bookName(completedBooktalk.getBookName())
+                .authorName(completedBooktalk.getAuthorName())
+                .booktalkDate(completedBooktalk.getBooktalkDate())
+                .placeName(completedBooktalk.getPlaceName())
+                .build());
         });
         return sophyStoryDtos;
     }
@@ -53,13 +58,13 @@ public class SophyStoryService {
 
         completedBooktalkList.forEach(completedBooktalk -> {
             sophyStoryDtos.add(SophyStoryDto.builder()
-                    .title(completedBooktalk.getTitle())
-                    .bookName(completedBooktalk.getBookName())
-                    .authorName(completedBooktalk.getAuthorName())
-                    .booktalkDate(completedBooktalk.getBooktalkDate())
-                    .placeName(completedBooktalk.getPlaceName())
-                    .bookCategory(completedBooktalk.getBookCategory())
-                    .build());
+                .title(completedBooktalk.getTitle())
+                .bookName(completedBooktalk.getBookName())
+                .authorName(completedBooktalk.getAuthorName())
+                .booktalkDate(completedBooktalk.getBooktalkDate())
+                .placeName(completedBooktalk.getPlaceName())
+                .bookCategory(completedBooktalk.getBookCategory())
+                .build());
         });
         return sophyStoryDtos;
     }

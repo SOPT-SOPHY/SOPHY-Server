@@ -1,6 +1,8 @@
 package org.sophy.sophy.domain.dto.place.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +11,10 @@ import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.enumerate.City;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaceRequestDto {
+
     @NotNull
     @Schema(description = "지역 이름", example = "UIJEONGBU_DONG")
     private City city;
@@ -34,12 +34,12 @@ public class PlaceRequestDto {
 
     public Place toPlace(Member member, String placeImageUrl) {
         return Place.builder()
-                .city(city)
-                .member(member)
-                .name(name)
-                .address(address)
-                .maximum(maximum)
-                .placeImage(placeImageUrl)
-                .build();
+            .city(city)
+            .member(member)
+            .name(name)
+            .address(address)
+            .maximum(maximum)
+            .placeImage(placeImageUrl)
+            .build();
     }
 }

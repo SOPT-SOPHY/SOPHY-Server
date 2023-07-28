@@ -15,18 +15,21 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ControllerExceptionAdvice {
+
     /*
     400 BAD_REQUEST
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ApiResponseDto handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+    protected ApiResponseDto handleMethodArgumentNotValidException(
+        final MethodArgumentNotValidException e) {
         return ApiResponseDto.error(ErrorStatus.VALIDATION_REQUEST_MISSING_EXCEPTION);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RedisCommandExecutionException.class)
-    protected ApiResponseDto handleRedisCommandExecutionException(final RedisCommandExecutionException e) {
+    protected ApiResponseDto handleRedisCommandExecutionException(
+        final RedisCommandExecutionException e) {
         return ApiResponseDto.error(ErrorStatus.INVALID_TOKEN_INFO_EXCEPTION);
     }
 
@@ -54,6 +57,6 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(SophyException.class)
     protected ResponseEntity<ApiResponseDto> handleSophyException(SophyException e) {
         return ResponseEntity.status(e.getHttpStatus())
-                .body(ApiResponseDto.error(e.getErrorStatus(), e.getMessage()));
+            .body(ApiResponseDto.error(e.getErrorStatus(), e.getMessage()));
     }
 }

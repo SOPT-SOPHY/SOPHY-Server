@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book {
+
     @Id
     @GeneratedValue
     @Column(name = "book_id")

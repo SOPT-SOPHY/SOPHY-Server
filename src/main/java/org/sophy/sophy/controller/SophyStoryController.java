@@ -21,15 +21,21 @@ import java.util.List;
 @Tag(name = "소피 스토리", description = "소피 스토리 관련 API docs")
 @SecurityRequirement(name = "JWT Auth")
 public class SophyStoryController {
+
     private final SophyStoryService sophyStoryService;
 
     @GetMapping //소피스토리 연, 월로 조회
-    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestBody SophyStoryRequestDto sophyStoryRequestDto) {
-        return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS, sophyStoryService.getMySophyStory(user.getUsername(), sophyStoryRequestDto));
+    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @RequestBody SophyStoryRequestDto sophyStoryRequestDto) {
+        return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS,
+            sophyStoryService.getMySophyStory(user.getUsername(), sophyStoryRequestDto));
     }
 
     @GetMapping("/all") //소피스토리 모두 조회
-    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS, sophyStoryService.getMySophyStory(user.getUsername()));
+    public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS,
+            sophyStoryService.getMySophyStory(user.getUsername()));
     }
 }

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlaceService {
+
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
     private final S3Service s3Service;
@@ -30,11 +31,13 @@ public class PlaceService {
     public PlaceResponseDto createPlace(PlaceRequestDto placeRequestDto, String email) {
         Member member = memberRepository.getMemberByEmail(email);
         if (!member.getAuthority().equals(Authority.ROLE_OPERATOR)) {
-            throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
+            throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION,
+                ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
         String placeImageUrl = null;
-        if (!placeRequestDto.getPlaceImage().isEmpty())
+        if (!placeRequestDto.getPlaceImage().isEmpty()) {
             placeImageUrl = s3Service.uploadImage(placeRequestDto.getPlaceImage(), "image");
+        }
         Place place = placeRequestDto.toPlace(member, placeImageUrl);
         return PlaceResponseDto.of(placeRepository.save(place));
     }
@@ -43,11 +46,11 @@ public class PlaceService {
         //의정부 시이면 전체 조회
         if (city == City.UIJEONGBU_SI) {
             return placeRepository.findAll().stream()
-                    .map(PlaceResponseDto::of)
-                    .collect(Collectors.toList());
-        }
-        return placeRepository.findAllByCity(city).stream()
                 .map(PlaceResponseDto::of)
                 .collect(Collectors.toList());
+        }
+        return placeRepository.findAllByCity(city).stream()
+            .map(PlaceResponseDto::of)
+            .collect(Collectors.toList());
     }
 }

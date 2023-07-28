@@ -1,19 +1,19 @@
 package org.sophy.sophy.domain.dto.booktalk;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkUpdateDto {
+
     @NotNull
     @Schema(description = "장소 Id", example = "1")
     private Long placeId;

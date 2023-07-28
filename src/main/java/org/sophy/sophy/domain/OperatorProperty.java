@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class OperatorProperty {
+
     @Id
     @GeneratedValue
     @Column(name = "operator_property_id")

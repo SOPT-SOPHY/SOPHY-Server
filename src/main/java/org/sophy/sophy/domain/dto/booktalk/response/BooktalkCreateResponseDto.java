@@ -8,6 +8,7 @@ import org.sophy.sophy.domain.Booktalk;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkCreateResponseDto {
+
     private Long booktalkId;
     private String title;
 

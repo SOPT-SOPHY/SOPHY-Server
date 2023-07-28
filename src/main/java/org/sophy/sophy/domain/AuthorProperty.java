@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class AuthorProperty {
+
     @Id
     @GeneratedValue
     @Column(name = "author_property_id")

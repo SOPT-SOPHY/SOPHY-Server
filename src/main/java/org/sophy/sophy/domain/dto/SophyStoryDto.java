@@ -1,16 +1,16 @@
 package org.sophy.sophy.domain.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Builder
 @AllArgsConstructor
 public class SophyStoryDto {
+
     private String title;
     private String bookName;
     private String authorName;

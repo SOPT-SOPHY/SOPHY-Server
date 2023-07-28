@@ -12,29 +12,29 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @SecuritySchemes({
-        @SecurityScheme(
-                name = "Refresh",
-                type = SecuritySchemeType.APIKEY,
-                in = SecuritySchemeIn.HEADER
-        ),
-        @SecurityScheme(
-                name = "JWT Auth",
-                type = SecuritySchemeType.HTTP,
-                bearerFormat = "JWT",
-                scheme = "bearer"
-        )
+    @SecurityScheme(
+        name = "Refresh",
+        type = SecuritySchemeType.APIKEY,
+        in = SecuritySchemeIn.HEADER
+    ),
+    @SecurityScheme(
+        name = "JWT Auth",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer"
+    )
 })
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info()
-                .title("Sophy")
-                .description("Sophy Server API 문서")
-                .version("1.0.0");
+            .title("Sophy")
+            .description("Sophy Server API 문서")
+            .version("1.0.0");
 
         return new OpenAPI()
-                .components(new Components())
-                .info(info);
+            .components(new Components())
+            .info(info);
     }
 }

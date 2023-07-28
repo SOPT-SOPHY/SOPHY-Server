@@ -22,6 +22,7 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE booktalk SET deleted = true WHERE booktalk_id=?")
 @Where(clause = "deleted=false")
 public class Booktalk extends AuditingTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booktalk_id")
@@ -83,6 +84,7 @@ public class Booktalk extends AuditingTimeEntity {
     private BooktalkStatus booktalkStatus;
 
     @OneToMany(mappedBy = "booktalk", cascade = CascadeType.ALL, orphanRemoval = true)
+    //개념적으로 부모를 제거하면 자식은 고아가 됨 -> 고아 객체 제거 기능을 활성화하면 자식도 함께 제거
     private List<MemberBooktalk> participantList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -119,7 +121,10 @@ public class Booktalk extends AuditingTimeEntity {
     }
 
     @Builder
-    public Booktalk(Place place, String title, String booktalkImageUrl, Book book, Member member, BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum, Integer participationFee, PreliminaryInfo preliminaryInfo, String description, BooktalkStatus booktalkStatus) {
+    public Booktalk(Place place, String title, String booktalkImageUrl, Book book, Member member,
+        BookCategory bookCategory, LocalDateTime startDate, LocalDateTime endDate, Integer maximum,
+        Integer participationFee, PreliminaryInfo preliminaryInfo, String description,
+        BooktalkStatus booktalkStatus) {
         setPlace(place);
         this.title = title;
         this.booktalkImageUrl = booktalkImageUrl;

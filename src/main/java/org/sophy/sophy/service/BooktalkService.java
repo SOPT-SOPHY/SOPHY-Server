@@ -24,6 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BooktalkService {
+
     private final BooktalkRepository booktalkRepository;
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
@@ -33,16 +34,20 @@ public class BooktalkService {
 
     // 북토크 생성
     @Transactional
-    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto, String email) {
+    public BooktalkCreateResponseDto createBooktalk(BooktalkRequestDto booktalkRequestDto,
+        String email) {
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberByEmail(email);
         if (!member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
-            throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION, ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
+            throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION,
+                ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }
 
         String booktalkImageUrl = null;
-        if (!booktalkRequestDto.getBooktalkImage().isEmpty())
-            booktalkImageUrl = s3Service.uploadImage(booktalkRequestDto.getBooktalkImage(), "image");
+        if (!booktalkRequestDto.getBooktalkImage().isEmpty()) {
+            booktalkImageUrl = s3Service.uploadImage(booktalkRequestDto.getBooktalkImage(),
+                "image");
+        }
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member, booktalkImageUrl);
         //작가 정보에 북토크 업데이트
         member.getAuthorProperty().getMyBookTalkList().add(booktalk);
@@ -53,13 +58,15 @@ public class BooktalkService {
     @Transactional
     public BooktalkUpdateDto updateBooktalk(Long booktalkId, BooktalkUpdateDto booktalkUpdateDto) {
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
-        booktalk.patchBooktalk(booktalkUpdateDto, placeRepository.getPlaceById(booktalkUpdateDto.getPlaceId()));
+        booktalk.patchBooktalk(booktalkUpdateDto,
+            placeRepository.getPlaceById(booktalkUpdateDto.getPlaceId()));
         return booktalkUpdateDto;
     }
 
     // 북토크 삭제
     @Transactional
-    public BooktalkDeleteResponseDto deleteBooktalk(Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
+    public BooktalkDeleteResponseDto deleteBooktalk(
+        Long booktalkId) { // 수정필요 -> 테이블 외래키 고려하여 관련된 엔티티 전부 삭제해야 함
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         //TODO soft delete?
         //공간이 거절 됐거나 공간 매칭중일 때만 삭제가능
@@ -77,15 +84,19 @@ public class BooktalkService {
 
     // 북토크 참여 신청
     @Transactional
-    public void postBooktalkParticipation(BooktalkParticipationRequestDto booktalkParticipationRequestDto, String email) {
+    public void postBooktalkParticipation(
+        BooktalkParticipationRequestDto booktalkParticipationRequestDto, String email) {
         Member member = memberRepository.getMemberByEmail(email);
-        Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkParticipationRequestDto.getBooktalkId());
+        Booktalk booktalk = booktalkRepository.getBooktalkById(
+            booktalkParticipationRequestDto.getBooktalkId());
         //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드 필요할듯
         if (booktalk.getMaximum() == booktalk.getParticipantList().size()) {
-            throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION, ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION.getMessage());
+            throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION,
+                ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION.getMessage());
         }
         // 복합키?
-        MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member);
+        MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk,
+            member);
         //연관 객체 변경 ( member 객체 북토크 수 표시하는 메서드 리팩터 필요 )
         booktalk.getParticipantList().add(memberBooktalk);
         member.getUserBookTalkList().add(memberBooktalk);
@@ -99,11 +110,11 @@ public class BooktalkService {
         List<BooktalkDeadlineUpcomingDto> booktalkList = new ArrayList<>();
         placeList.forEach(place -> {
             place.getBooktalkList().forEach(booktalk -> {
-                        // 모집중인 북토크만 추가
-                        if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                            booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
-                        }
+                    // 모집중인 북토크만 추가
+                    if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
+                        booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
                     }
+                }
             );
         });
 
@@ -144,22 +155,9 @@ public class BooktalkService {
     public CompletedBooktalk completeBooktalk(Long booktalkId) { //작가가 자신의 북토크를 완료상태로 변경하는 메서드
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
-        for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){ //참가 인원들 소피스토리 세팅
+        for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
             CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-                    .title(booktalk.getTitle())
-                    .bookName(booktalk.getBook().getTitle())
-                    .authorName(booktalk.getMember().getName())
-                    .booktalkDate(booktalk.getEndDate())
-                    .placeName(booktalk.getPlace().getName())
-                    .bookCategory(booktalk.getBookCategory())
-                    .build();
-            completedBooktalkRepository.save(completedBooktalk);
-            member.getCompletedBookTalkList().add(completedBooktalk);
-            completedBooktalk.setMember(member);
-        }
-        Member member = booktalk.getMember(); //작가 소피스토리 세팅
-        CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
                 .title(booktalk.getTitle())
                 .bookName(booktalk.getBook().getTitle())
                 .authorName(booktalk.getMember().getName())
@@ -167,6 +165,19 @@ public class BooktalkService {
                 .placeName(booktalk.getPlace().getName())
                 .bookCategory(booktalk.getBookCategory())
                 .build();
+            completedBooktalkRepository.save(completedBooktalk);
+            member.getCompletedBookTalkList().add(completedBooktalk);
+            completedBooktalk.setMember(member);
+        }
+        Member member = booktalk.getMember(); //작가 소피스토리 세팅
+        CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
+            .title(booktalk.getTitle())
+            .bookName(booktalk.getBook().getTitle())
+            .authorName(booktalk.getMember().getName())
+            .booktalkDate(booktalk.getEndDate())
+            .placeName(booktalk.getPlace().getName())
+            .bookCategory(booktalk.getBookCategory())
+            .build();
         completedBooktalkRepository.save(completedBooktalk);
         member.getCompletedBookTalkList().add(completedBooktalk);
         completedBooktalk.setMember(member);

@@ -19,6 +19,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Schema(description = "회원가입 DTO")
 public class MemberRequestDto {
+
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotNull
     @Schema(description = "유저 아이디(이메일 주소)", example = "sophy@gmail.com")
@@ -31,8 +32,8 @@ public class MemberRequestDto {
 
     @NotBlank
     @Pattern(
-            regexp="(?=.*[0-9])(?=.*[a-zA-Z]).{8,16}",
-            message = "비밀번호는 영문과 숫자가 포함된 8자 ~ 16자의 비밀번호여야 합니다."
+        regexp = "(?=.*[0-9])(?=.*[a-zA-Z]).{8,16}",
+        message = "비밀번호는 영문과 숫자가 포함된 8자 ~ 16자의 비밀번호여야 합니다."
     )
     @Schema(description = "비밀번호", example = "test1234")
     private String password;
@@ -47,13 +48,13 @@ public class MemberRequestDto {
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
-                .email(email)
-                .name(name)
-                .password(passwordEncoder.encode(password))
-                .phoneNum(phoneNum)
-                .marketingAgree(marketingAgree)
-                .authority(Authority.ROLE_USER)
-                .build();
+            .email(email)
+            .name(name)
+            .password(passwordEncoder.encode(password))
+            .phoneNum(phoneNum)
+            .marketingAgree(marketingAgree)
+            .authority(Authority.ROLE_USER)
+            .build();
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {

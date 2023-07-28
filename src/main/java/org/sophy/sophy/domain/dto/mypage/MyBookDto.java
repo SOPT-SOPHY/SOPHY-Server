@@ -9,6 +9,7 @@ import org.sophy.sophy.domain.enumerate.BookCategory;
 @AllArgsConstructor
 @Builder
 public class MyBookDto {
+
     private String title;
     private BookCategory bookCategory;
     private Integer booktalkOpenCount;

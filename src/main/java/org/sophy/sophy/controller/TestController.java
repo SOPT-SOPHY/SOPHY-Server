@@ -12,6 +12,7 @@ public class TestController {
 
     @GetMapping("/test")
     public ApiResponseDto<String> test() {
-        return ApiResponseDto.success(SuccessStatus.TEST_SUCCESS, SuccessStatus.TEST_SUCCESS.getMessage());
+        return ApiResponseDto.success(SuccessStatus.TEST_SUCCESS,
+            SuccessStatus.TEST_SUCCESS.getMessage());
     }
 }

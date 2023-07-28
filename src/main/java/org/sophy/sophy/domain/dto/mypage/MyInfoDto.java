@@ -1,18 +1,18 @@
 package org.sophy.sophy.domain.dto.mypage;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.sophy.sophy.domain.enumerate.City;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
-
 @Getter
 @AllArgsConstructor
 @Builder
 public class MyInfoDto {
+
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String email;

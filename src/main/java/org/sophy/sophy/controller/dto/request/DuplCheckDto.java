@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DuplCheckDto {
+
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotNull
     @Schema(description = "이메일 확인", example = "member@gmail.com")

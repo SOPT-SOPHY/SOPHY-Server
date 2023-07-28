@@ -28,41 +28,55 @@ import java.util.List;
 @RequestMapping("/author")
 @Tag(name = "작가", description = "작가 관련 API docs")
 @SecurityRequirement(name = "JWT Auth")
-public class AuthorController { private final MemberService memberService;
+public class AuthorController {
+
+    private final MemberService memberService;
     private final BooktalkService booktalkService;
 
     @GetMapping("/my-booktalks")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "개설한 북토크 조회")
-    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS, memberService.getAuthorBooktalksByEmail(user.getUsername()));
+    public ApiResponseDto<List<MyPageBooktalkDto>> getAuthorBooktalks(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_AUTHOR_BOOKTALKS_SUCCESS,
+            memberService.getAuthorBooktalksByEmail(user.getUsername()));
     }
 
     @PostMapping("/booktalk")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "북토크 생성")
-    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(@Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS, booktalkService.createBooktalk(booktalkRequestDto, user.getUsername()));
+    public ApiResponseDto<BooktalkCreateResponseDto> createBooktalk(
+        @Valid @ModelAttribute BooktalkRequestDto booktalkRequestDto,
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.CREATE_BOOKTALK_SUCCESS,
+            booktalkService.createBooktalk(booktalkRequestDto, user.getUsername()));
     }
 
     @PatchMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 수정")
-    public ApiResponseDto<BooktalkUpdateDto> updateBooktalk(@PathVariable("booktalkId") Long booktalkId, @Valid @RequestBody BooktalkUpdateDto booktalkUpdateDto) {
-        return ApiResponseDto.success(SuccessStatus.PATCH_BOOKTALK_SUCCESS, booktalkService.updateBooktalk(booktalkId, booktalkUpdateDto));
+    public ApiResponseDto<BooktalkUpdateDto> updateBooktalk(
+        @PathVariable("booktalkId") Long booktalkId,
+        @Valid @RequestBody BooktalkUpdateDto booktalkUpdateDto) {
+        return ApiResponseDto.success(SuccessStatus.PATCH_BOOKTALK_SUCCESS,
+            booktalkService.updateBooktalk(booktalkId, booktalkUpdateDto));
     }
 
     @DeleteMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 삭제")
-    public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(@PathVariable("booktalkId") Long booktalkId) {
-        return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.deleteBooktalk(booktalkId));
+    public ApiResponseDto<BooktalkDeleteResponseDto> deleteBooktalk(
+        @PathVariable("booktalkId") Long booktalkId) {
+        return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS,
+            booktalkService.deleteBooktalk(booktalkId));
     }
 
     @PostMapping("/booktalk/{booktalkId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 완료")
-    public ApiResponseDto<CompletedBooktalk> completeBooktalk(@PathVariable("booktalkId") Long booktalkId) {
-        return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS, booktalkService.completeBooktalk(booktalkId));
+    public ApiResponseDto<CompletedBooktalk> completeBooktalk(
+        @PathVariable("booktalkId") Long booktalkId) {
+        return ApiResponseDto.success(SuccessStatus.DELETE_BOOKTALK_SUCCESS,
+            booktalkService.completeBooktalk(booktalkId));
     }
 }
