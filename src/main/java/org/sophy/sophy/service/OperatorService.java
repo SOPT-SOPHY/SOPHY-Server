@@ -18,14 +18,15 @@ public class OperatorService {
     private final MemberRepository memberRepository;
     private final BooktalkRepository booktalkRepository;
 
-    public List<Booktalk> getWaitingBooktalks(Long memberId) { //승인 대기중 북토크 조회
-        Member member = memberRepository.getMemberById(memberId);
+    public List<Booktalk> getWaitingBooktalks(String email) { //승인 대기중 북토크 조회
+        Member member = memberRepository.getMemberByEmail(email);
         return member.getOperatorProperty().getRecruitScheduledBooktalks();
     }
 
     public void approveBooktalk(Long booktalkId) { //북토크 승인
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
         booktalk.setBooktalkStatus(BooktalkStatus.RECRUITING_EXPECTED);
-        ScheduledBooktalkConverter.getScheduledBooktalk().add(booktalk); //대기중 큐에 승인된 북토크 추가 -> 다음날 오전 10시에 해당 큐를 이용해 상태 변경
+        ScheduledBooktalkConverter.getScheduledBooktalk()
+            .add(booktalk); //대기중 큐에 승인된 북토크 추가 -> 다음날 오전 10시에 해당 큐를 이용해 상태 변경
     }
 }

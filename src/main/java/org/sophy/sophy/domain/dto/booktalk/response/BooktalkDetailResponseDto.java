@@ -1,17 +1,17 @@
 package org.sophy.sophy.domain.dto.booktalk.response;
 
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.Booktalk;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
-
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkDetailResponseDto {
+
     private String booktalkImageUrl;
     private String title;
     private String Author;
@@ -28,19 +28,19 @@ public class BooktalkDetailResponseDto {
 
     public static BooktalkDetailResponseDto of(Booktalk booktalk) {
         return new BooktalkDetailResponseDto(
-                booktalk.getBooktalkImageUrl(),
-                booktalk.getTitle(),
-                booktalk.getMember().getName(),
-                booktalk.getBookCategory(),
-                booktalk.getBook().getTitle(),
-                booktalk.getStartDate(),
-                booktalk.getEndDate(),
-                booktalk.getParticipantList().size(),
-                booktalk.getParticipationFee(),
-                booktalk.getPreliminaryInfo(),
-                booktalk.getDescription(),
-                booktalk.getPlace().getName(),
-                booktalk.getPlace().getAddress()
+            booktalk.getBooktalkImageUrl(),
+            booktalk.getTitle(),
+            booktalk.getMember().getName(),
+            booktalk.getBookCategory(),
+            booktalk.getBook().getTitle(),
+            booktalk.getStartDate(),
+            booktalk.getEndDate(),
+            booktalk.getParticipantList().size(),
+            booktalk.getParticipationFee(),
+            booktalk.getPreliminaryInfo(),
+            booktalk.getDescription(),
+            booktalk.getPlace().getName(),
+            booktalk.getPlace().getAddress()
         );
     }
 }

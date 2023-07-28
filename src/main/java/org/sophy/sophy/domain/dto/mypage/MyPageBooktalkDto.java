@@ -1,16 +1,16 @@
 package org.sophy.sophy.domain.dto.mypage;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 
-import java.time.LocalDateTime;
-
 @Getter
 @AllArgsConstructor
 @Builder
 public class MyPageBooktalkDto {
+
     private Long booktalkId;
     private String booktalkImageUrl;
     private String title;

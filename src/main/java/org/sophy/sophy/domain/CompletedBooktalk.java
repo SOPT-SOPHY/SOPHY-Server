@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CompletedBooktalk extends AuditingTimeEntity{
+public class CompletedBooktalk extends AuditingTimeEntity {
+
     @Id
     @GeneratedValue
     @Column(name = "completed_booktalk_id")
@@ -27,7 +28,8 @@ public class CompletedBooktalk extends AuditingTimeEntity{
     private Member member;
 
     @Builder
-    public CompletedBooktalk(String title, String bookName, String authorName, LocalDateTime booktalkDate, String placeName, BookCategory bookCategory) {
+    public CompletedBooktalk(String title, String bookName, String authorName,
+        LocalDateTime booktalkDate, String placeName, BookCategory bookCategory) {
         this.title = title;
         this.bookName = bookName;
         this.authorName = authorName;

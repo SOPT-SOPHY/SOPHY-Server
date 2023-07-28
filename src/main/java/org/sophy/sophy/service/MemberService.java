@@ -23,45 +23,49 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+
     private final MemberRepository memberRepository;
 
     @Transactional
     public MyPageDto getMyPage(String email) {
         Member member = memberRepository.getMemberByEmail(email);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
-        if(member.getAuthority().equals(Authority.ROLE_AUTHOR)){
+        if (member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
             return MyPageDto.builder()
-                    .name(member.getName())
-                    .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
-                    .waitingBookTalkCount(member.getUserBookTalkList().size())
-                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
-                    .myPageBooktalkDtos(getBooktalksByMember(member))
-                    .myBookDtos(getAuthorBooksByMember(member))
-                    .build();
+                .name(member.getName())
+                .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
+                .waitingBookTalkCount(member.getUserBookTalkList().size())
+                .completeBookTalkCount(member.getCompletedBookTalkList().size())
+                .myPageBooktalkDtos(getBooktalksByMember(member))
+                .myBookDtos(getAuthorBooksByMember(member))
+                .build();
         } else {
             return MyPageDto.builder()
-                    .name(member.getName())
-                    .waitingBookTalkCount(member.getUserBookTalkList().size())
-                    .completeBookTalkCount(member.getCompletedBookTalkList().size())
-                    .myPageBooktalkDtos(getBooktalksByMember(member))
-                    .build();
+                .name(member.getName())
+                .waitingBookTalkCount(member.getUserBookTalkList().size())
+                .completeBookTalkCount(member.getCompletedBookTalkList().size())
+                .myPageBooktalkDtos(getBooktalksByMember(member))
+                .build();
         }
     }
+
     @Transactional
     public MyInfoDto getMyInfo(String email) {
         Member member = memberRepository.getMemberByEmail(email);
         return MyInfoDto.builder()
-                .email(member.getEmail())
-                .name(member.getName())
-                .phoneNum(member.getPhoneNum())
-                .gender(member.getGender())
-                .birth(member.getBirth())
-                .city(member.getMyCity())
-                .marketingAgree(member.getMarketingAgree())
-                .build();
+            .email(member.getEmail())
+            .name(member.getName())
+            .phoneNum(member.getPhoneNum())
+            .gender(member.getGender())
+            .birth(member.getBirth())
+            .city(member.getMyCity())
+            .marketingAgree(member.getMarketingAgree())
+            .build();
     }
+
     @Transactional
-    public MemberAdditionalInfoDto postAdditionalInfo(String email, MemberAdditionalInfoDto memberAdditionalInfoDto) {
+    public MemberAdditionalInfoDto postAdditionalInfo(String email,
+        MemberAdditionalInfoDto memberAdditionalInfoDto) {
         Member member = memberRepository.getMemberByEmail(email);
         member.setAdditionalInfo(memberAdditionalInfoDto);
         return memberAdditionalInfoDto;
@@ -81,40 +85,41 @@ public class MemberService {
         userBookTalkList.forEach(memberBooktalk -> {
             Booktalk booktalk = memberBooktalk.getBooktalk();
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
-                    .booktalkId(booktalk.getId())
-                    .booktalkImageUrl(booktalk.getBooktalkImageUrl())
-                    .title(booktalk.getTitle())
-                    .author(booktalk.getMember().getName())
-                    .startDate(booktalk.getStartDate())
-                    .endDate(booktalk.getEndDate())
-                    .place(booktalk.getPlace().getName())
-                    .participant(booktalk.getParticipantList().size())
-                    .maximum(booktalk.getMaximum())
-                    .booktalkStatus(booktalk.getBooktalkStatus())
-                    .build());
+                .booktalkId(booktalk.getId())
+                .booktalkImageUrl(booktalk.getBooktalkImageUrl())
+                .title(booktalk.getTitle())
+                .author(booktalk.getMember().getName())
+                .startDate(booktalk.getStartDate())
+                .endDate(booktalk.getEndDate())
+                .place(booktalk.getPlace().getName())
+                .participant(booktalk.getParticipantList().size())
+                .maximum(booktalk.getMaximum())
+                .booktalkStatus(booktalk.getBooktalkStatus())
+                .build());
         });
 
         booktalkResponseDtoList.sort(Comparator.comparing(MyPageBooktalkDto::getEndDate));
         return booktalkResponseDtoList;
     }
-    
+
     @Transactional
     public List<MyPageBooktalkDto> getAuthorBooktalksByEmail(String email) { //작가가 개최한 북토크 조회 메서드
-        List<Booktalk> authorBookTalkList = memberRepository.getMemberByEmail(email).getAuthorProperty().getMyBookTalkList();
+        List<Booktalk> authorBookTalkList = memberRepository.getMemberByEmail(email)
+            .getAuthorProperty().getMyBookTalkList();
         List<MyPageBooktalkDto> booktalkResponseDtoList = new ArrayList<>();
         authorBookTalkList.forEach(booktalk -> {
             booktalkResponseDtoList.add(MyPageBooktalkDto.builder()
-                    .booktalkId(booktalk.getId())
-                    .booktalkImageUrl(booktalk.getBooktalkImageUrl())
-                    .title(booktalk.getTitle())
-                    .author(booktalk.getMember().getName())
-                    .startDate(booktalk.getStartDate())
-                    .endDate(booktalk.getEndDate())
-                    .place(booktalk.getPlace().getName())
-                    .participant(booktalk.getParticipantList().size())
-                    .maximum(booktalk.getMaximum())
-                    .booktalkStatus(booktalk.getBooktalkStatus())
-                    .build());
+                .booktalkId(booktalk.getId())
+                .booktalkImageUrl(booktalk.getBooktalkImageUrl())
+                .title(booktalk.getTitle())
+                .author(booktalk.getMember().getName())
+                .startDate(booktalk.getStartDate())
+                .endDate(booktalk.getEndDate())
+                .place(booktalk.getPlace().getName())
+                .participant(booktalk.getParticipantList().size())
+                .maximum(booktalk.getMaximum())
+                .booktalkStatus(booktalk.getBooktalkStatus())
+                .build());
         });
         return booktalkResponseDtoList;
     }
@@ -125,12 +130,12 @@ public class MemberService {
         List<MyBookDto> bookResponseDtoList = new ArrayList<>();
         authorBookList.forEach(book -> {
             bookResponseDtoList.add(MyBookDto.builder()
-                    .title(book.getTitle())
-                    .bookCategory(book.getBookCategory())
-                    .booktalkOpenCount(book.getBooktalkOpenCount())
-                    .isRegistration(book.getIsRegistration())
-                    .bookImageUrl(book.getBookImageUrl())
-                    .build());
+                .title(book.getTitle())
+                .bookCategory(book.getBookCategory())
+                .booktalkOpenCount(book.getBooktalkOpenCount())
+                .isRegistration(book.getIsRegistration())
+                .bookImageUrl(book.getBookImageUrl())
+                .build());
         });
         return bookResponseDtoList;
     }

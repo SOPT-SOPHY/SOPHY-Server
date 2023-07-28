@@ -15,14 +15,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SchedulerService {
+
     private final BooktalkRepository booktalkRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
 
     @Scheduled(fixedDelay = 60000)
     @Transactional
     public void updateBooktalkStatus() { //1분마다 북토크 상태 측정
-        List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING);
-        List<Booktalk> closedBooktalks = booktalkRepository.findAllByBooktalkStatus(BooktalkStatus.RECRUITING_CLOSED);
+        List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatus(
+            BooktalkStatus.RECRUITING);
+        List<Booktalk> closedBooktalks = booktalkRepository.findAllByBooktalkStatus(
+            BooktalkStatus.RECRUITING_CLOSED);
 
         recrutingBooktalks.forEach(booktalk -> {
             booktalkToCompletedBooktalk(booktalk);
@@ -33,25 +36,13 @@ public class SchedulerService {
         });
     }
 
-    private void booktalkToCompletedBooktalk(Booktalk booktalk) { //북토크가 기간이 지났을 때 지난 북토크로 매핑하면서 객체들 상태 및 연관관계 변경
-        if(booktalk.getEndDate().isBefore(LocalDateTime.now())){ //북토크 마감일이 현재시간보다 이전이라면
+    private void booktalkToCompletedBooktalk(
+        Booktalk booktalk) { //북토크가 기간이 지났을 때 지난 북토크로 매핑하면서 객체들 상태 및 연관관계 변경
+        if (booktalk.getEndDate().isBefore(LocalDateTime.now())) { //북토크 마감일이 현재시간보다 이전이라면
             booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
-            for(MemberBooktalk memberBooktalk : booktalk.getParticipantList()){ //참가 인원들 소피스토리 세팅
+            for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
                 Member member = memberBooktalk.getMember();
                 CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-                        .title(booktalk.getTitle())
-                        .bookName(booktalk.getBook().getTitle())
-                        .authorName(booktalk.getMember().getName())
-                        .booktalkDate(booktalk.getEndDate())
-                        .placeName(booktalk.getPlace().getName())
-                        .bookCategory(booktalk.getBookCategory())
-                        .build();
-                completedBooktalkRepository.save(completedBooktalk);
-                member.getCompletedBookTalkList().add(completedBooktalk);
-                completedBooktalk.setMember(member);
-            }
-            Member member = booktalk.getMember(); //작가 소피스토리 세팅
-            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
                     .title(booktalk.getTitle())
                     .bookName(booktalk.getBook().getTitle())
                     .authorName(booktalk.getMember().getName())
@@ -59,6 +50,19 @@ public class SchedulerService {
                     .placeName(booktalk.getPlace().getName())
                     .bookCategory(booktalk.getBookCategory())
                     .build();
+                completedBooktalkRepository.save(completedBooktalk);
+                member.getCompletedBookTalkList().add(completedBooktalk);
+                completedBooktalk.setMember(member);
+            }
+            Member member = booktalk.getMember(); //작가 소피스토리 세팅
+            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
+                .title(booktalk.getTitle())
+                .bookName(booktalk.getBook().getTitle())
+                .authorName(booktalk.getMember().getName())
+                .booktalkDate(booktalk.getEndDate())
+                .placeName(booktalk.getPlace().getName())
+                .bookCategory(booktalk.getBookCategory())
+                .build();
             completedBooktalkRepository.save(completedBooktalk);
             member.getCompletedBookTalkList().add(completedBooktalk);
             completedBooktalk.setMember(member);

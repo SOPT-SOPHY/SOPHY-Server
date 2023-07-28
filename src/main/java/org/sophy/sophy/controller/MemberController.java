@@ -1,5 +1,9 @@
 package org.sophy.sophy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
@@ -17,31 +21,48 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Tag(name = "나의 소피", description = "마이페이지 관련 API docs")
+@SecurityRequirement(name = "JWT Auth")
 public class MemberController {
+
     private final MemberService memberService;
 
-    @GetMapping("/my-page") // 마이페이지 조회
+    @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyPageDto> getMyPage(@AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyPage(user.getUsername()));
+    @Operation(summary = "마이페이지 조회")
+    public ApiResponseDto<MyPageDto> getMyPage(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
+            memberService.getMyPage(user.getUsername()));
     }
 
-    @GetMapping("/my-info") //내 정보 조회
+    @GetMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyInfoDto> getInfo(@AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS, memberService.getMyInfo(user.getUsername()));
+    @Operation(summary = "내 정보 조회")
+    public ApiResponseDto<MyInfoDto> getInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
+            memberService.getMyInfo(user.getUsername()));
     }
 
-    @PostMapping("/my-info") //추가 정보 입력
+    @PostMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(@AuthenticationPrincipal User user, @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
-        return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS, memberService.postAdditionalInfo(user.getUsername(), memberAdditionalInfoDto));
+    @Operation(summary = "추가 정보 입력")
+    public ApiResponseDto<MemberAdditionalInfoDto> postAdditionalInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @RequestBody @Valid MemberAdditionalInfoDto memberAdditionalInfoDto) {
+        return ApiResponseDto.success(SuccessStatus.POST_ADDITIONALINFO_SUCCESS,
+            memberService.postAdditionalInfo(user.getUsername(), memberAdditionalInfoDto));
     }
 
-    @PatchMapping("/my-info") //내 정보 업데이트
+    @PatchMapping("/my-info")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<MyInfoDto> patchInfo(@AuthenticationPrincipal User user, @RequestBody @Valid MyInfoDto myInfoDto) {
-        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS, memberService.patchMyInfo(user.getUsername(), myInfoDto));
+    @Operation(summary = "내 정보 수정")
+    public ApiResponseDto<MyInfoDto> patchInfo(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @RequestBody @Valid MyInfoDto myInfoDto) {
+        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS,
+            memberService.patchMyInfo(user.getUsername(), myInfoDto));
     }
 
 }

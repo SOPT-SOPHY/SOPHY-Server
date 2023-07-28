@@ -25,6 +25,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class S3Service {
+
     private final AmazonS3 amazonS3;
 
     @Value("${cloud.aws.credentials.accessKey}")
@@ -43,9 +44,9 @@ public class S3Service {
     public AmazonS3Client amazonS3Client() {
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
         return (AmazonS3Client) AmazonS3ClientBuilder.standard()
-                .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                .build();
+            .withRegion(region)
+            .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+            .build();
     }
 
     public String uploadImage(MultipartFile multipartFile, String folder) {
@@ -55,11 +56,14 @@ public class S3Service {
         objectMetadata.setContentLength(multipartFile.getSize()); //TODO: 파일 크기 제한
         objectMetadata.setContentType(multipartFile.getContentType());
         try (InputStream inputStream = multipartFile.getInputStream()) { //Statement Class의 인스턴스나 Stream 타입의 클래스들이 동작 후 필요로하는 close() 메소드를 자동실행해주는 공간
-            amazonS3.putObject(new PutObjectRequest(bucket + "/" + folder + "/image", fileName, inputStream, objectMetadata)
+            amazonS3.putObject(
+                new PutObjectRequest(bucket + "/" + folder + "/image", fileName, inputStream,
+                    objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return amazonS3.getUrl(bucket + "/" + folder + "/image", fileName).toString();
         } catch (IOException e) {
-            throw new NotFoundException(ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION, ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION.getMessage());
+            throw new NotFoundException(ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION,
+                ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION.getMessage());
         }
     }
 
@@ -71,7 +75,8 @@ public class S3Service {
     // 파일 유효성 검사
     private String getFileExtension(String fileName) {
         if (fileName.length() == 0) {
-            throw new NotFoundException(ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION, ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION.getMessage());
+            throw new NotFoundException(ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION,
+                ErrorStatus.NOT_FOUND_IMAGE_EXCEPTION.getMessage());
         }
         ArrayList<String> fileValidate = new ArrayList<>();
         fileValidate.add(".jpg");
@@ -82,7 +87,8 @@ public class S3Service {
         fileValidate.add(".PNG");
         String idxFileName = fileName.substring(fileName.lastIndexOf("."));
         if (!fileValidate.contains(idxFileName)) {
-            throw new BadRequestException(ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION, ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION.getMessage());
+            throw new BadRequestException(ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION,
+                ErrorStatus.INVALID_MULTIPART_EXTENSION_EXCEPTION.getMessage());
         }
         return fileName.substring(fileName.lastIndexOf("."));
     }

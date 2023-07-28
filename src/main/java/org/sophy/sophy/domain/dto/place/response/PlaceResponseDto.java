@@ -8,6 +8,7 @@ import org.sophy.sophy.domain.Place;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaceResponseDto {
+
     private Long placeId;
     private String name;
 

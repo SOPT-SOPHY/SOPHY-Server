@@ -7,6 +7,7 @@ import org.sophy.sophy.domain.Place;
 @Getter
 @AllArgsConstructor
 public class PlaceResponseDto {
+
     private Long placeId;
     private String placeImage;
     private String name;
@@ -14,11 +15,7 @@ public class PlaceResponseDto {
     private Integer maximum;
 
     public static PlaceResponseDto of(Place place) {
-        return new PlaceResponseDto(
-                place.getId(),
-                place.getPlaceImage(),
-                place.getName(),
-                place.getAddress(),
-                place.getMaximum());
+        return new PlaceResponseDto(place.getId(), place.getPlaceImage(), place.getName(),
+            place.getAddress(), place.getMaximum());
     }
 }

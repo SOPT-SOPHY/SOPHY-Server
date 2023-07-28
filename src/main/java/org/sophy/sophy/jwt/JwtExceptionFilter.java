@@ -22,7 +22,8 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
     private ObjectMapper objectMapper;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain filterChain) throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtException exception) {
@@ -31,14 +32,17 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             response.setStatus(400);
             response.setContentType("application/json; charset=UTF-8");
 
-            response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.error(ErrorStatus.VALIDATION_EXCEPTION)));
+            response.getWriter().write(objectMapper.writeValueAsString(
+                ApiResponseDto.error(ErrorStatus.VALIDATION_EXCEPTION)));
         }
     }
 
-    public void setErrorResponse(HttpStatus status, HttpServletResponse res, Throwable ex) throws IOException {
+    public void setErrorResponse(HttpStatus status, HttpServletResponse res, Throwable ex)
+        throws IOException {
         res.setStatus(status.value());
         res.setContentType("application/json; charset=UTF-8");
 
-        res.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.error(ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION, ex.getMessage())));
+        res.getWriter().write(objectMapper.writeValueAsString(
+            ApiResponseDto.error(ErrorStatus.INVALID_ACCESS_TOKEN_EXCEPTION, ex.getMessage())));
     }
 }

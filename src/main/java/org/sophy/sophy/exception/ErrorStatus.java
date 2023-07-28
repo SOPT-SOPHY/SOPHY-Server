@@ -29,7 +29,7 @@ public enum ErrorStatus {
      * 403 FORBIDDEN
      */
 
-    FORBIDDEN_USER_EXCEPTION(HttpStatus.FORBIDDEN, "요청에 대한 권한이 없습니다."),
+    FORBIDDEN_USER_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     /**
      * 404 NOT FOUND
      */

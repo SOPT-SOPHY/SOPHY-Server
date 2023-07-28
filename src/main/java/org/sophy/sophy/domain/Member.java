@@ -23,7 +23,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE member SET deleted = true WHERE member_id=?")
 @Where(clause = "deleted=false")
+@DiscriminatorColumn
 public class Member extends AuditingTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -48,7 +50,7 @@ public class Member extends AuditingTimeEntity {
     private City myCity;
 
     private Boolean marketingAgree;
-    
+
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
@@ -69,7 +71,8 @@ public class Member extends AuditingTimeEntity {
     private Boolean deleted = Boolean.FALSE;
 
     @Builder
-    public Member(String name, String email, String password, String phoneNum, boolean marketingAgree, Authority authority) {
+    public Member(String name, String email, String password, String phoneNum,
+        boolean marketingAgree, Authority authority) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -83,6 +86,7 @@ public class Member extends AuditingTimeEntity {
     public void setAuthorProperty(AuthorProperty authorProperty) {
         this.authorProperty = authorProperty;
     }
+
     public void setOperatorProperty(OperatorProperty operatorProperty) {
         this.operatorProperty = operatorProperty;
     }

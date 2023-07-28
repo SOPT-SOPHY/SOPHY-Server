@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Place extends AuditingTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "place_id")
@@ -23,7 +24,7 @@ public class Place extends AuditingTimeEntity {
 
     //공간 운영자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id",nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    @JoinColumn(name = "member_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private Member member; //공간 운영자
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,7 +47,8 @@ public class Place extends AuditingTimeEntity {
     private List<Booktalk> booktalkList = new ArrayList<>();
 
     @Builder
-    public Place(City city, Member member,String name, String address, Integer maximum, String placeImage) {
+    public Place(City city, Member member, String name, String address, Integer maximum,
+        String placeImage) {
         this.city = city;
         this.member = member;
         setOperator(member);

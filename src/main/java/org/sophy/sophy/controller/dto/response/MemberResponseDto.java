@@ -9,6 +9,7 @@ import org.sophy.sophy.domain.Member;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberResponseDto {
+
     private String email;
     private String name;
 
