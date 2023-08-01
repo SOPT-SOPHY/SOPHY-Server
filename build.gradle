@@ -52,6 +52,8 @@ dependencies {
 
 	//swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
