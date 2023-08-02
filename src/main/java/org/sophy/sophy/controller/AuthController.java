@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
@@ -19,10 +21,12 @@ import org.sophy.sophy.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -86,8 +90,10 @@ public class AuthController {
 
     @PostMapping("/email-confirm")
     @Operation(summary = "이메일 인증")
-    public ApiResponseDto<String> emailConfirm(@Parameter(example = "kdh01132006@naver.com") @RequestParam String email) throws Exception {
-        return ApiResponseDto.success(SuccessStatus.CREATE_AUTHCODE_SUCCESS, emailService.sendEmail(email));
+    public ApiResponseDto<String> emailConfirm(
+        @Parameter(example = "member@naver.com") @RequestParam String email) throws Exception {
+        return ApiResponseDto.success(SuccessStatus.CREATE_AUTHCODE_SUCCESS,
+            emailService.sendEmail(email));
     }
 
     @PostMapping("/withdrawal")

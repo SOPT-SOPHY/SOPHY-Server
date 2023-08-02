@@ -22,16 +22,10 @@ public class SchedulerService {
     @Scheduled(fixedDelay = 60000)
     @Transactional
     public void updateBooktalkStatus() { //1분마다 북토크 상태 측정
-        List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatus(
-            BooktalkStatus.RECRUITING);
-        List<Booktalk> closedBooktalks = booktalkRepository.findAllByBooktalkStatus(
-            BooktalkStatus.RECRUITING_CLOSED);
+        List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatusOrBooktalkStatus(
+            BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_CLOSED);
 
         recrutingBooktalks.forEach(booktalk -> {
-            booktalkToCompletedBooktalk(booktalk);
-        });
-
-        closedBooktalks.forEach(booktalk -> {
             booktalkToCompletedBooktalk(booktalk);
         });
     }

@@ -18,7 +18,7 @@ public interface BooktalkRepository extends JpaRepository<Booktalk, Long> {
 
     Integer countAllByCityAndCreateAtBetween(City city, LocalDateTime before, LocalDateTime now);
 
-    List<Booktalk> findAllByBooktalkStatus(BooktalkStatus booktalkStatus);
+    List<Booktalk> findAllByBooktalkStatusOrBooktalkStatus(BooktalkStatus recruting, BooktalkStatus recrutingClosed);
 
     default Booktalk getBooktalkById(Long booktalkId) {
         return this.findById(booktalkId)
