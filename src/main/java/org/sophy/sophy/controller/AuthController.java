@@ -74,7 +74,7 @@ public class AuthController {
         @SecurityRequirement(name = "JWT Auth"),
         @SecurityRequirement(name = "Refresh")
     })
-    public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request) {
+    public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request, @RequestBody String none) {
         String accessToken = tokenProvider.resolveAccessToken(request);
         String refreshToken = tokenProvider.resolveRefreshToken(request);
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS,

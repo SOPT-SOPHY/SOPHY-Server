@@ -45,11 +45,11 @@ public class ControllerExceptionAdvice {
         return ApiResponseDto.error(ErrorStatus.INVALID_FORMAT_EXCEPTION);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(IllegalArgumentException.class)
-    protected ApiResponseDto handleIllegalArgumentException(final IllegalArgumentException e) {
-        return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
-    }
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    protected ApiResponseDto handleIllegalArgumentException(final IllegalArgumentException e) {
+//        return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
+//    }
 
     /**
      * Sopt custom error
