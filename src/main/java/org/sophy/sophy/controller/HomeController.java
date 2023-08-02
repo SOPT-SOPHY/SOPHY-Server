@@ -7,16 +7,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
-import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.HomeService;
-import org.springframework.security.core.GrantedAuthority;
+import org.sophy.sophy.service.api.HomeService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collection;
 
 
 @RestController

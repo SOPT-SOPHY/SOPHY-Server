@@ -1,4 +1,4 @@
-package org.sophy.sophy.service;
+package org.sophy.sophy.service.api;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.*;

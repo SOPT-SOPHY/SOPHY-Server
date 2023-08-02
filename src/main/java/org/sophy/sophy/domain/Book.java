@@ -23,7 +23,7 @@ public class Book {
     private Boolean isRegistration;
     @Column(length = 1000)
     private String bookImageUrl;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty;
 

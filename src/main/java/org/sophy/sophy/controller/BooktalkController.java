@@ -11,7 +11,7 @@ import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDetailResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.BooktalkService;
+import org.sophy.sophy.service.api.BooktalkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;

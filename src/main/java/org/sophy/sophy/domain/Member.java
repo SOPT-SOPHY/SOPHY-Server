@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE member SET deleted = true WHERE member_id=?")
 @Where(clause = "deleted=false")
-@DiscriminatorColumn
+//@DiscriminatorColumn
 public class Member extends AuditingTimeEntity {
 
     @Id
@@ -60,11 +60,11 @@ public class Member extends AuditingTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<CompletedBooktalk> completedBookTalkList; //이거 길이로 북토크 수 보여줄 수 있지 않을까? -> 참여 완료 북토크 수
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_property_id")
     private AuthorProperty authorProperty; //(개설한 북토크 리스트 + 나의 책 리스트 + 공간 매칭 중 북토크 수 + 청중 모집 중 북토크 수)
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "operator_property_id")
     private OperatorProperty operatorProperty;
 

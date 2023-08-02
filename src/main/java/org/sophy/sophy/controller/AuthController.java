@@ -15,6 +15,7 @@ import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.sophy.sophy.service.AuthService;
+import org.sophy.sophy.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -31,6 +32,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final TokenProvider tokenProvider;
+    private final EmailService emailService;
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
@@ -80,6 +82,12 @@ public class AuthController {
     public ApiResponseDto<String> duplCheck(@RequestBody DuplCheckDto email) {
         return ApiResponseDto.success(SuccessStatus.CHECK_DUPL_EMAIL_SUCCESS,
             authService.duplCheck(email));
+    }
+
+    @PostMapping("/email-confirm")
+    @Operation(summary = "이메일 인증")
+    public ApiResponseDto<String> emailConfirm(@Parameter(example = "kdh01132006@naver.com") @RequestParam String email) throws Exception {
+        return ApiResponseDto.success(SuccessStatus.CREATE_AUTHCODE_SUCCESS, emailService.sendEmail(email));
     }
 
     @PostMapping("/withdrawal")
