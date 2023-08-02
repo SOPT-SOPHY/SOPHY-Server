@@ -35,7 +35,7 @@ public class TokenProvider {
     public static final String REFRESH_HEADER = "Refresh";
 
 
-    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L;
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
     private final Key key;
 
@@ -120,13 +120,13 @@ public class TokenProvider {
                 .build()
                 .parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) { //토큰 형식이 잘못됨
             log.info("잘못된 JWT 서명입니다.");
             throw new JwtException("잘못된 JWT 서명입니다.");
-        } catch (UnsupportedJwtException e) {
+        } catch (UnsupportedJwtException e) { //이 버전에서 지원하지 않는 JWT 토큰
             log.info("지원되지 않는 JWT 토큰입니다.");
             throw new JwtException("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException e) { //토큰의 형식이 잘못됨
             log.info("JWT 토큰이 잘못되었습니다.");
             throw new JwtException("JWT 토큰이 잘못되었습니다.");
         }
