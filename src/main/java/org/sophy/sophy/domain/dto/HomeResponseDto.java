@@ -13,8 +13,8 @@ import org.sophy.sophy.domain.enumerate.City;
 public class HomeResponseDto {
 
     private String name;
-    private Integer booktalkCount;
-    private Integer myCityBooktalkCount;
+    private Integer booktalkCount; //나의 예정된 북토크
+    private Integer myCityBooktalkCount; //내 지역 북토크
     private Boolean isAuthor;
     private List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming;
     private List<City> cityRanks;
