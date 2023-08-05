@@ -35,7 +35,7 @@ public class BooktalkDetailResponseDto {
             booktalk.getBook().getTitle(),
             booktalk.getStartDate(),
             booktalk.getEndDate(),
-            booktalk.getParticipantList().size(),
+            booktalk.getParticipantNum(),
             booktalk.getParticipationFee(),
             booktalk.getPreliminaryInfo(),
             booktalk.getDescription(),

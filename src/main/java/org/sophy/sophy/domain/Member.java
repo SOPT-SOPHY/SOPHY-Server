@@ -15,7 +15,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -68,7 +67,7 @@ public class Member extends AuditingTimeEntity {
     @JoinColumn(name = "operator_property_id")
     private OperatorProperty operatorProperty;
 
-    private Boolean deleted = Boolean.FALSE;
+    private final Boolean deleted = Boolean.FALSE;
 
     @Builder
     public Member(String name, String email, String password, String phoneNum,
@@ -104,9 +103,9 @@ public class Member extends AuditingTimeEntity {
         this.marketingAgree = myInfoDto.getMarketingAgree();
     }
 
-    public void addUserBooktalkandSortByStartDate(MemberBooktalk memberBooktalk) {
-        this.getUserBookTalkList().add(memberBooktalk);
-        // 시작날짜순으로 정렬(예정된 북토크)
-        this.getUserBookTalkList().sort(Comparator.comparing(o -> o.getBooktalk().getStartDate()));
-    }
+//    public void addUserBooktalkandSortByStartDate(MemberBooktalk memberBooktalk) { //이게 merge?
+//        this.getUserBookTalkList().add(memberBooktalk);
+//        // 시작날짜순으로 정렬(예정된 북토크)
+//        this.getUserBookTalkList().sort(Comparator.comparing(o -> o.getBooktalk().getStartDate()));
+//    }
 }

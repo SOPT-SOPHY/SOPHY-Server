@@ -30,7 +30,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
         this.member = member;
         if (!member.getUserBookTalkList().contains(this)) {
             // 시작날짜로 순으로 정렬해서 추가
-            member.addUserBooktalkandSortByStartDate(this);
+            member.getUserBookTalkList().add(this);
         }
     }
 
@@ -38,11 +38,13 @@ public class MemberBooktalk extends AuditingTimeEntity {
         this.booktalk = booktalk;
         if (!booktalk.getParticipantList().contains(this)) {
             booktalk.getParticipantList().add(this);
+            booktalk.plusParticipant();
         }
     }
 
     @Builder
     public MemberBooktalk(Member member, Booktalk booktalk) {
+        //Member_Booltalk 관련 연관관계 변경
         setBooktalk(booktalk);
         setMember(member);
     }

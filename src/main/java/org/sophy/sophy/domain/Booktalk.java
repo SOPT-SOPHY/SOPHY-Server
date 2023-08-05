@@ -66,6 +66,8 @@ public class Booktalk extends AuditingTimeEntity {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
+    private Integer participantNum;
+
     @Column(nullable = false)
     private Integer maximum;
 
@@ -91,7 +93,11 @@ public class Booktalk extends AuditingTimeEntity {
     @JoinColumn(name = "scheduled_booktalk_id")
     private ScheduledBooktalk scheduledBooktalk;
 
-    private Boolean deleted = Boolean.FALSE;
+    private final Boolean deleted = Boolean.FALSE;
+
+    public void plusParticipant() {
+        this.participantNum += 1;
+    }
 
     public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
         this.booktalkStatus = booktalkStatus;
@@ -133,6 +139,7 @@ public class Booktalk extends AuditingTimeEntity {
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.participantNum = 0;
         this.maximum = maximum;
         this.participationFee = participationFee;
         this.preliminaryInfo = preliminaryInfo;
