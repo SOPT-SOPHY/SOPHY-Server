@@ -1,17 +1,16 @@
 package org.sophy.sophy.domain.dto.booktalk.response;
 
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.sophy.sophy.domain.Booktalk;
+import lombok.Data;
+import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
-@Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
+@AllArgsConstructor
 public class BooktalkResponseDto {
 
     private Long booktalkId;
-    private Integer preliminaryInfo;
+    private PreliminaryInfo preliminaryInfo;
     private String title;
     private String author;
     private LocalDateTime startDate;
@@ -20,18 +19,4 @@ public class BooktalkResponseDto {
     private Integer participant;
     private Integer maximum;
     private String booktalkImageUrl;
-
-    public static BooktalkResponseDto of(Booktalk booktalk) {
-        return new BooktalkResponseDto(
-            booktalk.getId(),
-            booktalk.getPreliminaryInfo().ordinal(),
-            booktalk.getTitle(),
-            booktalk.getMember().getName(),
-            booktalk.getStartDate(),
-            booktalk.getEndDate(),
-            booktalk.getPlace().getName(),
-            booktalk.getParticipantList().size(),
-            booktalk.getMaximum(),
-            booktalk.getBooktalkImageUrl());
-    }
 }
