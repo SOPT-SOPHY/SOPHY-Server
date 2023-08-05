@@ -1,5 +1,6 @@
 package org.sophy.sophy.service;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.*;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
@@ -22,12 +23,11 @@ public class SchedulerService {
     @Scheduled(fixedDelay = 60000)
     @Transactional
     public void updateBooktalkStatus() { //1분마다 북토크 상태 측정
-        List<Booktalk> recrutingBooktalks = booktalkRepository.findAllByBooktalkStatusOrBooktalkStatus(
-            BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_CLOSED);
+        List<Booktalk> recrutingBooktalks = booktalkRepository.findByBooktalkStatuses(
+            Arrays.asList(BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_CLOSED)
+        );
 
-        recrutingBooktalks.forEach(booktalk -> {
-            booktalkToCompletedBooktalk(booktalk);
-        });
+        recrutingBooktalks.forEach(this::booktalkToCompletedBooktalk);
     }
 
     private void booktalkToCompletedBooktalk(
@@ -69,9 +69,9 @@ public class SchedulerService {
     @Transactional
     public void changeApprovedBooktalkStatus() { //오전 10시에 승인된 북토크들 모집중으로 변경
         List<Booktalk> scheduledBooktalk = ScheduledBooktalkConverter.getScheduledBooktalk();
-        scheduledBooktalk.forEach(booktalk -> {
+        for (Booktalk booktalk : scheduledBooktalk) {
             booktalk.setBooktalkStatus(BooktalkStatus.RECRUITING);
-        });
+        }
         scheduledBooktalk.clear();
         //스케줄러 포트 변경(이틀 뒤 변경부터 필요)
 //        if (ScheduledBooktalkConverter.getPort() == 0) {
