@@ -13,22 +13,20 @@ import org.springframework.data.repository.query.Param;
 public interface BooktalkQueryRepository extends JpaRepository<Booktalk, Long> {
 
     @Query("select new org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto("
-        + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, pr.size, b.maximum, b.booktalkImageUrl)"
+        + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, b.participantNum, b.maximum, b.booktalkImageUrl)"
         + " from Booktalk b"
         + " join b.member m"
         + " join b.place p"
-        + " left outer join b.participantList pr"
         + " where b.booktalkStatus = :booktalkStatus")
     List<BooktalkResponseDto> findBooktalkResponseDto(
         @Param("booktalkStatus") BooktalkStatus booktalkStatus);
 
     @Query(
         "select new org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto("
-            + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, pr.size, b.maximum, b.booktalkImageUrl)"
+            + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, b.participantNum, b.maximum, b.booktalkImageUrl)"
             + " from Booktalk b"
             + " join b.member m"
             + " join b.place p"
-            + " left outer join b.participantList pr"
             + " where b.city = :city"
             + " and b.booktalkStatus = :booktalkStatus"
             + " order by b.startDate")
@@ -41,11 +39,10 @@ public interface BooktalkQueryRepository extends JpaRepository<Booktalk, Long> {
         @Param("booktalkStatuses") List<BooktalkStatus> booktalkStatuses);
 
     @Query("select new org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto("
-        + " b.id, b.booktalkImageUrl, b.title, m.name, b.startDate, b.endDate, p.name, pr.size, b.maximum, b.booktalkStatus)"
+        + " b.id, b.booktalkImageUrl, b.title, m.name, b.startDate, b.endDate, p.name, b.participantNum, b.maximum, b.booktalkStatus)"
         + " from Booktalk b"
         + " join b.member m"
         + " join b.place p"
-        + " left outer join b.participantList pr"
         + " where b.id in :booktalkIds"
         + " order by b.startDate")
     List<MyPageBooktalkDto> findBooktalks(

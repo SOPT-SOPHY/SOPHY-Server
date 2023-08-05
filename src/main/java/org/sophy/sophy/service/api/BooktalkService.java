@@ -105,7 +105,7 @@ public class BooktalkService {
         Booktalk booktalk = booktalkRepository.getBooktalkById(
             booktalkParticipationRequestDto.getBooktalkId()); //참가하고자 하는 북토크
         //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드
-        if (booktalk.getMaximum() >= booktalk.getParticipantNum()) {
+        if (booktalk.getMaximum() <= booktalk.getParticipantNum()) {
             throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION,
                 ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION.getMessage());
         }
