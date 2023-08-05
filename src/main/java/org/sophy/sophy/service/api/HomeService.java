@@ -1,5 +1,14 @@
 package org.sophy.sophy.service.api;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
@@ -10,12 +19,6 @@ import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +67,8 @@ public class HomeService {
         if (city.equals(City.UIJEONGBU_SI)) {
             return booktalkRepository.countAllByBooktalkStatus(BooktalkStatus.RECRUITING);
         } else {
-            return booktalkRepository.countAllByCityAndBooktalkStatus(city, BooktalkStatus.RECRUITING);
+            return booktalkRepository.countAllByCityAndBooktalkStatus(city,
+                BooktalkStatus.RECRUITING);
         }
     }
 

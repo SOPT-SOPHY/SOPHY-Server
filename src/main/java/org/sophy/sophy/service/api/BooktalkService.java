@@ -1,25 +1,36 @@
 package org.sophy.sophy.service.api;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.Booktalk;
+import org.sophy.sophy.domain.CompletedBooktalk;
+import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
+import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
-import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkCreateResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeadlineUpcomingDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeleteResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDetailResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ForbiddenException;
-import org.sophy.sophy.external.client.aws.S3Service;
 import org.sophy.sophy.exception.model.OverMaxParticipationException;
-import org.sophy.sophy.infrastructure.*;
+import org.sophy.sophy.external.client.aws.S3Service;
+import org.sophy.sophy.infrastructure.BooktalkRepository;
+import org.sophy.sophy.infrastructure.CompletedBooktalkRepository;
+import org.sophy.sophy.infrastructure.MemberBooktalkRepository;
+import org.sophy.sophy.infrastructure.MemberRepository;
+import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -135,7 +146,8 @@ public class BooktalkService {
         if (city.equals(City.UIJEONGBU_SI)) { //모집중인 북토크만 조회
             booktalkList = booktalkRepository.findBooktalkResponseDto(BooktalkStatus.RECRUITING);
         } else {
-            booktalkList = booktalkRepository.findBooktalkResponseDto(city, BooktalkStatus.RECRUITING);
+            booktalkList = booktalkRepository.findBooktalkResponseDto(city,
+                BooktalkStatus.RECRUITING);
         }
 
         return booktalkList;
