@@ -29,6 +29,7 @@ import org.sophy.sophy.infrastructure.CompletedBooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberBooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.infrastructure.PlaceRepository;
+import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BooktalkService {
 
     private final BooktalkRepository booktalkRepository;
+    private final BooktalkQueryRepository booktalkQueryRepository;
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
     private final MemberBooktalkRepository memberBooktalkRepository;
@@ -144,9 +146,9 @@ public class BooktalkService {
         Dto로 직접 조회할 땐 페이징이 불가능 한 문제가 생길 수 있지만 여기선 ToMany관계가 없어서 가능할 듯
          */
         if (city.equals(City.UIJEONGBU_SI)) { //모집중인 북토크만 조회
-            booktalkList = booktalkRepository.findBooktalkResponseDto(BooktalkStatus.RECRUITING);
+            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(BooktalkStatus.RECRUITING);
         } else {
-            booktalkList = booktalkRepository.findBooktalkResponseDto(city,
+            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(city,
                 BooktalkStatus.RECRUITING);
         }
 

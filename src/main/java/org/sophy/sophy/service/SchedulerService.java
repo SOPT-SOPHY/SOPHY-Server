@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.ScheduledBooktalkConverter;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
-import org.sophy.sophy.infrastructure.BooktalkRepository;
+import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
 import org.sophy.sophy.service.api.BooktalkService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SchedulerService {
-
-    private final BooktalkRepository booktalkRepository;
+    private final BooktalkQueryRepository booktalkQueryRepository;
     private final BooktalkService booktalkService;
 
     @Scheduled(fixedDelay = 60000)
     @Transactional
     public void updateBooktalkStatus() { //1분마다 북토크 상태 측정
-        List<Booktalk> recrutingBooktalks = booktalkRepository.findByBooktalkStatuses(
+        List<Booktalk> recrutingBooktalks = booktalkQueryRepository.findByBooktalkStatuses(
             Arrays.asList(BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_CLOSED)
         );
 

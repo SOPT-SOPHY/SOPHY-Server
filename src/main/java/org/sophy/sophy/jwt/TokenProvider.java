@@ -35,7 +35,7 @@ public class TokenProvider {
     public static final String REFRESH_HEADER = "Refresh";
 
 
-    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60L;
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
     private final Key key;
 
@@ -136,7 +136,7 @@ public class TokenProvider {
         //access Token 남은 유효시간
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build()
             .parseClaimsJws(accessToken).getBody().getExpiration();
-        Long now = new Date().getTime();
+        long now = new Date().getTime();
         return (expiration.getTime() - now);
     }
 
