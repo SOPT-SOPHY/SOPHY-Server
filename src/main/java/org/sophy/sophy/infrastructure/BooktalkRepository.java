@@ -27,6 +27,9 @@ public interface BooktalkRepository extends JpaRepository<Booktalk, Long> {
     List<BooktalkResponseDto> findBooktalkResponseDto(@Param("city") City city,
         @Param("booktalkStatus") BooktalkStatus booktalkStatus);
 
+    Integer countAllByCityAndBooktalkStatus(City city, BooktalkStatus booktalkStatus);
+    Integer countAllByBooktalkStatus(BooktalkStatus booktalkStatus);
+
     @Query("select new org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto("
         + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, pr.size, b.maximum, b.booktalkImageUrl)"
         + " from Booktalk b"

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeadlineUpcomingDto;
-import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
@@ -61,15 +60,12 @@ public class HomeService {
     }
 
     public Integer getMyCityBooktalkCount(City city) {
-        List<BooktalkResponseDto> booktalkList;
 
         if (city.equals(City.UIJEONGBU_SI)) {
-            booktalkList = booktalkRepository.findBooktalkResponseDto(BooktalkStatus.RECRUITING);
+            return booktalkRepository.countAllByBooktalkStatus(BooktalkStatus.RECRUITING);
         } else {
-            booktalkList = booktalkRepository.findBooktalkResponseDto(city, BooktalkStatus.RECRUITING);
+            return booktalkRepository.countAllByCityAndBooktalkStatus(city, BooktalkStatus.RECRUITING);
         }
-
-        return booktalkList.size();
     }
 
     public List<City> getCityRank() {
