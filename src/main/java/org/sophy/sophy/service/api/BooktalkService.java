@@ -108,15 +108,13 @@ public class BooktalkService {
         List<Place> placeList = placeRepository.findAll();
 
         List<BooktalkDeadlineUpcomingDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> {
-            place.getBooktalkList().forEach(booktalk -> {
-                    // 모집중인 북토크만 추가
-                    if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                        booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
-                    }
+        placeList.forEach(place -> place.getBooktalkList().forEach(booktalk -> {
+                // 모집중인 북토크만 추가
+                if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
+                    booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
                 }
-            );
-        });
+            }
+        ));
 
         // 마감 임박순으로 정렬
         booktalkList.sort(Comparator.comparing(BooktalkDeadlineUpcomingDto::getEndDate));
@@ -154,6 +152,11 @@ public class BooktalkService {
     @Transactional
     public CompletedBooktalk completeBooktalk(Long booktalkId) { //작가가 자신의 북토크를 완료상태로 변경하는 메서드
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
+        return changeBooktalkToComplete(booktalk);
+    }
+
+    //북토크 상태를 완료로 변경하는 메서드
+    public CompletedBooktalk changeBooktalkToComplete(Booktalk booktalk) {
         booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
         for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
