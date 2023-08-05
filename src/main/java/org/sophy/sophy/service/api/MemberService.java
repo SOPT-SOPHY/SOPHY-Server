@@ -52,30 +52,19 @@ public class MemberService {
 
     @Transactional
     public MyInfoDto getMyInfo(String email) {
-        Member member = memberRepository.getMemberByEmail(email);
-        return MyInfoDto.builder()
-            .email(member.getEmail())
-            .name(member.getName())
-            .phoneNum(member.getPhoneNum())
-            .gender(member.getGender())
-            .birth(member.getBirth())
-            .city(member.getMyCity())
-            .marketingAgree(member.getMarketingAgree())
-            .build();
+        return MyInfoDto.toBuild(memberRepository.getMemberByEmail(email));
     }
 
     @Transactional
     public MemberAdditionalInfoDto postAdditionalInfo(String email,
         MemberAdditionalInfoDto memberAdditionalInfoDto) {
-        Member member = memberRepository.getMemberByEmail(email);
-        member.setAdditionalInfo(memberAdditionalInfoDto);
+        memberRepository.getMemberByEmail(email).setAdditionalInfo(memberAdditionalInfoDto);
         return memberAdditionalInfoDto;
     }
 
     @Transactional
     public MyInfoDto patchMyInfo(String email, MyInfoDto myInfoDto) {
-        Member member = memberRepository.getMemberByEmail(email);
-        member.patchMyInfo(myInfoDto);
+        memberRepository.getMemberByEmail(email).patchMyInfo(myInfoDto);
         return myInfoDto;
     }
 
