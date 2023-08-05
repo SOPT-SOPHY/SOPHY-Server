@@ -12,11 +12,11 @@ import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.infrastructure.MemberRepository;
+import org.sophy.sophy.infrastructure.query.BookQueryRepository;
 import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +26,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BooktalkQueryRepository booktalkQueryRepository;
+    private final BookQueryRepository bookQueryRepository;
+
 
     @Transactional
     public MyPageDto getMyPage(String email) {
@@ -89,16 +91,11 @@ public class MemberService {
 
     @Transactional
     public List<MyBookDto> getAuthorBooksByMember(Member member) { //작가가 쓴 책 조회 메서드
-        List<Book> authorBookList = member.getAuthorProperty().getMyBookList();
-        List<MyBookDto> bookResponseDtoList = new ArrayList<>();
-        authorBookList.forEach(book -> bookResponseDtoList.add(MyBookDto.builder()
-            .title(book.getTitle())
-            .bookCategory(book.getBookCategory())
-            .booktalkOpenCount(book.getBooktalkOpenCount())
-            .isRegistration(book.getIsRegistration())
-            .bookImageUrl(book.getBookImageUrl())
-            .build()));
-        return bookResponseDtoList;
+        List<Long> bookIds = member.getAuthorProperty().getMyBookList()
+            .stream().map(Book::getId)
+            .collect(Collectors.toList());
+
+        return bookQueryRepository.findBooks(bookIds);
     }
 
 }
