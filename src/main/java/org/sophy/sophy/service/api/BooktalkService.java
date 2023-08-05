@@ -138,9 +138,6 @@ public class BooktalkService {
             booktalkList = booktalkRepository.findBooktalkResponseDto(city, BooktalkStatus.RECRUITING);
         }
 
-//        // 마감 임박순으로 정렬
-//        booktalkList.sort(Comparator.comparing(BooktalkResponseDto::getEndDate));
-
         return booktalkList;
     }
 
@@ -155,31 +152,20 @@ public class BooktalkService {
         booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
         for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
-            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-                .title(booktalk.getTitle())
-                .bookName(booktalk.getBook().getTitle())
-                .authorName(booktalk.getMember().getName())
-                .booktalkDate(booktalk.getEndDate())
-                .placeName(booktalk.getPlace().getName())
-                .bookCategory(booktalk.getBookCategory())
-                .build();
-            completedBooktalkRepository.save(completedBooktalk);
-            member.getCompletedBookTalkList().add(completedBooktalk);
-            completedBooktalk.setMember(member);
+            completedBooktalkSetting(booktalk, member);
         }
         Member member = booktalk.getMember(); //작가 소피스토리 세팅
-        CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-            .title(booktalk.getTitle())
-            .bookName(booktalk.getBook().getTitle())
-            .authorName(booktalk.getMember().getName())
-            .booktalkDate(booktalk.getEndDate())
-            .placeName(booktalk.getPlace().getName())
-            .bookCategory(booktalk.getBookCategory())
-            .build();
+        CompletedBooktalk completedBooktalk = completedBooktalkSetting(booktalk, member);
+        booktalkRepository.delete(booktalk);
+        return completedBooktalk;
+    }
+
+    //완료된 북토크 연관관계 설정
+    private CompletedBooktalk completedBooktalkSetting(Booktalk booktalk, Member member) {
+        CompletedBooktalk completedBooktalk = CompletedBooktalk.toBuild(booktalk);
         completedBooktalkRepository.save(completedBooktalk);
         member.getCompletedBookTalkList().add(completedBooktalk);
         completedBooktalk.setMember(member);
-        booktalkRepository.delete(booktalk);
         return completedBooktalk;
     }
 }

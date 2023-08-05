@@ -42,4 +42,15 @@ public class CompletedBooktalk extends AuditingTimeEntity {
         this.member = member;
         member.getCompletedBookTalkList().add(this);
     }
+
+    public static CompletedBooktalk toBuild(Booktalk booktalk) {
+        return CompletedBooktalk.builder() // 완료된 북토크로 이동
+            .title(booktalk.getTitle())
+            .bookName(booktalk.getBook().getTitle())
+            .authorName(booktalk.getMember().getName())
+            .booktalkDate(booktalk.getEndDate())
+            .placeName(booktalk.getPlace().getName())
+            .bookCategory(booktalk.getBookCategory())
+            .build();
+    }
 }
