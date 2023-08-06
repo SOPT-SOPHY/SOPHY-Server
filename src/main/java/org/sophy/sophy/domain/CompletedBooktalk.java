@@ -1,10 +1,18 @@
 package org.sophy.sophy.domain;
 
-import lombok.*;
-import org.sophy.sophy.domain.enumerate.BookCategory;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.sophy.sophy.domain.enumerate.BookCategory;
 
 @Entity
 @Getter
@@ -36,6 +44,17 @@ public class CompletedBooktalk extends AuditingTimeEntity {
         this.booktalkDate = booktalkDate;
         this.placeName = placeName;
         this.bookCategory = bookCategory;
+    }
+
+    public static CompletedBooktalk toBuild(Booktalk booktalk) {
+        return CompletedBooktalk.builder() // 완료된 북토크로 이동
+            .title(booktalk.getTitle())
+            .bookName(booktalk.getBook().getTitle())
+            .authorName(booktalk.getMember().getName())
+            .booktalkDate(booktalk.getEndDate())
+            .placeName(booktalk.getPlace().getName())
+            .bookCategory(booktalk.getBookCategory())
+            .build();
     }
 
     public void setMember(Member member) {

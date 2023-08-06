@@ -1,31 +1,30 @@
 package org.sophy.sophy.service.api;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Member;
-import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeadlineUpcomingDto;
-import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
-import org.sophy.sophy.infrastructure.PlaceRepository;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HomeService {
 
     private final MemberRepository memberRepository;
-    private final PlaceRepository placeRepository;
     private final BooktalkService booktalkService;
     private final BooktalkRepository booktalkRepository;
 
@@ -64,29 +63,17 @@ public class HomeService {
     }
 
     public Integer getMyCityBooktalkCount(City city) {
-        List<Place> placeList;
 
         if (city.equals(City.UIJEONGBU_SI)) {
-            placeList = placeRepository.findAll();
+            return booktalkRepository.countAllByBooktalkStatus(BooktalkStatus.RECRUITING);
         } else {
-            placeList = placeRepository.findAllByCity(city);
+            return booktalkRepository.countAllByCityAndBooktalkStatus(city,
+                BooktalkStatus.RECRUITING);
         }
-
-        List<BooktalkResponseDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> {
-            place.getBooktalkList().forEach(booktalk -> {
-                    // 모집중인 북토크만 추가
-                    if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                        booktalkList.add(BooktalkResponseDto.of(booktalk));
-                    }
-                }
-            );
-        });
-        return booktalkList.size();
     }
 
     public List<City> getCityRank() {
-        Map<City, Integer> rank = new HashMap<City, Integer>();
+        Map<City, Integer> rank = new HashMap<>();
         for (City city : City.values()) {
             Integer count = booktalkRepository.countAllByCityAndCreateAtBetween(city
                 , LocalDateTime.of(LocalDate.now().minusDays(30)

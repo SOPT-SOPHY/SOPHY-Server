@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.enumerate.City;
 
 @Getter
@@ -30,4 +31,16 @@ public class MyInfoDto {
     private City city;
     @Schema(description = "마케팅 수신 동의", example = "true")
     private Boolean marketingAgree;
+
+    public static MyInfoDto toBuild(Member member) {
+        return MyInfoDto.builder()
+            .email(member.getEmail())
+            .name(member.getName())
+            .phoneNum(member.getPhoneNum())
+            .gender(member.getGender())
+            .birth(member.getBirth())
+            .city(member.getMyCity())
+            .marketingAgree(member.getMarketingAgree())
+            .build();
+    }
 }

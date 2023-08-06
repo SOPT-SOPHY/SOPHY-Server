@@ -1,31 +1,46 @@
 package org.sophy.sophy.service.api;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.domain.*;
+import org.sophy.sophy.domain.Booktalk;
+import org.sophy.sophy.domain.CompletedBooktalk;
+import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.MemberBooktalk;
+import org.sophy.sophy.domain.Place;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkRequestDto;
-import org.sophy.sophy.domain.dto.booktalk.response.*;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkCreateResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeadlineUpcomingDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDeleteResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkDetailResponseDto;
+import org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.ErrorStatus;
+import org.sophy.sophy.exception.model.DuplParticipationException;
 import org.sophy.sophy.exception.model.ForbiddenException;
-import org.sophy.sophy.external.client.aws.S3Service;
 import org.sophy.sophy.exception.model.OverMaxParticipationException;
-import org.sophy.sophy.infrastructure.*;
+import org.sophy.sophy.external.client.aws.S3Service;
+import org.sophy.sophy.infrastructure.BooktalkRepository;
+import org.sophy.sophy.infrastructure.CompletedBooktalkRepository;
+import org.sophy.sophy.infrastructure.MemberBooktalkRepository;
+import org.sophy.sophy.infrastructure.MemberRepository;
+import org.sophy.sophy.infrastructure.PlaceRepository;
+import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BooktalkService {
 
     private final BooktalkRepository booktalkRepository;
+    private final BooktalkQueryRepository booktalkQueryRepository;
     private final PlaceRepository placeRepository;
     private final MemberRepository memberRepository;
     private final MemberBooktalkRepository memberBooktalkRepository;
@@ -86,21 +101,24 @@ public class BooktalkService {
     @Transactional
     public void postBooktalkParticipation(
         BooktalkParticipationRequestDto booktalkParticipationRequestDto, String email) {
-        Member member = memberRepository.getMemberByEmail(email);
+        Member member = memberRepository.getMemberByEmail(email); //참가 신청 유저
         Booktalk booktalk = booktalkRepository.getBooktalkById(
-            booktalkParticipationRequestDto.getBooktalkId());
-        //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드 필요할듯
-        if (booktalk.getMaximum() == booktalk.getParticipantList().size()) {
+            booktalkParticipationRequestDto.getBooktalkId()); //참가하고자 하는 북토크
+        //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드
+        if (booktalk.getMaximum() <= booktalk.getParticipantNum()) {
             throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION,
                 ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION.getMessage());
         }
+        List<Long> participantIds = booktalk.getParticipantList().stream()
+            .map(b -> b.getMember().getId())
+            .collect(Collectors.toList());
+        if (participantIds.contains(member.getId())) {
+            throw new DuplParticipationException(ErrorStatus.DUPL_PARTICIPATION_EXCEPTION,
+                ErrorStatus.DUPL_PARTICIPATION_EXCEPTION.getMessage());
+        }
         // 복합키?
-        MemberBooktalk memberBooktalk = booktalkParticipationRequestDto.toMemberBooktalk(booktalk,
-            member);
-        //연관 객체 변경 ( member 객체 북토크 수 표시하는 메서드 리팩터 필요 )
-        booktalk.getParticipantList().add(memberBooktalk);
-        member.getUserBookTalkList().add(memberBooktalk);
-        memberBooktalkRepository.save(memberBooktalk);
+        memberBooktalkRepository.save(
+            booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member));
     }
 
     // 마감임박 북토크 조회
@@ -108,15 +126,13 @@ public class BooktalkService {
         List<Place> placeList = placeRepository.findAll();
 
         List<BooktalkDeadlineUpcomingDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> {
-            place.getBooktalkList().forEach(booktalk -> {
-                    // 모집중인 북토크만 추가
-                    if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                        booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
-                    }
+        placeList.forEach(place -> place.getBooktalkList().forEach(booktalk -> {
+                // 모집중인 북토크만 추가
+                if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
+                    booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
                 }
-            );
-        });
+            }
+        ));
 
         // 마감 임박순으로 정렬
         booktalkList.sort(Comparator.comparing(BooktalkDeadlineUpcomingDto::getEndDate));
@@ -129,24 +145,18 @@ public class BooktalkService {
     @Transactional
     public List<BooktalkResponseDto> getBooktalksByCity(City city) {
 
-        List<Booktalk> booktalks;
-
-        if (city.equals(City.UIJEONGBU_SI)) {
-            booktalks = booktalkRepository.findAll();
+        List<BooktalkResponseDto> booktalkList;
+        /*
+        @Query를 통해 Dto로 직접 조회 및 정렬까지 구현 가능할 듯
+        Dto로 직접 조회할 땐 페이징이 불가능 한 문제가 생길 수 있지만 여기선 ToMany관계가 없어서 가능할 듯
+         */
+        if (city.equals(City.UIJEONGBU_SI)) { //모집중인 북토크만 조회
+            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(
+                BooktalkStatus.RECRUITING);
         } else {
-            booktalks = booktalkRepository.findAllByCity(city);
+            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(city,
+                BooktalkStatus.RECRUITING);
         }
-
-        List<BooktalkResponseDto> booktalkList = new ArrayList<>();
-        booktalks.forEach(booktalk -> {
-            // 모집중인 북토크만 추가
-            if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                booktalkList.add(BooktalkResponseDto.of(booktalk));
-            }
-        });
-
-        // 마감 임박순으로 정렬
-        booktalkList.sort(Comparator.comparing(BooktalkResponseDto::getEndDate));
 
         return booktalkList;
     }
@@ -154,34 +164,28 @@ public class BooktalkService {
     @Transactional
     public CompletedBooktalk completeBooktalk(Long booktalkId) { //작가가 자신의 북토크를 완료상태로 변경하는 메서드
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
+        return changeBooktalkToComplete(booktalk);
+    }
+
+    //북토크 상태를 완료로 변경하는 메서드
+    public CompletedBooktalk changeBooktalkToComplete(Booktalk booktalk) {
         booktalk.setBooktalkStatus(BooktalkStatus.COMPLETED);
         for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
-            CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-                .title(booktalk.getTitle())
-                .bookName(booktalk.getBook().getTitle())
-                .authorName(booktalk.getMember().getName())
-                .booktalkDate(booktalk.getEndDate())
-                .placeName(booktalk.getPlace().getName())
-                .bookCategory(booktalk.getBookCategory())
-                .build();
-            completedBooktalkRepository.save(completedBooktalk);
-            member.getCompletedBookTalkList().add(completedBooktalk);
-            completedBooktalk.setMember(member);
+            completedBooktalkSetting(booktalk, member);
         }
         Member member = booktalk.getMember(); //작가 소피스토리 세팅
-        CompletedBooktalk completedBooktalk = CompletedBooktalk.builder() // 완료된 북토크로 이동
-            .title(booktalk.getTitle())
-            .bookName(booktalk.getBook().getTitle())
-            .authorName(booktalk.getMember().getName())
-            .booktalkDate(booktalk.getEndDate())
-            .placeName(booktalk.getPlace().getName())
-            .bookCategory(booktalk.getBookCategory())
-            .build();
+        CompletedBooktalk completedBooktalk = completedBooktalkSetting(booktalk, member);
+        booktalkRepository.delete(booktalk);
+        return completedBooktalk;
+    }
+
+    //완료된 북토크 연관관계 설정
+    private CompletedBooktalk completedBooktalkSetting(Booktalk booktalk, Member member) {
+        CompletedBooktalk completedBooktalk = CompletedBooktalk.toBuild(booktalk);
         completedBooktalkRepository.save(completedBooktalk);
         member.getCompletedBookTalkList().add(completedBooktalk);
         completedBooktalk.setMember(member);
-        booktalkRepository.delete(booktalk);
         return completedBooktalk;
     }
 }
