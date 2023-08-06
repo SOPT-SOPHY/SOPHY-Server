@@ -31,6 +31,7 @@ public class MemberBooktalk extends AuditingTimeEntity {
         if (!member.getUserBookTalkList().contains(this)) {
             // 시작날짜로 순으로 정렬해서 추가
             member.getUserBookTalkList().add(this);
+            member.plusUserBooktalk();
         }
     }
 

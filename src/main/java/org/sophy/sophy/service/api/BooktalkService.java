@@ -64,8 +64,7 @@ public class BooktalkService {
                 "image");
         }
         Booktalk booktalk = booktalkRequestDto.toBooktalk(place, member, booktalkImageUrl);
-        //작가 정보에 북토크 업데이트
-        member.getAuthorProperty().getMyBookTalkList().add(booktalk);
+
         return BooktalkCreateResponseDto.of(booktalkRepository.save(booktalk));
     }
 
@@ -173,9 +172,11 @@ public class BooktalkService {
         for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
             completedBooktalkSetting(booktalk, member);
+            member.minusUserBooktalk(); //예정된 북토크 수 감소
         }
         Member member = booktalk.getMember(); //작가 소피스토리 세팅
         CompletedBooktalk completedBooktalk = completedBooktalkSetting(booktalk, member);
+        member.getAuthorProperty().minusMyBookTalkSize(); //개최한 북토크 수 감소
         booktalkRepository.delete(booktalk);
         return completedBooktalk;
     }
@@ -184,8 +185,7 @@ public class BooktalkService {
     private CompletedBooktalk completedBooktalkSetting(Booktalk booktalk, Member member) {
         CompletedBooktalk completedBooktalk = CompletedBooktalk.toBuild(booktalk);
         completedBooktalkRepository.save(completedBooktalk);
-        member.getCompletedBookTalkList().add(completedBooktalk);
-        completedBooktalk.setMember(member);
+        completedBooktalk.setMember(member); //연관관계 설정
         return completedBooktalk;
     }
 }

@@ -2,11 +2,9 @@ package org.sophy.sophy.service.api;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.ScheduledBooktalkConverter;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
-import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OperatorService {
 
-    private final MemberRepository memberRepository;
     private final BooktalkRepository booktalkRepository;
 
     public List<Booktalk> getWaitingBooktalks(String email) { //승인 대기중 북토크 조회
-        Member member = memberRepository.getMemberByEmail(email);
-        return member.getOperatorProperty().getRecruitScheduledBooktalks();
+        return booktalkRepository.getWatingBooktalks(email);
     }
 
     public void approveBooktalk(Long booktalkId) { //북토크 승인

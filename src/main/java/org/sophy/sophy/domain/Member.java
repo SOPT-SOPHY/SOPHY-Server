@@ -56,8 +56,12 @@ public class Member extends AuditingTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<MemberBooktalk> userBookTalkList; // -> 참여 예정 북토크 수
 
+    private Integer userBookTalkSize;
+
     @OneToMany(mappedBy = "member")
     private List<CompletedBooktalk> completedBookTalkList; //이거 길이로 북토크 수 보여줄 수 있지 않을까? -> 참여 완료 북토크 수
+
+    private Integer completedBookTalkSize;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_property_id")
@@ -79,7 +83,21 @@ public class Member extends AuditingTimeEntity {
         this.marketingAgree = marketingAgree;
         this.authority = authority;
         this.userBookTalkList = new ArrayList<>();
+        this.userBookTalkSize = 0;
         this.completedBookTalkList = new ArrayList<>();
+        this.completedBookTalkSize = 0;
+    }
+
+    public void plusUserBooktalk() {
+        this.userBookTalkSize += 1;
+    }
+
+    public void minusUserBooktalk() {
+        this.userBookTalkSize -= 1;
+    }
+
+    public void plusCompletedBooktalk() {
+        this.completedBookTalkSize += 1;
     }
 
     public void setAuthorProperty(AuthorProperty authorProperty) {

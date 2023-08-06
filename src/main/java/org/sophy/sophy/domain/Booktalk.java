@@ -124,6 +124,7 @@ public class Booktalk extends AuditingTimeEntity {
         this.member = member;
         this.authorProperty = member.getAuthorProperty();
         member.getAuthorProperty().getMyBookTalkList().add(this);
+        member.getAuthorProperty().plusMyBookTalkSize();
     }
 
     @Builder
