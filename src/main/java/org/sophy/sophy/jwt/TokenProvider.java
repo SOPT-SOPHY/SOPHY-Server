@@ -35,7 +35,7 @@ public class TokenProvider {
     public static final String REFRESH_HEADER = "Refresh";
 
 
-    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L;
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
     private final Key key;
 

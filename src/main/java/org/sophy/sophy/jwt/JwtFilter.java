@@ -37,17 +37,19 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // 2. validateToken 으로 토큰 유효성 검사
         // 정상 토큰이면 해당 토큰으롤 Authentication을 가져와서 SecurityContext에 저장
-        try {
-            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                String isLogout = (String) redisTemplate.opsForValue().get(jwt);
-                if (ObjectUtils.isEmpty(isLogout)) {
-                    Authentication authentication = tokenProvider.getAuthentication(jwt);
-                    //Context에 저장할 때 auth를 설정하며 저장
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+        if(!request.getServletPath().contains("/auth/reissue")) { //servletRequest의 경로가 reissue가 아닐때만 필터 체크
+            try {
+                if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+                    String isLogout = (String) redisTemplate.opsForValue().get(jwt);
+                    if (ObjectUtils.isEmpty(isLogout)) {
+                        Authentication authentication = tokenProvider.getAuthentication(jwt);
+                        //Context에 저장할 때 auth를 설정하며 저장
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
                 }
+            } catch (ExpiredJwtException e) { //access token이 만료되었을 때
+                throw new JwtException("만료된 액세스 토큰입니다.");
             }
-        } catch (ExpiredJwtException e) { //access token이 만료되었을 때
-            throw new JwtException("만료된 액세스 토큰입니다.");
         }
 
         filterChain.doFilter(request, response);

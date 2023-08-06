@@ -75,6 +75,7 @@ public class AuthController {
         @SecurityRequirement(name = "Refresh")
     })
     public ApiResponseDto<TokenDto> reissue(@Parameter(hidden = true) HttpServletRequest request) {
+        //HttpServletRequest 객체가 filter를 거친후 DispatherServlet을 지나서 만들어지는 객체라 무조건 filter를 타게됨 (config 설정해도)
         String accessToken = tokenProvider.resolveAccessToken(request);
         String refreshToken = tokenProvider.resolveRefreshToken(request);
         return ApiResponseDto.success(SuccessStatus.REISSUE_SUCCESS,
