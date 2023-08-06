@@ -43,19 +43,9 @@ public class InitDb {
                 .build();
             em.persist(citizen);
 
-            AuthorProperty memauthor1 = AuthorProperty.builder()
-                .myBookTalkList(new ArrayList<>())
-                .myBookList(new ArrayList<>())
-                .build();
-            AuthorProperty memauthor2 = AuthorProperty.builder()
-                .myBookTalkList(new ArrayList<>())
-                .myBookList(new ArrayList<>())
-                .build();
-            AuthorProperty memauthor3 = AuthorProperty.builder()
-                .myBookTalkList(new ArrayList<>())
-                .myBookList(new ArrayList<>())
-                .build();
-
+            AuthorProperty memauthor1 = AuthorProperty.toBuild();
+            AuthorProperty memauthor2 = AuthorProperty.toBuild();
+            AuthorProperty memauthor3 = AuthorProperty.toBuild();
             em.persist(memauthor1);
             em.persist(memauthor2);
             em.persist(memauthor3);

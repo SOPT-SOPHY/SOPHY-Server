@@ -36,17 +36,17 @@ public class MemberService {
         if (member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
             return MyPageDto.builder()
                 .name(member.getName())
-                .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkList().size())
-                .waitingBookTalkCount(member.getUserBookTalkList().size()) //쿼리 나감 (공통 부분 묶어서 fetch join 혹은 dto 쿼리로 가져오고 작가 부분만 setter 이용해 변경해야 할듯)
-                .completeBookTalkCount(member.getCompletedBookTalkList().size()) //쿼리 나감
+                .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkSize())
+                .waitingBookTalkCount(member.getUserBookTalkSize()) //쿼리 나감 (공통 부분 묶어서 fetch join 혹은 dto 쿼리로 가져오고 작가 부분만 setter 이용해 변경해야 할듯)
+                .completeBookTalkCount(member.getCompletedBookTalkSize()) //쿼리 나감
                 .myPageBooktalkDtos(getBooktalksByMember(member))
                 .myBookDtos(getAuthorBooksByMember(member))
                 .build();
         } else {
             return MyPageDto.builder()
                 .name(member.getName())
-                .waitingBookTalkCount(member.getUserBookTalkList().size())
-                .completeBookTalkCount(member.getCompletedBookTalkList().size())
+                .waitingBookTalkCount(member.getUserBookTalkSize())
+                .completeBookTalkCount(member.getCompletedBookTalkSize())
                 .myPageBooktalkDtos(getBooktalksByMember(member))
                 .build();
         }
