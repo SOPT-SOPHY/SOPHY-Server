@@ -1,8 +1,22 @@
 package org.sophy.sophy.jwt;
 
-import io.jsonwebtoken.*;
+import static org.sophy.sophy.jwt.JwtFilter.AUTHORIZATION_HEADER;
+import static org.sophy.sophy.jwt.JwtFilter.BEARER_PREFIX;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.model.SophyJwtException;
@@ -17,26 +31,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
-
-import static org.sophy.sophy.jwt.JwtFilter.AUTHORIZATION_HEADER;
-import static org.sophy.sophy.jwt.JwtFilter.BEARER_PREFIX;
-
 
 @Slf4j
 @Component
 public class TokenProvider {
 
+    public static final String REFRESH_HEADER = "Refresh";
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    public static final String REFRESH_HEADER = "Refresh";
-
-
     private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
     private final Key key;
@@ -122,7 +124,8 @@ public class TokenProvider {
                 .build()
                 .parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) { //토큰 형식이 잘못됨
+        } catch (io.jsonwebtoken.security.SecurityException |
+                 MalformedJwtException e) { //토큰 형식이 잘못됨
             log.info("잘못된 JWT 서명입니다.");
             throw new SophyJwtException(HttpStatus.UNAUTHORIZED, "잘못된 JWT 서명입니다.");
         } catch (UnsupportedJwtException e) { //이 버전에서 지원하지 않는 JWT 토큰

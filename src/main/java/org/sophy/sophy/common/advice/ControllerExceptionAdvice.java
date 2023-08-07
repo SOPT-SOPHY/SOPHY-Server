@@ -3,6 +3,7 @@ package org.sophy.sophy.common.advice;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.lettuce.core.RedisCommandExecutionException;
+import java.security.SignatureException;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.SophyException;
@@ -22,31 +23,40 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ApiResponseDto handleMethodArgumentNotValidException() {
+    protected ApiResponseDto<?> handleMethodArgumentNotValidException() {
         return ApiResponseDto.error(ErrorStatus.VALIDATION_REQUEST_MISSING_EXCEPTION);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RedisCommandExecutionException.class)
-    protected ApiResponseDto handleRedisCommandExecutionException() {
+    protected ApiResponseDto<?> handleRedisCommandExecutionException() {
         return ApiResponseDto.error(ErrorStatus.INVALID_TOKEN_INFO_EXCEPTION);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    protected ApiResponseDto handleIllegalArgumentException() {
+    protected ApiResponseDto<?> handleIllegalArgumentException() {
         return ApiResponseDto.error(ErrorStatus.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException.class)
-    protected ApiResponseDto handleInvalidFormatException() {
+    protected ApiResponseDto<?> handleInvalidFormatException() {
         return ApiResponseDto.error(ErrorStatus.INVALID_FORMAT_EXCEPTION);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(SignatureException.class)
+    protected ApiResponseDto<?> handleSignatureException() {
+        return ApiResponseDto.error(401, "Jwt 토큰의 형식이 잘못되었습니다. (Signature)");
+    }
+
+    /*
+    401 UN_AUTHORIZED
+     */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
-    protected ApiResponseDto handleExpiredRefreshTokenException() {
+    protected ApiResponseDto<?> handleExpiredRefreshTokenException() {
         return ApiResponseDto.error(ErrorStatus.REFRESH_TOKEN_TIME_EXPIRED_EXCEPTION);
     }
 
@@ -54,13 +64,13 @@ public class ControllerExceptionAdvice {
      * Sopt custom error
      */
     @ExceptionHandler(SophyException.class)
-    protected ResponseEntity<ApiResponseDto> handleSophyException(SophyException e) {
+    protected ResponseEntity<ApiResponseDto<?>> handleSophyException(SophyException e) {
         return ResponseEntity.status(e.getHttpStatus())
             .body(ApiResponseDto.error(e.getErrorStatus(), e.getMessage()));
     }
 
     @ExceptionHandler(SophyJwtException.class)
-    protected ResponseEntity<ApiResponseDto> handleSophyException(SophyJwtException e) {
+    protected ResponseEntity<ApiResponseDto<?>> handleSophyJwtException(SophyJwtException e) {
         return ResponseEntity.status(e.getHttpStatus())
             .body(ApiResponseDto.error(e.getHttpStatus(), e.getMessage()));
     }
