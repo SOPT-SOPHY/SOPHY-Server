@@ -5,7 +5,9 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.controller.dto.response.TokenDto;
+import org.sophy.sophy.exception.model.SophyJwtException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -85,7 +87,7 @@ public class TokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new JwtException("권한 정보가 없는 토큰입니다.");
+            throw new SophyJwtException(HttpStatus.UNAUTHORIZED, "권한 정보가 없는 토큰입니다.");
         }
 
         //클레임에서 권한 정보 가져오기
@@ -122,13 +124,13 @@ public class TokenProvider {
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) { //토큰 형식이 잘못됨
             log.info("잘못된 JWT 서명입니다.");
-            throw new JwtException("잘못된 JWT 서명입니다.");
+            throw new SophyJwtException(HttpStatus.UNAUTHORIZED, "잘못된 JWT 서명입니다.");
         } catch (UnsupportedJwtException e) { //이 버전에서 지원하지 않는 JWT 토큰
             log.info("지원되지 않는 JWT 토큰입니다.");
-            throw new JwtException("지원되지 않는 JWT 토큰입니다.");
+            throw new SophyJwtException(HttpStatus.UNAUTHORIZED, "지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalStateException e) { //토큰의 형식이 잘못됨
             log.info("JWT 토큰이 잘못되었습니다.");
-            throw new JwtException("JWT 토큰이 잘못되었습니다.");
+            throw new SophyJwtException(HttpStatus.UNAUTHORIZED, "JWT 토큰이 잘못되었습니다.");
         }
     }
 

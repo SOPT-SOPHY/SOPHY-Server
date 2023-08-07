@@ -22,7 +22,7 @@ public class ApiResponseDto<T> {
     }
 
     public static <T> ApiResponseDto<T> success(SuccessStatus successStatus, T data) {
-        return new ApiResponseDto<T>(successStatus.getHttpStatus().value(),
+        return new ApiResponseDto<>(successStatus.getHttpStatus().value(),
             successStatus.getMessage(), data);
     }
 
@@ -32,5 +32,9 @@ public class ApiResponseDto<T> {
 
     public static ApiResponseDto error(ErrorStatus errorStatus, String message) {
         return new ApiResponseDto<>(errorStatus.getHttpStatusCode(), message);
+    }
+
+    public static ApiResponseDto error(Integer httpStatus, String message) {
+        return new ApiResponseDto<>(httpStatus, message);
     }
 }
