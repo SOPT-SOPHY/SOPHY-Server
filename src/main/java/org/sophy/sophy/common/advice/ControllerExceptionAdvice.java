@@ -1,9 +1,10 @@
 package org.sophy.sophy.common.advice;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import io.lettuce.core.RedisCommandExecutionException;
-import java.security.SignatureException;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.SophyException;
@@ -46,9 +47,9 @@ public class ControllerExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(SignatureException.class)
+    @ExceptionHandler(value = {SignatureException.class, JsonParseException.class})
     protected ApiResponseDto<?> handleSignatureException() {
-        return ApiResponseDto.error(401, "Jwt 토큰의 형식이 잘못되었습니다. (Signature)");
+        return ApiResponseDto.error(401, "Jwt 토큰의 형식이 잘못되었습니다.");
     }
 
     /*
