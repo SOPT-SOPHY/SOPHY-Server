@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
@@ -14,10 +16,13 @@ import org.sophy.sophy.service.api.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,11 +43,11 @@ public class PlaceController {
             placeService.createPlace(placeRequestDto, user.getUsername()));
     }
 
-    @GetMapping("/search/{city}")
+    @GetMapping("/search")
     @Operation(summary = "지역으로 공간 조회")
-    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCity(
-        @Parameter(description = "지역 이름", example = "UIJEONGBU_DONG") @Valid @PathVariable(name = "city") City city) {
+    public ApiResponseDto<List<PlaceResponseDto>> getPlacesByCities(
+        @Parameter(description = "지역 이름", example = "UIJEONGBU_DONG") @Valid @RequestParam(name = "cities") List<City> cities) {
         return ApiResponseDto.success(SuccessStatus.GET_PLACES_BY_CITY_SUCCESS,
-            placeService.getPlacesByCity(city));
+            placeService.getPlacesByCities(cities));
     }
 }

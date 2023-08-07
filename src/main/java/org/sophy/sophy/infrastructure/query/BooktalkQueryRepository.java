@@ -27,10 +27,10 @@ public interface BooktalkQueryRepository extends JpaRepository<Booktalk, Long> {
             + " from Booktalk b"
             + " join b.member m"
             + " join b.place p"
-            + " where b.city = :city"
+            + " where b.city in :cities"
             + " and b.booktalkStatus = :booktalkStatus"
             + " order by b.startDate")
-    List<BooktalkResponseDto> findBooktalkResponseDto(@Param("city") City city,
+    List<BooktalkResponseDto> findBooktalkResponseDto(@Param("cities") List<City> cities,
         @Param("booktalkStatus") BooktalkStatus booktalkStatus); //count 쿼리는 매우 무거운데 이거를 참가자 리스트를 불러와 count를 세는게 맞나?
 
     //sql의 in절을 통해 모집중과 모집 마감 북토크들을 한번에 조회

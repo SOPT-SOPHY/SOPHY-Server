@@ -6,6 +6,7 @@ import io.lettuce.core.RedisCommandExecutionException;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.SophyException;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,11 +46,11 @@ public class ControllerExceptionAdvice {
         return ApiResponseDto.error(ErrorStatus.INVALID_FORMAT_EXCEPTION);
     }
 
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    protected ApiResponseDto handleIllegalArgumentException(final IllegalArgumentException e) {
-//        return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
-//    }
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ConversionFailedException.class)
+    protected ApiResponseDto handleConversionFailedException(final ConversionFailedException e) {
+        return ApiResponseDto.error(ErrorStatus.NOT_FOUND_CITY_EXCEPTION);
+    }
 
     /**
      * Sopt custom error

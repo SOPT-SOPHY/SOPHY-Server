@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.booktalk.request.BooktalkParticipationRequestDto;
@@ -15,10 +17,14 @@ import org.sophy.sophy.service.api.BooktalkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,13 +44,13 @@ public class BooktalkController {
             booktalkService.getBooktalkDetail(booktalkId));
     }
 
-    @GetMapping("/search/{city}")
+    @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "지역으로 북토크 조회")
-    public ApiResponseDto<List<BooktalkResponseDto>> getPlacesByCity(
-        @Parameter(description = "지역 이름", example = "UIJEONGBU_DONG") @Valid @PathVariable(name = "city") City city) {
+    public ApiResponseDto<List<BooktalkResponseDto>> getBooktalksByCities(
+        @Parameter(description = "지역 이름", example = "UIJEONGBU_DONG") @Valid @RequestParam(name = "cities") List<City> cities) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS,
-            booktalkService.getBooktalksByCity(city));
+            booktalkService.getBooktalksByCities(cities));
     }
 
     @PostMapping("/participation")

@@ -142,18 +142,18 @@ public class BooktalkService {
 
     //지역으로 북토크 조회
     @Transactional
-    public List<BooktalkResponseDto> getBooktalksByCity(City city) {
+    public List<BooktalkResponseDto> getBooktalksByCities(List<City> cities) {
 
         List<BooktalkResponseDto> booktalkList;
         /*
         @Query를 통해 Dto로 직접 조회 및 정렬까지 구현 가능할 듯
         Dto로 직접 조회할 땐 페이징이 불가능 한 문제가 생길 수 있지만 여기선 ToMany관계가 없어서 가능할 듯
          */
-        if (city.equals(City.UIJEONGBU_SI)) { //모집중인 북토크만 조회
+        if (cities.contains(City.UIJEONGBU_SI)) { //모집중인 북토크만 조회
             booktalkList = booktalkQueryRepository.findBooktalkResponseDto(
                 BooktalkStatus.RECRUITING);
         } else {
-            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(city,
+            booktalkList = booktalkQueryRepository.findBooktalkResponseDto(cities,
                 BooktalkStatus.RECRUITING);
         }
 
