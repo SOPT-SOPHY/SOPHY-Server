@@ -1,4 +1,4 @@
-package org.sophy.sophy.controller;
+package org.sophy.sophy.controller.other;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;

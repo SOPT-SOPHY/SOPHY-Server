@@ -10,7 +10,7 @@ import org.sophy.sophy.controller.dto.response.PlaceResponseDto;
 import org.sophy.sophy.domain.dto.place.request.PlaceRequestDto;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.api.PlaceService;
+import org.sophy.sophy.service.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;

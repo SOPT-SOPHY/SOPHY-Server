@@ -9,7 +9,7 @@ import org.sophy.sophy.domain.enumerate.City;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import org.sophy.sophy.domain.other.AuditingEntity;
+import org.sophy.sophy.domain.common.AuditingEntity;
 
 @Entity
 @Getter

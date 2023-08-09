@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import org.sophy.sophy.domain.other.AuditingEntity;
+import org.sophy.sophy.domain.common.AuditingEntity;
 
 @Entity
 @Getter

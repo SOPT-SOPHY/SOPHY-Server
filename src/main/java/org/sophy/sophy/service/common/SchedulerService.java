@@ -1,14 +1,14 @@
-package org.sophy.sophy.service;
+package org.sophy.sophy.service.common;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.other.ScheduledBooktalkConverter;
+import org.sophy.sophy.domain.common.ScheduledBooktalkConverter;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
-import org.sophy.sophy.service.api.BooktalkService;
+import org.sophy.sophy.service.BooktalkService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

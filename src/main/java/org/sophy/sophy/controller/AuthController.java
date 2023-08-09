@@ -16,8 +16,8 @@ import org.sophy.sophy.controller.dto.response.MemberResponseDto;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.jwt.TokenProvider;
-import org.sophy.sophy.service.AuthService;
-import org.sophy.sophy.service.EmailService;
+import org.sophy.sophy.service.common.AuthService;
+import org.sophy.sophy.service.common.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -59,14 +59,10 @@ public class AuthController {
     @Operation(summary = "로그아웃")
     @SecurityRequirement(name = "JWT Auth")
     public ApiResponseDto<String> logout(@Parameter(hidden = true) HttpServletRequest request) {
-        /**
-         * HttpServletRequest나 HttpServletResponse 객체가 Service 계층으로 넘어가는 것은 좋지 않다.
-         * request, response는 컨트롤러 계층에서 사용되는 객체이며, Service 계층이 request와 response를 알 필요가 없다.
-         */
         String accessToken = tokenProvider.resolveAccessToken(request);
         return ApiResponseDto.success(SuccessStatus.LOGOUT_SUCCESS,
             authService.logout(accessToken));
-    }
+    } // HttpServletRequest 나 HttpServletResponse 객체가 Service 계층으로 넘어가는 것은 좋지 않다.
 
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발행")

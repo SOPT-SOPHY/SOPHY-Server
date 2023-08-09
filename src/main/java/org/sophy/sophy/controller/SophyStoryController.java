@@ -9,7 +9,7 @@ import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.SophyStoryDto;
 import org.sophy.sophy.domain.dto.SophyStoryRequestDto;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.api.SophyStoryService;
+import org.sophy.sophy.service.SophyStoryService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;

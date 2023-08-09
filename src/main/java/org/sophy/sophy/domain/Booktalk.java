@@ -15,8 +15,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.sophy.sophy.domain.other.AuditingEntity;
-import org.sophy.sophy.domain.other.ScheduledBooktalk;
+import org.sophy.sophy.domain.common.AuditingEntity;
+import org.sophy.sophy.domain.common.ScheduledBooktalk;
 
 @Entity
 @Getter

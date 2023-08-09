@@ -1,8 +1,8 @@
-package org.sophy.sophy.service.api;
+package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Booktalk;
-import org.sophy.sophy.domain.other.ScheduledBooktalkConverter;
+import org.sophy.sophy.domain.common.ScheduledBooktalkConverter;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.infrastructure.BooktalkRepository;
 import org.springframework.stereotype.Service;

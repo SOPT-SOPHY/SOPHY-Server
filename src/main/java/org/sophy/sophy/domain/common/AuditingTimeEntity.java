@@ -1,4 +1,4 @@
-package org.sophy.sophy.domain.other;
+package org.sophy.sophy.domain.common;
 
 import javax.persistence.Column;
 import lombok.Getter;
