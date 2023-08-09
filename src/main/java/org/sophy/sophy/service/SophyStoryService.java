@@ -1,4 +1,4 @@
-package org.sophy.sophy.service.api;
+package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.CompletedBooktalk;
@@ -38,15 +38,13 @@ public class SophyStoryService {
                 , LocalTime.of(23, 59, 59)));
 
         List<SophyStoryDto> sophyStoryDtos = new ArrayList<>();
-        completedBooktalkList.forEach(completedBooktalk -> {
-            sophyStoryDtos.add(SophyStoryDto.builder()
-                .title(completedBooktalk.getTitle())
-                .bookName(completedBooktalk.getBookName())
-                .authorName(completedBooktalk.getAuthorName())
-                .booktalkDate(completedBooktalk.getBooktalkDate())
-                .placeName(completedBooktalk.getPlaceName())
-                .build());
-        });
+        completedBooktalkList.forEach(completedBooktalk -> sophyStoryDtos.add(SophyStoryDto.builder()
+            .title(completedBooktalk.getTitle())
+            .bookName(completedBooktalk.getBookName())
+            .authorName(completedBooktalk.getAuthorName())
+            .booktalkDate(completedBooktalk.getBooktalkDate())
+            .placeName(completedBooktalk.getPlaceName())
+            .build()));
         return sophyStoryDtos;
     }
 
@@ -56,16 +54,14 @@ public class SophyStoryService {
         List<CompletedBooktalk> completedBooktalkList = member.getCompletedBookTalkList();
         List<SophyStoryDto> sophyStoryDtos = new ArrayList<>();
 
-        completedBooktalkList.forEach(completedBooktalk -> {
-            sophyStoryDtos.add(SophyStoryDto.builder()
-                .title(completedBooktalk.getTitle())
-                .bookName(completedBooktalk.getBookName())
-                .authorName(completedBooktalk.getAuthorName())
-                .booktalkDate(completedBooktalk.getBooktalkDate())
-                .placeName(completedBooktalk.getPlaceName())
-                .bookCategory(completedBooktalk.getBookCategory())
-                .build());
-        });
+        completedBooktalkList.forEach(completedBooktalk -> sophyStoryDtos.add(SophyStoryDto.builder()
+            .title(completedBooktalk.getTitle())
+            .bookName(completedBooktalk.getBookName())
+            .authorName(completedBooktalk.getAuthorName())
+            .booktalkDate(completedBooktalk.getBooktalkDate())
+            .placeName(completedBooktalk.getPlaceName())
+            .bookCategory(completedBooktalk.getBookCategory())
+            .build()));
         return sophyStoryDtos;
     }
 }
