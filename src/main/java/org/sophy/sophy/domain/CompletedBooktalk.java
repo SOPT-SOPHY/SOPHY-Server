@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sophy.sophy.domain.enumerate.BookCategory;
+import org.sophy.sophy.domain.other.AuditingTimeEntity;
 
 @Entity
 @Getter

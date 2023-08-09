@@ -15,13 +15,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.sophy.sophy.domain.other.AuditingEntity;
+import org.sophy.sophy.domain.other.ScheduledBooktalk;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE booktalk SET deleted = true WHERE booktalk_id=?")
 @Where(clause = "deleted=false")
-public class Booktalk extends AuditingTimeEntity {
+public class Booktalk extends AuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
