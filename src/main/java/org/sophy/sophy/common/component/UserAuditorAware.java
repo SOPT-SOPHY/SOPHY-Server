@@ -1,4 +1,4 @@
-package org.sophy.sophy.common.service;
+package org.sophy.sophy.common.component;
 
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
