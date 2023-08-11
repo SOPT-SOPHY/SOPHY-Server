@@ -32,6 +32,7 @@ public class SecurityConfig {
 
     private final JwtExceptionFilter jwtExceptionFilter;
     private final RedisTemplate redisTemplate;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,18 +66,18 @@ public class SecurityConfig {
             .and()
             .authorizeRequests()
             .antMatchers("/author/**").hasRole("AUTHOR")
-            .antMatchers("/auth/**").permitAll()
-            .antMatchers("/profile/**").permitAll()
-            .antMatchers("/actuator/**").permitAll()
-            .antMatchers("/health/**").permitAll()
-            .antMatchers("/home/**").permitAll()
-            .antMatchers("/booktalk/search/**").permitAll()
+            .antMatchers("/auth/**", "/profile/**", "/actuator/**", "/health/**").permitAll()
+            .antMatchers("/home/**", "/booktalk/search/**", "/").permitAll()
             .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html").permitAll()
-            .anyRequest().authenticated() //나머지 API는 전부 인증 필요
+            .anyRequest().authenticated();//나머지 API는 전부 인증 필요
 
-            //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+        http.oauth2Login()
+            .userInfoEndpoint()
+            .userService(customOAuth2UserService)
             .and()
-            .apply(new JwtSecurityConfig(tokenProvider, redisTemplate, jwtExceptionFilter));
+            .permitAll();
+        //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+        http.apply(new JwtSecurityConfig(tokenProvider, redisTemplate, jwtExceptionFilter));
 
         return http.build();
     }

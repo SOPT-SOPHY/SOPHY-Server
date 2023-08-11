@@ -33,7 +33,7 @@ public class MemberService {
     public MyPageDto getMyPage(String email) {
         Member member = memberRepository.getMemberByEmail(email);
         //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
-        if (member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
+        if (member.getAuthority().equals(Authority.AUTHOR)) {
             return MyPageDto.builder()
                 .name(member.getName())
                 .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkSize())
