@@ -39,7 +39,7 @@ public class InitDb {
                 .password(passwordEncoder.encode("Iammember10!"))
                 .phoneNum("01012345678")
                 .marketingAgree(true)
-                .authority(Authority.ROLE_USER)
+                .authority(Authority.USER)
                 .build();
             em.persist(citizen);
 
@@ -56,7 +56,7 @@ public class InitDb {
                 .password(passwordEncoder.encode("sophy123"))
                 .phoneNum("01012345678")
                 .marketingAgree(false)
-                .authority(Authority.ROLE_AUTHOR)
+                .authority(Authority.AUTHOR)
                 .build();
             author1.setAuthorProperty(memauthor1);
 
@@ -66,7 +66,7 @@ public class InitDb {
                 .password(passwordEncoder.encode("sophy234"))
                 .phoneNum("01023456789")
                 .marketingAgree(false)
-                .authority(Authority.ROLE_AUTHOR)
+                .authority(Authority.AUTHOR)
                 .build();
             author2.setAuthorProperty(memauthor2);
 
@@ -76,7 +76,7 @@ public class InitDb {
                 .password(passwordEncoder.encode("sophy345"))
                 .phoneNum("01098765432")
                 .marketingAgree(false)
-                .authority(Authority.ROLE_AUTHOR)
+                .authority(Authority.AUTHOR)
                 .build();
             author3.setAuthorProperty(memauthor3);
 
@@ -194,7 +194,7 @@ public class InitDb {
                 .password(passwordEncoder.encode("Iamoperator10!"))
                 .phoneNum("01056784321")
                 .marketingAgree(true)
-                .authority(Authority.ROLE_OPERATOR)
+                .authority(Authority.OPERATOR)
                 .build();
             oper.setOperatorProperty(memOper);
             em.persist(oper);

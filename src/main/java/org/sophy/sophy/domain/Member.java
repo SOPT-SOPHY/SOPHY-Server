@@ -127,4 +127,9 @@ public class Member extends AuditingTimeEntity {
 //        // 시작날짜순으로 정렬(예정된 북토크)
 //        this.getUserBookTalkList().sort(Comparator.comparing(o -> o.getBooktalk().getStartDate()));
 //    }
+
+    public Member update(String name) {
+        this.name = name;
+        return this;
+    }
 }

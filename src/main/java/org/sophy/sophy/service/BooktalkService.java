@@ -53,7 +53,7 @@ public class BooktalkService {
         String email) {
         Place place = placeRepository.getPlaceById(booktalkRequestDto.getPlaceId());
         Member member = memberRepository.getMemberByEmail(email);
-        if (!member.getAuthority().equals(Authority.ROLE_AUTHOR)) {
+        if (!member.getAuthority().equals(Authority.AUTHOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION,
                 ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }

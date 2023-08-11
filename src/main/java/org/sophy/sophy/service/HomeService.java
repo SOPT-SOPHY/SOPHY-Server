@@ -33,7 +33,7 @@ public class HomeService {
         Integer booktalkCount = member.getUserBookTalkSize();
         List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming = booktalkService.getBooktalkDeadlineUpcoming();
 
-        if (member.getAuthority().equals(Authority.ROLE_AUTHOR)) { //작가냐 아니냐에 따라 홈 화면 분리
+        if (member.getAuthority().equals(Authority.AUTHOR)) { //작가냐 아니냐에 따라 홈 화면 분리
             List<City> cityRank = getCityRank();
             return HomeResponseDto.builder()
                 .name(member.getName())

@@ -53,7 +53,7 @@ public class MemberRequestDto {
             .password(passwordEncoder.encode(password))
             .phoneNum(phoneNum)
             .marketingAgree(marketingAgree)
-            .authority(Authority.ROLE_USER)
+            .authority(Authority.USER)
             .build();
     }
 
