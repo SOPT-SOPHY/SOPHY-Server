@@ -1,10 +1,8 @@
 package org.sophy.sophy.config.auth;
 
 import java.util.Collections;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.config.auth.dto.OAuthAttributes;
-import org.sophy.sophy.config.auth.dto.SessionUser;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,10 +19,15 @@ import org.springframework.stereotype.Service;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        /**
+         * DefaultOAuth2UserService 객체를 생성하여, loadUser(userRequest)를 통해 DefaultOAuth2User 객체를 생성 후 반환
+         * DefaultOAuth2UserService의 loadUser()는 소셜 로그인 API의 사용자 정보 제공 URI로 요청을 보내서
+         * 사용자 정보를 얻은 후, 이를 통해 DefaultOAuth2User 객체를 생성 후 반환한다.
+         * 결과적으로, OAuth2User는 OAuth 서비스에서 가져온 유저 정보를 담고 있는 유저
+         */
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest); // OAuth2 정보를 가져옵니다.
 
@@ -35,12 +38,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             .getUserInfoEndpoint().getUserNameAttributeName();
 
         //OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
+        // 소셜 로그인에서 API가 제공하는 userInfo의 Json 값(유저 정보들)
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
             oAuth2User.getAttributes());
 
-        //SessionUser = 세션에 사용자 정보를 저장하기 위한 DTO 클래스
         Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(member));
 
         return new DefaultOAuth2User(
             Collections.singleton(new SimpleGrantedAuthority(member.getAuthority().getKey())),
