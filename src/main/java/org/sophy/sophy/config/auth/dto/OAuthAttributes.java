@@ -4,6 +4,7 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import org.sophy.sophy.domain.Member;
+import org.sophy.sophy.domain.enumerate.Authority;
 
 @Getter
 @Builder
@@ -16,9 +17,9 @@ public class OAuthAttributes {
     public static OAuthAttributes of(String registrationId, String userNameAttributeName,
         Map<String, Object> attributes) {
         if ("naver".equals(registrationId)) {
-            return ofNaver("id", attributes);
+            return ofNaver(attributes);
         } else if ("kakao".equals(registrationId)) {
-            return ofKakao("id", attributes);
+            return ofKakao(attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
@@ -33,27 +34,29 @@ public class OAuthAttributes {
             .build();
     }
 
-    private static OAuthAttributes ofNaver(String userNameAttributeName,
-        Map<String, Object> attributes) {
+    private static OAuthAttributes ofNaver(Map<String, Object> attributes) {
         return OAuthAttributes.builder()
             .name((String) attributes.get("name"))
             .email((String) attributes.get("email"))
             .attributes(attributes)
-            .nameAttributeKey(userNameAttributeName)
+            .nameAttributeKey("id")
             .build();
     }
 
-    private static OAuthAttributes ofKakao(String userNameAttributeName,
-        Map<String, Object> attributes) {
+    private static OAuthAttributes ofKakao(Map<String, Object> attributes) {
         return OAuthAttributes.builder()
             .name((String) attributes.get("name"))
             .email((String) attributes.get("email"))
             .attributes(attributes)
-            .nameAttributeKey(userNameAttributeName)
+            .nameAttributeKey("id")
             .build();
     }
 
     public Member toEntity() {
-        return Member.builder().build();
+        return Member.builder()
+            .name(name)
+            .email(email)
+            .authority(Authority.USER)
+            .build();
     }
 }
