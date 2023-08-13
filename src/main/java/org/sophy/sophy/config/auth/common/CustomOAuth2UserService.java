@@ -42,29 +42,35 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
             oAuth2User.getAttributes());
 
-        Member member = saveOrUpdate(attributes);
+        Member member = getMember(attributes);
 
         return new CustomOAuth2User(
             Collections.singleton(new SimpleGrantedAuthority(member.getAuthority().getKey())),
-            attributes.getAttributes(),
+            oAuth2User.getAttributes(),
             attributes.getNameAttributeKey(),
             member.getEmail(),
             member.getAuthority()
         );
     }
 
+    private Member getMember(OAuthAttributes attributes) {
+        Member findMember = memberRepository.findBySocialId(
+            attributes.getOAuth2UserInfo().getId()).orElse(null);
+
+        if (findMember == null) {
+            return saveMember(attributes);
+        }
+        return findMember;
+    }
+
     /**
      * 이미 존재하는 회원이라면 이름과 프로필이미지를 업데이트해줍니다.
      * 처음 가입하는 회원이라면 Member 테이블을 생성합니다. (소셜 회원가입)
      **/
-    private Member saveOrUpdate(OAuthAttributes attributes) {
+    private Member saveMember(OAuthAttributes attributes) {
         //기존 유저도 이메일 인증을 했기에, 둘이 이메일이 같으면 같은 유저임
         // update는 기존 유저의 소셜 ID 컬럼에 값을 추가하는 것 정도만 있으면 될듯
-        // 필드 추가 필요
-        Member member = memberRepository.findByEmail(attributes.getEmail())
-            .map(entity -> entity.update(attributes.getName()))
-            .orElse(attributes.toEntity());
-
+        Member member = attributes.toEntity(attributes.getOAuth2UserInfo());
         return memberRepository.save(member);
     }
 
