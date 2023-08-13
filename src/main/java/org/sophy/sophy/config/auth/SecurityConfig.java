@@ -3,6 +3,8 @@ package org.sophy.sophy.config.auth;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.config.auth.common.CustomOAuth2UserService;
+import org.sophy.sophy.config.auth.common.OAuth2LoginSuccessHandler;
 import org.sophy.sophy.jwt.JwtAccessDeniedHandler;
 import org.sophy.sophy.jwt.JwtAuthenticationEntryPoint;
 import org.sophy.sophy.jwt.JwtExceptionFilter;
@@ -33,6 +35,7 @@ public class SecurityConfig {
     private final JwtExceptionFilter jwtExceptionFilter;
     private final RedisTemplate redisTemplate;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -72,8 +75,8 @@ public class SecurityConfig {
             .anyRequest().authenticated();//나머지 API는 전부 인증 필요
 
         http.oauth2Login()
-            .userInfoEndpoint()
-            .userService(customOAuth2UserService)
+            .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+            .userInfoEndpoint().userService(customOAuth2UserService) // customUserService 설정
             .and()
             .permitAll();
         //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용

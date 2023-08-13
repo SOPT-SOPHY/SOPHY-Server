@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum Authority {
     ADMIN("ROLE_ADMIN", "관리자"),
     USER("ROLE_USER", "일반 사용자"),
+    GUEST("ROLE_GUEST", "비회원"),
     AUTHOR("ROLE_AUTHOR", "작가"),
     OPERATOR("ROLE_OPERATOR", "공간운영자"),
     ALL("ROLE_ALL", "작가 + 공간운영자");

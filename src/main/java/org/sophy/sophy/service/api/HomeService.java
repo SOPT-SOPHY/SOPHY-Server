@@ -85,7 +85,6 @@ public class HomeService {
         List<Map.Entry<City, Integer>> cityLists = rank.entrySet().stream()
             .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
             .collect(Collectors.toList());
-        System.out.println(cityLists);
 
         List<City> result = new ArrayList<>();
         for (Map.Entry<City, Integer> entry : cityLists.subList(0, 3)) {

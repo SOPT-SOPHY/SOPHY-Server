@@ -56,7 +56,7 @@ public class OAuthAttributes {
         return Member.builder()
             .name(name)
             .email(email)
-            .authority(Authority.USER)
+            .authority(Authority.GUEST)
             .build();
     }
 }
