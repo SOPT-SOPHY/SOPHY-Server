@@ -22,7 +22,6 @@ import org.sophy.sophy.domain.common.AuditingTimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE member SET deleted = true WHERE member_id=?")
 @Where(clause = "deleted=false")
-//@DiscriminatorColumn
 public class Member extends AuditingTimeEntity {
 
     @Id
@@ -84,6 +83,10 @@ public class Member extends AuditingTimeEntity {
         this.userBookTalkSize = 0;
         this.completedBookTalkList = new ArrayList<>();
         this.completedBookTalkSize = 0;
+    }
+
+    public void authorizeUser() {
+        this.authority = Authority.USER;
     }
 
     public void plusUserBooktalk() {

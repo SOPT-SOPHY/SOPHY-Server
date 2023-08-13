@@ -1,7 +1,8 @@
-package org.sophy.sophy.config.auth;
+package org.sophy.sophy.config.auth.common;
 
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.config.auth.CustomOAuth2User;
 import org.sophy.sophy.config.auth.dto.OAuthAttributes;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.infrastructure.MemberRepository;
@@ -10,7 +11,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -44,10 +44,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Member member = saveOrUpdate(attributes);
 
-        return new DefaultOAuth2User(
+        return new CustomOAuth2User(
             Collections.singleton(new SimpleGrantedAuthority(member.getAuthority().getKey())),
             attributes.getAttributes(),
-            attributes.getNameAttributeKey()
+            attributes.getNameAttributeKey(),
+            member.getEmail(),
+            member.getAuthority()
         );
     }
 
@@ -56,6 +58,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
      * 처음 가입하는 회원이라면 Member 테이블을 생성합니다. (소셜 회원가입)
      **/
     private Member saveOrUpdate(OAuthAttributes attributes) {
+        //기존 유저도 이메일 인증을 했기에, 둘이 이메일이 같으면 같은 유저임
+        // update는 기존 유저의 소셜 ID 컬럼에 값을 추가하는 것 정도만 있으면 될듯
+        // 필드 추가 필요
         Member member = memberRepository.findByEmail(attributes.getEmail())
             .map(entity -> entity.update(attributes.getName()))
             .orElse(attributes.toEntity());
