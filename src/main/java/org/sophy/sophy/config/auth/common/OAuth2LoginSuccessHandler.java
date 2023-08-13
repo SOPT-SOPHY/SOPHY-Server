@@ -41,8 +41,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트
         if(customOAuth2User.getAuthority() == Authority.GUEST) {
             response.sendRedirect("/auth/signup"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트 (추가 컨트롤러를 만들고 거기서 post 해야지 User로 바뀌게 해야겠다)
-            //
 
+            //아래의 GUEST를 USER로 바꿔주는 로직은 회원가입 승인되면서 처리되게 변경
             Member findUser = memberRepository.getMemberByEmail(customOAuth2User.getEmail());
             findUser.authorizeUser();
         } else {

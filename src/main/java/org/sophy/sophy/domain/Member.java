@@ -28,6 +28,8 @@ public class Member extends AuditingTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
+    private String socialId;
+
     @Column(nullable = false)
     private String name;
 
@@ -71,13 +73,14 @@ public class Member extends AuditingTimeEntity {
 
     @Builder
     public Member(String name, String email, String password, String phoneNum,
-        boolean marketingAgree, Authority authority) {
+        boolean marketingAgree, Authority authority, String socialId) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNum = phoneNum;
         this.marketingAgree = marketingAgree;
         this.authority = authority;
+        this.socialId = socialId;
         this.userBookTalkList = new ArrayList<>();
         this.userBookTalkSize = 0;
         this.completedBookTalkList = new ArrayList<>();
