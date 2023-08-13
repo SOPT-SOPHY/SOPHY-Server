@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.config.auth.common.CustomOAuth2UserService;
+import org.sophy.sophy.config.auth.common.OAuth2LoginFailureHandler;
 import org.sophy.sophy.config.auth.common.OAuth2LoginSuccessHandler;
 import org.sophy.sophy.jwt.JwtAccessDeniedHandler;
 import org.sophy.sophy.jwt.JwtAuthenticationEntryPoint;
@@ -36,6 +37,7 @@ public class SecurityConfig {
     private final RedisTemplate redisTemplate;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -76,6 +78,7 @@ public class SecurityConfig {
 
         http.oauth2Login()
             .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+            .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
             .userInfoEndpoint().userService(customOAuth2UserService) // customUserService 설정
             .and()
             .permitAll();
