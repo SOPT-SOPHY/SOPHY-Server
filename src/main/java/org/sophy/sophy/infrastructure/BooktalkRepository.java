@@ -30,4 +30,6 @@ public interface BooktalkRepository extends JpaRepository<Booktalk, Long> {
         + " join m.operatorProperty o"
         + " where m.email = :email")
     List<Booktalk> getWatingBooktalks(@Param("email") String email);
+
+    List<Booktalk> findAllByBooktalkStatusOrderByEndDate(BooktalkStatus booktalkStatus);
 }
