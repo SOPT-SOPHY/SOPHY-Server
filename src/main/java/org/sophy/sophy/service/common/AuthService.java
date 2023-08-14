@@ -10,6 +10,7 @@ import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ExistEmailException;
 import org.sophy.sophy.exception.model.LogoutRefreshtokenException;
+import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.exception.model.SophyException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
@@ -45,6 +46,16 @@ public class AuthService {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
+    }
+
+    @Transactional
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto, String socialId) {
+        //GUEST를 USER로 바꾸며 회원가입 시키는 로직
+        Member member = memberRepository.findBySocialId(socialId)
+            .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION,
+                ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+
+        return MemberResponseDto.of(member.createSocialLogin(passwordEncoder, memberRequestDto));
     }
 
     @Transactional
