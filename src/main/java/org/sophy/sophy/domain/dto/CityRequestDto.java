@@ -8,6 +8,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class CityRequestDto {
 
-    @NotNull
+    @NotNull(message = "유효하지 않은 지역입니다.")
     private City city;
 }

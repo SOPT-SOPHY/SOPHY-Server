@@ -9,11 +9,12 @@ import org.sophy.sophy.domain.enumerate.City;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.sophy.sophy.domain.common.AuditingEntity;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Place extends AuditingTimeEntity {
+public class Place extends AuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

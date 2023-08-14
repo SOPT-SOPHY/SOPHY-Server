@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.HomeResponseDto;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.api.HomeService;
+import org.sophy.sophy.service.HomeService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;

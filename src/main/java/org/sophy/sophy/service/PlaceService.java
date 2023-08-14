@@ -1,4 +1,4 @@
-package org.sophy.sophy.service.api;
+package org.sophy.sophy.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.response.PlaceResponseDto;

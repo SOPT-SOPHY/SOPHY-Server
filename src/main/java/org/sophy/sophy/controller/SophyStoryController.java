@@ -3,12 +3,13 @@ package org.sophy.sophy.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.SophyStoryDto;
 import org.sophy.sophy.domain.dto.SophyStoryRequestDto;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.service.api.SophyStoryService;
+import org.sophy.sophy.service.SophyStoryService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class SophyStoryController {
     @GetMapping //소피스토리 연, 월로 조회
     public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(
         @Parameter(hidden = true) @AuthenticationPrincipal User user,
-        @RequestBody SophyStoryRequestDto sophyStoryRequestDto) {
+        @RequestBody @Valid SophyStoryRequestDto sophyStoryRequestDto) {
         return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS,
             sophyStoryService.getMySophyStory(user.getUsername(), sophyStoryRequestDto));
     }
