@@ -41,6 +41,7 @@ public class MemberController {
     @Operation(summary = "내 정보 조회")
     public ApiResponseDto<MyInfoDto> getInfo(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        System.out.println(user.toString());
         return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
             memberService.getMyInfo(user.getUsername()));
     }

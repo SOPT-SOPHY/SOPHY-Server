@@ -48,7 +48,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             Collections.singleton(new SimpleGrantedAuthority(member.getAuthority().getKey())),
             oAuth2User.getAttributes(),
             attributes.getNameAttributeKey(),
-            member.getEmail(),
+            member.getEmail(), //user 로드할 때 현재 member의 email 저장
             member.getAuthority()
         );
     }

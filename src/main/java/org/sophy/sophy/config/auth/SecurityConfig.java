@@ -72,7 +72,7 @@ public class SecurityConfig {
             .authorizeRequests()
             .antMatchers("/author/**").hasRole("AUTHOR")
             .antMatchers("/auth/**", "/profile/**", "/actuator/**", "/health/**").permitAll()
-            .antMatchers("/home/**", "/booktalk/search/**", "/").permitAll()
+            .antMatchers("/home/**", "/booktalk/search/**", "/test/**", "/").permitAll()
             .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html").permitAll()
             .anyRequest().authenticated();//나머지 API는 전부 인증 필요
 
