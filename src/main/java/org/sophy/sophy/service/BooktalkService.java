@@ -1,7 +1,5 @@
 package org.sophy.sophy.service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -122,22 +120,8 @@ public class BooktalkService {
 
     // 마감임박 북토크 조회
     public List<BooktalkDeadlineUpcomingDto> getBooktalkDeadlineUpcoming() {
-        List<Place> placeList = placeRepository.findAll();
-
-        List<BooktalkDeadlineUpcomingDto> booktalkList = new ArrayList<>();
-        placeList.forEach(place -> place.getBooktalkList().forEach(booktalk -> {
-                // 모집중인 북토크만 추가
-                if (booktalk.getBooktalkStatus() == BooktalkStatus.RECRUITING) {
-                    booktalkList.add(BooktalkDeadlineUpcomingDto.of(booktalk));
-                }
-            }
-        ));
-
-        // 마감 임박순으로 정렬
-        booktalkList.sort(Comparator.comparing(BooktalkDeadlineUpcomingDto::getEndDate));
-
-        return booktalkList;
-
+        return booktalkRepository.findAllByBooktalkStatusOrderByEndDate(BooktalkStatus.RECRUITING)
+            .stream().map(BooktalkDeadlineUpcomingDto::of).collect(Collectors.toList());
     }
 
     //지역으로 북토크 조회
