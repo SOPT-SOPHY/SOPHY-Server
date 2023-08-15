@@ -10,8 +10,8 @@ import org.sophy.sophy.domain.MemberBooktalk;
 @Getter
 public class BooktalkParticipationRequestDto {
 
-    @NotNull
-    @Schema(description = "북토크 Id", example = "1")
+    @NotNull(message = "유효하지 않은 북토크 ID입니다.")
+    @Schema(description = "북토크 Id", example = "5")
     private Long booktalkId;
 
     public MemberBooktalk toMemberBooktalk(Booktalk booktalk, Member member) {

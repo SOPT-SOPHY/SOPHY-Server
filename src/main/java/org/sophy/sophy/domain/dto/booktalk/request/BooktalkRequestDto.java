@@ -20,36 +20,36 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BooktalkRequestDto {
 
-    @NotNull
+    @NotNull(message = "유효하지 않은 공간 ID입니다.")
     @Schema(description = "장소 Id", example = "1")
     private Long placeId;
 
     private MultipartFile booktalkImage;
-    @NotBlank
+    @NotBlank(message = "유효하지 않은 북토크 제목입니다.")
     @Schema(description = "북토크 이름", example = "소나기")
     private String title;
-    @NotNull
+    @NotNull(message = "유효하지 않은 책 분야입니다.")
     @Schema(description = "책 분야", example = "LITERATURE")
     private BookCategory bookCategory;
-    @NotNull
+    @NotNull(message = "유효하지 않은 책 ID입니다.")
     @Schema(description = "책 Id", example = "1")
     private Long bookId;
-    @NotNull
+    @NotNull(message = "유효하지 않은 시작 날짜입니다.")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startDate;
-    @NotNull
+    @NotNull(message = "유효하지 않은 종료 날짜입니다.")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endDate;
-    @NotNull
+    @NotNull(message = "유효하지 않은 북토크 참가 인원입니다.")
     @Schema(description = "북토크 참가 인원", example = "8")
     private Integer participant;
-    @NotNull
-    @Schema(description = "북토크 참가 비", example = "1000")
+    @NotNull(message = "유효하지 않은 북토크 참가비입니다.")
+    @Schema(description = "북토크 참가비", example = "1000")
     private Integer participationFee;
-    @NotNull
+    @NotNull(message = "유효하지 않은 북토크 사전 준비 사항입니다.")
     @Schema(description = "북토크 사전 준비 사항", example = "PRE_READING")
     private PreliminaryInfo preliminaryInfo;
-    @NotBlank
+    @NotBlank(message = "유효하지 않은 북토크 상세 설명입니다.")
     @Schema(description = "북토크 상세 설명", example = "밖에 비온다 주륵주륵")
     private String description;
 

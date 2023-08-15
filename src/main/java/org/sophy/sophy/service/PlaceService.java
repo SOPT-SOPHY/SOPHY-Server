@@ -1,4 +1,4 @@
-package org.sophy.sophy.service.api;
+package org.sophy.sophy.service;
 
 import java.util.List;
 import java.util.stream.Collectors;

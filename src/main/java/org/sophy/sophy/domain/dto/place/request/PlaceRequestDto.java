@@ -1,6 +1,7 @@
 package org.sophy.sophy.domain.dto.place.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -15,21 +16,22 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaceRequestDto {
 
-    @NotNull
+    @NotNull(message = "유효하지 않은 지역입니다.")
     @Schema(description = "지역 이름", example = "UIJEONGBU_DONG")
     private City city;
-    @NotBlank
+    @NotBlank(message = "유효하지 않은 공간 이름입니다.")
     @Schema(description = "공간 이름", example = "나의 공간")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "유효하지 않은 주소입니다.")
     @Schema(description = "공간 주소", example = "경기도 의정부시 의정부동 의정부로 14번길 7")
     private String address;
 
-    @NotNull
+    @NotNull(message = "유효하지 않은 최대 수용 인원입니다.")
     @Schema(description = "최대 수용 인원", example = "12")
     private Integer maximum;
 
+    @Valid
     private MultipartFile placeImage;
 
     public Place toPlace(Member member, String placeImageUrl) {

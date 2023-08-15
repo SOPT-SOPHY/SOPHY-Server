@@ -1,5 +1,6 @@
-package org.sophy.sophy.domain;
+package org.sophy.sophy.domain.common;
 
+import javax.persistence.Column;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class AuditingTimeEntity {
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createAt;
 
     @LastModifiedDate

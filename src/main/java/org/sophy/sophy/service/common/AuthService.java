@@ -1,4 +1,4 @@
-package org.sophy.sophy.service;
+package org.sophy.sophy.service.common;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
@@ -32,7 +32,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     //이메일 중복 체크만 가능한 서비스 하나 추가
 
@@ -115,7 +115,7 @@ public class AuthService {
         // 2. Access Token 에서 Member ID(user email) 가져오기
         Authentication authentication = tokenProvider.getAuthentication(accessToken);
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        String existRefreshToken = (String) redisTemplate.opsForValue()
+        String existRefreshToken = redisTemplate.opsForValue()
             .get("RT:" + authentication.getName());
 
         //로그아웃 되어 Redis에 RefreshToken이 존재하지 않는 경우 처리
