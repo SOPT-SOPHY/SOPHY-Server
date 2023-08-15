@@ -13,7 +13,6 @@ import org.sophy.sophy.config.auth.CustomOAuth2User;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.exception.SuccessStatus;
-import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
