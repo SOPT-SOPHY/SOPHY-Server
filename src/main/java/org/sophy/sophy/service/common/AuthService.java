@@ -1,6 +1,7 @@
 package org.sophy.sophy.service.common;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
 import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
@@ -10,7 +11,6 @@ import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ExistEmailException;
 import org.sophy.sophy.exception.model.LogoutRefreshtokenException;
-import org.sophy.sophy.exception.model.NotFoundException;
 import org.sophy.sophy.exception.model.SophyException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -49,13 +50,11 @@ public class AuthService {
     }
 
     @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto, String socialId) {
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto, String email) {
         //GUEST를 USER로 바꾸며 회원가입 시키는 로직
-        Member member = memberRepository.findBySocialId(socialId)
-            .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION,
-                ErrorStatus.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        Member member = memberRepository.getMemberByEmail(email);
 
-        return MemberResponseDto.of(member.createSocialLogin(passwordEncoder, memberRequestDto));
+        return MemberResponseDto.of(member.socialSignUp(passwordEncoder, memberRequestDto));
     }
 
     @Transactional

@@ -123,7 +123,7 @@ public class Member extends AuditingTimeEntity {
         this.marketingAgree = myInfoDto.getMarketingAgree();
     }
 
-    public Member createSocialLogin(PasswordEncoder passwordEncoder, MemberRequestDto memberRequestDto) {
+    public Member socialSignUp(PasswordEncoder passwordEncoder, MemberRequestDto memberRequestDto) {
         this.email = memberRequestDto.getEmail();
         this.name = memberRequestDto.getName();
         this.password = passwordEncoder.encode(memberRequestDto.getPassword());
