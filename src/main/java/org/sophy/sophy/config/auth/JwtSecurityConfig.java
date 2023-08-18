@@ -1,4 +1,4 @@
-package org.sophy.sophy.config;
+package org.sophy.sophy.config.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.jwt.JwtExceptionFilter;

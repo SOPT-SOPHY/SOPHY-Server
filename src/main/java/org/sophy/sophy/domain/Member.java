@@ -7,23 +7,23 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
+import org.sophy.sophy.controller.dto.request.MemberRequestDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.City;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import org.sophy.sophy.domain.common.AuditingTimeEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE member SET deleted = true WHERE member_id=?")
 @Where(clause = "deleted=false")
-//@DiscriminatorColumn
 public class Member extends AuditingTimeEntity {
 
     @Id
@@ -31,16 +31,16 @@ public class Member extends AuditingTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
+    private String socialId;
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @NotNull
     @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phoneNum;
 
@@ -76,13 +76,14 @@ public class Member extends AuditingTimeEntity {
 
     @Builder
     public Member(String name, String email, String password, String phoneNum,
-        boolean marketingAgree, Authority authority) {
+        boolean marketingAgree, Authority authority, String socialId) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNum = phoneNum;
         this.marketingAgree = marketingAgree;
         this.authority = authority;
+        this.socialId = socialId;
         this.userBookTalkList = new ArrayList<>();
         this.userBookTalkSize = 0;
         this.completedBookTalkList = new ArrayList<>();
@@ -122,9 +123,13 @@ public class Member extends AuditingTimeEntity {
         this.marketingAgree = myInfoDto.getMarketingAgree();
     }
 
-//    public void addUserBooktalkandSortByStartDate(MemberBooktalk memberBooktalk) { //이게 merge?
-//        this.getUserBookTalkList().add(memberBooktalk);
-//        // 시작날짜순으로 정렬(예정된 북토크)
-//        this.getUserBookTalkList().sort(Comparator.comparing(o -> o.getBooktalk().getStartDate()));
-//    }
+    public Member socialSignUp(PasswordEncoder passwordEncoder, MemberRequestDto memberRequestDto) {
+        this.email = memberRequestDto.getEmail();
+        this.name = memberRequestDto.getName();
+        this.password = passwordEncoder.encode(memberRequestDto.getPassword());
+        this.phoneNum = memberRequestDto.getPhoneNum();
+        this.marketingAgree = memberRequestDto.getMarketingAgree();
+        this.authority = Authority.USER;
+        return this;
+    }
 }

@@ -29,7 +29,7 @@ public class PlaceService {
     @Transactional
     public PlaceResponseDto createPlace(PlaceRequestDto placeRequestDto, String email) {
         Member member = memberRepository.getMemberByEmail(email);
-        if (!member.getAuthority().equals(Authority.ROLE_OPERATOR)) {
+        if (!member.getAuthority().equals(Authority.OPERATOR)) {
             throw new ForbiddenException(ErrorStatus.FORBIDDEN_USER_EXCEPTION,
                 ErrorStatus.FORBIDDEN_USER_EXCEPTION.getMessage());
         }

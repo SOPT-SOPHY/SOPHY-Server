@@ -1,6 +1,7 @@
 package org.sophy.sophy.service.common;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
 import org.sophy.sophy.controller.dto.request.MemberLoginRequestDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -45,6 +47,14 @@ public class AuthService {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
+    }
+
+    @Transactional
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto, String email) {
+        //GUEST를 USER로 바꾸며 회원가입 시키는 로직
+        Member member = memberRepository.getMemberByEmail(email);
+
+        return MemberResponseDto.of(member.socialSignUp(passwordEncoder, memberRequestDto));
     }
 
     @Transactional

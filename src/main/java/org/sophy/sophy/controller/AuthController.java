@@ -42,9 +42,21 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "회원가입")
     public ApiResponseDto<MemberResponseDto> signup(
-        @RequestBody @Valid MemberRequestDto memberRequestDto) {
+        @RequestBody @Valid MemberRequestDto memberRequestDto){
         return ApiResponseDto.success(SuccessStatus.SIGNUP_SUCCESS,
             authService.signup(memberRequestDto));
+    }
+
+    @PostMapping("/signup/oauth")
+    @ResponseStatus(HttpStatus.CREATED)
+    @SecurityRequirement(name = "JWT Auth")
+    @Operation(summary = "소셜 로그인 회원가입")
+    public ApiResponseDto<MemberResponseDto> signup(
+        @RequestBody @Valid MemberRequestDto memberRequestDto,
+        @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        //여기서는 user.getUsername() 의 값이 social ID 값
+        return ApiResponseDto.success(SuccessStatus.SIGNUP_SUCCESS,
+            authService.signup(memberRequestDto, user.getUsername()));
     }
 
     @PostMapping("/login")

@@ -1,8 +1,11 @@
-package org.sophy.sophy.config;
+package org.sophy.sophy.config.auth;
 
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.sophy.sophy.config.auth.common.CustomOAuth2UserService;
+import org.sophy.sophy.config.auth.common.OAuth2LoginFailureHandler;
+import org.sophy.sophy.config.auth.common.OAuth2LoginSuccessHandler;
 import org.sophy.sophy.jwt.JwtAccessDeniedHandler;
 import org.sophy.sophy.jwt.JwtAuthenticationEntryPoint;
 import org.sophy.sophy.jwt.JwtExceptionFilter;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +35,9 @@ public class SecurityConfig {
 
     private final JwtExceptionFilter jwtExceptionFilter;
     private final RedisTemplate redisTemplate;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,7 +49,7 @@ public class SecurityConfig {
         //CSRF 설정 Disable
         http.csrf().disable()
 
-            .cors(cors -> cors.disable())
+            .cors(AbstractHttpConfigurer::disable)
 
             //exception handling 할 때 우리가 만든 클래스를 추가
             .exceptionHandling()
@@ -64,18 +71,19 @@ public class SecurityConfig {
             .and()
             .authorizeRequests()
             .antMatchers("/author/**").hasRole("AUTHOR")
-            .antMatchers("/auth/**").permitAll()
-            .antMatchers("/profile/**").permitAll()
-            .antMatchers("/actuator/**").permitAll()
-            .antMatchers("/health/**").permitAll()
-            .antMatchers("/home/**").permitAll()
-            .antMatchers("/booktalk/search/**").permitAll()
+            .antMatchers("/auth/**", "/profile/**", "/actuator/**", "/health/**").permitAll()
+            .antMatchers("/home/**", "/booktalk/search/**", "/test/**", "/").permitAll()
             .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html").permitAll()
-            .anyRequest().authenticated() //나머지 API는 전부 인증 필요
+            .anyRequest().authenticated();//나머지 API는 전부 인증 필요
 
-            //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+        http.oauth2Login()
+            .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+            .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
+            .userInfoEndpoint().userService(customOAuth2UserService) // customUserService 설정
             .and()
-            .apply(new JwtSecurityConfig(tokenProvider, redisTemplate, jwtExceptionFilter));
+            .permitAll();
+        //JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+        http.apply(new JwtSecurityConfig(tokenProvider, redisTemplate, jwtExceptionFilter));
 
         return http.build();
     }

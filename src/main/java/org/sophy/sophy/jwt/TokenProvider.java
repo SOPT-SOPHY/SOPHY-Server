@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.sophy.sophy.config.auth.CustomOAuth2User;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.model.SophyJwtException;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,12 +64,23 @@ public class TokenProvider {
 
         //Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        String accessToken = Jwts.builder()
-            .setSubject(authentication.getName()) // payload "sub" : "name"
-            .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
-            .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
-            .signWith(key, SignatureAlgorithm.HS512)
-            .compact();
+        String accessToken;
+        if(authentication.getClass() == UsernamePasswordAuthenticationToken.class){
+            accessToken = Jwts.builder()
+                .setSubject(authentication.getName()) // payload "sub" : "name"
+                .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
+                .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+        } else { //oauth2 로 로그인 했을 때 토큰 저장
+            CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+            accessToken = Jwts.builder()
+                .setSubject(customOAuth2User.getEmail()) // payload "sub" : "name"
+                .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
+                .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+        }
 
         //Refresh Token 생성
         String refreshToken = Jwts.builder()
@@ -82,6 +94,24 @@ public class TokenProvider {
             .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
             .refreshToken(refreshToken)
             .build();
+    }
+
+    public String generateAccessToken(Authentication authentication) {
+        //권한들 가져오기
+        String authorities = authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
+        long now = (new Date()).getTime();
+
+        //Access Token 생성
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+        return Jwts.builder()
+            .setSubject(customOAuth2User.getEmail()) // payload "sub" : "name"
+            .claim(AUTHORITIES_KEY, authorities) // payload "auth": "ROLE_USER"
+            .setExpiration(accessTokenExpiresIn) //payload "exp": 1516239022 (예시)
+            .signWith(key, SignatureAlgorithm.HS512)
+            .compact();
     }
 
     public Authentication getAuthentication(String accessToken) {
