@@ -1,4 +1,4 @@
-package org.sophy.sophy.config.auth.common;
+package org.sophy.sophy.external.client.oauth2;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

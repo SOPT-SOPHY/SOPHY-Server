@@ -1,4 +1,4 @@
-package org.sophy.sophy.config.auth.dto;
+package org.sophy.sophy.external.client.oauth2.dto;
 
 import java.util.Map;
 import java.util.UUID;

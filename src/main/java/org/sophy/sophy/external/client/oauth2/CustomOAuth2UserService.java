@@ -1,9 +1,8 @@
-package org.sophy.sophy.config.auth.common;
+package org.sophy.sophy.external.client.oauth2;
 
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
-import org.sophy.sophy.config.auth.CustomOAuth2User;
-import org.sophy.sophy.config.auth.dto.OAuthAttributes;
+import org.sophy.sophy.external.client.oauth2.dto.OAuthAttributes;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

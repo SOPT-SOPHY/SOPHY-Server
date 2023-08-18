@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.sophy.sophy.config.auth.CustomOAuth2User;
+import org.sophy.sophy.external.client.oauth2.CustomOAuth2User;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.exception.model.SophyJwtException;
 import org.springframework.beans.factory.annotation.Value;

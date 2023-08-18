@@ -1,4 +1,4 @@
-package org.sophy.sophy.config.auth;
+package org.sophy.sophy.external.client.oauth2;
 
 import java.util.Collection;
 import java.util.Map;

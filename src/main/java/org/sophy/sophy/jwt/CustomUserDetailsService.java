@@ -1,4 +1,4 @@
-package org.sophy.sophy.config.auth.common;
+package org.sophy.sophy.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.Member;

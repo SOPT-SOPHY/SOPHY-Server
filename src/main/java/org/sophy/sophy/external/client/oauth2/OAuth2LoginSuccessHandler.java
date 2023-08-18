@@ -1,4 +1,4 @@
-package org.sophy.sophy.config.auth.common;
+package org.sophy.sophy.external.client.oauth2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.common.dto.ApiResponseDto;
-import org.sophy.sophy.config.auth.CustomOAuth2User;
 import org.sophy.sophy.controller.dto.response.TokenDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.exception.SuccessStatus;
