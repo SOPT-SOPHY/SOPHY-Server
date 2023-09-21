@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
-import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
+import org.sophy.sophy.domain.dto.mypage.MySophyDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;
@@ -27,13 +27,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/my-page")
+    @GetMapping("/my-sophy")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "마이페이지 조회")
-    public ApiResponseDto<MyPageDto> getMyPage(
-        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
-            memberService.getMyPage(user.getUsername()));
+    @Operation(summary = "나의 소피 조회")
+    public ApiResponseDto<MySophyDto> getMyPage(
+            @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MY_SOPHY_SUCCESS,
+                memberService.geyMySophy(user.getUsername()));
     }
 
     @GetMapping("/my-info")
@@ -42,7 +42,7 @@ public class MemberController {
     public ApiResponseDto<MyInfoDto> getInfo(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         System.out.println(user.toString());
-        return ApiResponseDto.success(SuccessStatus.GET_MYPAGE_SUCCESS,
+        return ApiResponseDto.success(SuccessStatus.GET_MYINFO_SUCCESS,
             memberService.getMyInfo(user.getUsername()));
     }
 
