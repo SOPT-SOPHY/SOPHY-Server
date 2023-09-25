@@ -30,30 +30,6 @@ public class MemberService {
     private final BookQueryRepository bookQueryRepository;
     private final BookRepository bookRepository;
 
-
-//    @Transactional
-//    public MyPageDto getMyPage(String email) {
-//        Member member = memberRepository.getMemberByEmail(email);
-//        //여기에 추가로 member에 있는 userBookTalk 리스트를 시간순으로 정렬해 가장 마감이 임박한 booktalk도 보여줌
-//        if (member.getAuthority().equals(Authority.AUTHOR)) {
-//            return MyPageDto.builder()
-//                .name(member.getName())
-//                .expectedBookTalkCount(member.getAuthorProperty().getMyBookTalkSize())
-//                .waitingBookTalkCount(member.getUserBookTalkSize()) //쿼리 나감 (공통 부분 묶어서 fetch join 혹은 dto 쿼리로 가져오고 작가 부분만 setter 이용해 변경해야 할듯)
-//                .completeBookTalkCount(member.getCompletedBookTalkSize()) //쿼리 나감
-//                .myPageBooktalkDtos(getBooktalksByMember(member))
-//                .myBookDtos(getAuthorBooksByMember(member))
-//                .build();
-//        } else {
-//            return MyPageDto.builder()
-//                .name(member.getName())
-//                .waitingBookTalkCount(member.getUserBookTalkSize())
-//                .completeBookTalkCount(member.getCompletedBookTalkSize())
-//                .myPageBooktalkDtos(getBooktalksByMember(member))
-//                .build();
-//        }
-//    }
-
     public MySophyDto geyMySophy(String email) {
         Member member = memberRepository.getMemberByEmail(email);
 

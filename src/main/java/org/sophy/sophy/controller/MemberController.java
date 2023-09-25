@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
@@ -14,9 +15,13 @@ import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,9 +36,9 @@ public class MemberController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "나의 소피 조회")
     public ApiResponseDto<MySophyDto> getMyPage(
-            @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_MY_SOPHY_SUCCESS,
-                memberService.geyMySophy(user.getUsername()));
+            memberService.geyMySophy(user.getUsername()));
     }
 
     @GetMapping("/my-info")
@@ -41,7 +46,6 @@ public class MemberController {
     @Operation(summary = "내 정보 조회")
     public ApiResponseDto<MyInfoDto> getInfo(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        System.out.println(user.toString());
         return ApiResponseDto.success(SuccessStatus.GET_MYINFO_SUCCESS,
             memberService.getMyInfo(user.getUsername()));
     }
