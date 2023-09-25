@@ -9,7 +9,7 @@ import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.dto.mypage.MyBookDto;
 import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
-import org.sophy.sophy.domain.dto.mypage.MySophyDto;
+import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.infrastructure.BookRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
@@ -30,17 +30,17 @@ public class MemberService {
     private final BookQueryRepository bookQueryRepository;
     private final BookRepository bookRepository;
 
-    public MySophyDto geyMySophy(String email) {
+    public MyPageDto geyMyPage(String email) {
         Member member = memberRepository.getMemberByEmail(email);
 
         if (member.getAuthority().equals(Authority.AUTHOR)) {
-            return MySophyDto.builder()
+            return MyPageDto.builder()
                     .name(member.getName())
                     .email(member.getEmail())
                     .myBookCount(bookRepository.countBookByAuthorProperty(member.getAuthorProperty()))
                     .build();
         }
-        return MySophyDto.builder()
+        return MyPageDto.builder()
                 .name(member.getName())
                 .email(member.getEmail())
                 .build();
@@ -64,6 +64,7 @@ public class MemberService {
         return myInfoDto;
     }
 
+    //예정된 북토크 메서드
     @Transactional
     public List<MyPageBooktalkDto> getBooktalksByMember(Member member) { //예정된 북토크 조회 메서드
         List<Long> booktalkIds = member.getUserBookTalkList()

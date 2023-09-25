@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
-import org.sophy.sophy.domain.dto.mypage.MySophyDto;
+import org.sophy.sophy.domain.dto.mypage.MyPageDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.MemberService;
 import org.springframework.http.HttpStatus;
@@ -32,13 +32,13 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/my-sophy")
+    @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "나의 소피 조회")
-    public ApiResponseDto<MySophyDto> getMyPage(
+    public ApiResponseDto<MyPageDto> getMyPage(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_MY_SOPHY_SUCCESS,
-            memberService.geyMySophy(user.getUsername()));
+            memberService.geyMyPage(user.getUsername()));
     }
 
     @GetMapping("/my-info")
