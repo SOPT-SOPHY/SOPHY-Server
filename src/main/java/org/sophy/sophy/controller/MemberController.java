@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
-@Tag(name = "나의 소피", description = "마이페이지 관련 API docs")
+@Tag(name = "마이 페이지", description = "마이 페이지 관련 API docs")
 @SecurityRequirement(name = "JWT Auth")
 public class MemberController {
 

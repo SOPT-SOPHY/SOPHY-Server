@@ -1,20 +1,24 @@
 package org.sophy.sophy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.common.dto.ApiResponseDto;
 import org.sophy.sophy.domain.dto.SophyStoryDto;
 import org.sophy.sophy.domain.dto.SophyStoryRequestDto;
+import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.exception.SuccessStatus;
 import org.sophy.sophy.service.MySophyService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/sophy-story")
@@ -39,5 +43,13 @@ public class MySophyController {
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS,
             mySophyService.getMySophyStory(user.getUsername()));
+    }
+
+    @GetMapping("/booktalks")
+    @Operation(summary = "예정된 북토크 조회")
+    public ApiResponseDto<List<MyPageBooktalkDto>> getMyBooktalks(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return ApiResponseDto.success(SuccessStatus.GET_MY_BOOKTALKS_SUCCESS,
+            mySophyService.getBooktalksByMember(user.getUsername()));
     }
 }
