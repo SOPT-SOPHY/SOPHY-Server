@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SophyStoryService {
+public class MySophyService {
 
     private final MemberRepository memberRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
