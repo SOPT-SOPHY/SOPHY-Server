@@ -31,6 +31,7 @@ public class MySophyController {
     private final MySophyService mySophyService;
 
     @GetMapping //소피스토리 연, 월로 조회
+    @Operation(summary = "소피스토리 연, 월로 조회")
     public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(
         @Parameter(hidden = true) @AuthenticationPrincipal User user,
         @RequestBody @Valid SophyStoryRequestDto sophyStoryRequestDto) {
@@ -39,6 +40,7 @@ public class MySophyController {
     }
 
     @GetMapping("/all") //소피스토리 모두 조회
+    @Operation(summary = "소피스토리 모두 조회")
     public ApiResponseDto<List<SophyStoryDto>> geyMySophyStory(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return ApiResponseDto.success(SuccessStatus.GET_SOPHY_STORY_SUCCESS,
