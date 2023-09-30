@@ -34,10 +34,10 @@ public class MemberController {
 
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "나의 소피 조회")
+    @Operation(summary = "마이 페이지 조회")
     public ApiResponseDto<MyPageDto> getMyPage(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MY_SOPHY_SUCCESS,
+        return ApiResponseDto.success(SuccessStatus.GET_MY_PAGE_SUCCESS,
             memberService.geyMyPage(user.getUsername()));
     }
 
@@ -46,7 +46,7 @@ public class MemberController {
     @Operation(summary = "내 정보 조회")
     public ApiResponseDto<MyInfoDto> getInfo(
         @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-        return ApiResponseDto.success(SuccessStatus.GET_MYINFO_SUCCESS,
+        return ApiResponseDto.success(SuccessStatus.GET_MY_INFO_SUCCESS,
             memberService.getMyInfo(user.getUsername()));
     }
 
@@ -66,7 +66,7 @@ public class MemberController {
     public ApiResponseDto<MyInfoDto> patchInfo(
         @Parameter(hidden = true) @AuthenticationPrincipal User user,
         @RequestBody @Valid MyInfoDto myInfoDto) {
-        return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS,
+        return ApiResponseDto.success(SuccessStatus.PATCH_MY_INFO_SUCCESS,
             memberService.patchMyInfo(user.getUsername(), myInfoDto));
     }
 
