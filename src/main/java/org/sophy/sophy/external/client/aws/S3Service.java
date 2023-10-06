@@ -8,6 +8,11 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.UUID;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.BadRequestException;
@@ -15,12 +20,6 @@ import org.sophy.sophy.exception.model.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +49,10 @@ public class S3Service {
     }
 
     public String uploadImage(MultipartFile multipartFile, String folder) {
+        if (multipartFile == null) {
+            throw new NotFoundException(ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION,
+                ErrorStatus.NOT_FOUND_SAVE_IMAGE_EXCEPTION.getMessage());
+        }
         String fileName = createFileName(multipartFile.getOriginalFilename());
         //inputStream 통해 Byte로 파일이 전달되기 때문에 파일에 대한 정보가 없어서 objectMetadata 같이 넘겨야 함
         ObjectMetadata objectMetadata = new ObjectMetadata();
