@@ -32,6 +32,7 @@ public enum SuccessStatus {
     GET_GUEST_HOME_SUCCESS(HttpStatus.OK, "게스트 홈페이지를 성공적으로 불러왔습니다"),
     GET_AUTHOR_HOME_SUCCESS(HttpStatus.OK, "작가 홈페이지를 성공적으로 불러왔습니다"),
     GET_SOPHY_STORY_SUCCESS(HttpStatus.OK, "소피스토리를 성공적으로 불러왔습니다"),
+    PATCH_PROFILE_SUCCESS(HttpStatus.OK, "프로필 이미지를 성공적으로 수정했습니다."),
     TEST_SUCCESS(HttpStatus.OK, "Test :: OK"),
     /*
      * 201 created

@@ -16,12 +16,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,6 +70,17 @@ public class MemberController {
         @RequestBody @Valid MyInfoDto myInfoDto) {
         return ApiResponseDto.success(SuccessStatus.PATCH_MYINFO_SUCCESS,
             memberService.patchMyInfo(user.getUsername(), myInfoDto));
+    }
+
+    @PatchMapping("/my-page/profile")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "프로필 이미지 수정")
+    public ApiResponseDto<String> patchProfileImage(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
+        @ModelAttribute @Valid final MultipartFile profileImage
+    ) {
+        return ApiResponseDto.success(SuccessStatus.PATCH_PROFILE_SUCCESS,
+            memberService.patchProfileImage(user.getUsername(), profileImage));
     }
 
 }
