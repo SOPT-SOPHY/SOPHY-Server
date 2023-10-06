@@ -1,12 +1,15 @@
 package org.sophy.sophy.service;
 
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.sophy.sophy.domain.CompletedBooktalk;
 import org.sophy.sophy.domain.Member;
 import org.sophy.sophy.domain.dto.SophyStoryDto;
 import org.sophy.sophy.domain.dto.SophyStoryRequestDto;
+import org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto;
 import org.sophy.sophy.infrastructure.CompletedBooktalkRepository;
 import org.sophy.sophy.infrastructure.MemberRepository;
+import org.sophy.sophy.infrastructure.query.BooktalkQueryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,10 +20,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SophyStoryService {
+public class MySophyService {
 
     private final MemberRepository memberRepository;
     private final CompletedBooktalkRepository completedBooktalkRepository;
+    private final BooktalkQueryRepository booktalkQueryRepository;
 
     public List<SophyStoryDto> getMySophyStory(String email,
         SophyStoryRequestDto sophyStoryRequestDto) { //연, 월 선택했을 때 반환하는 소피스토리
@@ -63,5 +67,14 @@ public class SophyStoryService {
             .bookCategory(completedBooktalk.getBookCategory())
             .build()));
         return sophyStoryDtos;
+    }
+
+    //예정된 북토크 메서드
+    public List<MyPageBooktalkDto> getBooktalksByMember(String email) { //예정된 북토크 조회 메서드
+        List<Long> booktalkIds = memberRepository.getMemberByEmail(email).getUserBookTalkList()
+            .stream().map(b -> b.getBooktalk().getId())
+            .collect(Collectors.toList());
+
+        return booktalkQueryRepository.findBooktalks(booktalkIds);
     }
 }

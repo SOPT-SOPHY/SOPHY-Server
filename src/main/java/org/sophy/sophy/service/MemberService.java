@@ -46,7 +46,6 @@ public class MemberService {
                 .build();
     }
 
-    @Transactional
     public MyInfoDto getMyInfo(String email) {
         return MyInfoDto.toBuild(memberRepository.getMemberByEmail(email));
     }
@@ -64,17 +63,6 @@ public class MemberService {
         return myInfoDto;
     }
 
-    //예정된 북토크 메서드
-    @Transactional
-    public List<MyPageBooktalkDto> getBooktalksByMember(Member member) { //예정된 북토크 조회 메서드
-        List<Long> booktalkIds = member.getUserBookTalkList()
-            .stream().map(b -> b.getBooktalk().getId())
-            .collect(Collectors.toList());
-
-        return booktalkQueryRepository.findBooktalks(booktalkIds);
-    }
-
-    @Transactional
     public List<MyPageBooktalkDto> getAuthorBooktalksByEmail(String email) { //작가가 개최한 북토크 조회 메서드
         List<Long> booktalkIds = memberRepository.getMemberByEmail(email)
             .getAuthorProperty().getMyBookTalkList()
@@ -84,7 +72,6 @@ public class MemberService {
         return booktalkQueryRepository.findBooktalks(booktalkIds);
     }
 
-    @Transactional
     public List<MyBookDto> getAuthorBooksByMember(Member member) { //작가가 쓴 책 조회 메서드
         List<Long> bookIds = member.getAuthorProperty().getMyBookList()
             .stream().map(Book::getId)
