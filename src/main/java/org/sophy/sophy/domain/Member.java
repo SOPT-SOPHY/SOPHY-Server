@@ -1,5 +1,19 @@
 package org.sophy.sophy.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,15 +22,10 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.sophy.sophy.controller.dto.request.MemberAdditionalInfoDto;
 import org.sophy.sophy.controller.dto.request.MemberRequestDto;
+import org.sophy.sophy.domain.common.AuditingTimeEntity;
 import org.sophy.sophy.domain.dto.mypage.MyInfoDto;
 import org.sophy.sophy.domain.enumerate.Authority;
 import org.sophy.sophy.domain.enumerate.City;
-
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
-import org.sophy.sophy.domain.common.AuditingTimeEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
@@ -50,6 +59,8 @@ public class Member extends AuditingTimeEntity {
     private City myCity;
 
     private Boolean marketingAgree;
+
+    private String profileImage;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
@@ -131,5 +142,9 @@ public class Member extends AuditingTimeEntity {
         this.marketingAgree = memberRequestDto.getMarketingAgree();
         this.authority = Authority.USER;
         return this;
+    }
+
+    public void patchProfileImage(String profileImageUrl) {
+        this.profileImage = profileImageUrl;
     }
 }

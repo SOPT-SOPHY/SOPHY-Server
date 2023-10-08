@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class MyPageDto {
 
+    private String profileImage;
     private String name;
     private String email;
     private Integer myBookCount;
