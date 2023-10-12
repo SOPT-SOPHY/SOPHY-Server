@@ -89,9 +89,12 @@ public class BooktalkService {
     }
 
     // 북토크 상세 조회
-    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
+    public BooktalkDetailResponseDto getBooktalkDetail(String email, Long booktalkId) {
+        Member member = memberRepository.getMemberByEmail(email);
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
-        return BooktalkDetailResponseDto.of(booktalk);
+        Boolean isApply = member.getUserBookTalkList()
+            .stream().anyMatch(memberBooktalk -> memberBooktalk.getBooktalk().equals(booktalk));
+        return BooktalkDetailResponseDto.of(booktalk, isApply);
     }
 
     // 북토크 참여 신청

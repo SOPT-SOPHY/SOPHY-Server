@@ -39,9 +39,10 @@ public class BooktalkController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 상세 조회")
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(
+        @Parameter(hidden = true) @AuthenticationPrincipal User user,
         @Parameter(example = "1") @PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS,
-            booktalkService.getBooktalkDetail(booktalkId));
+            booktalkService.getBooktalkDetail(user.getUsername(), booktalkId));
     }
 
     @GetMapping("/search")
