@@ -41,7 +41,7 @@ public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
     private static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L;
-    private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
+    private static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60L; //1000 * 60 * 60 * 24 * 7L
     private final Key key;
 
     //빈 생성 때 key 값 세팅
