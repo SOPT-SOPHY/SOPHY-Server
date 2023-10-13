@@ -90,10 +90,13 @@ public class BooktalkService {
 
     // 북토크 상세 조회
     public BooktalkDetailResponseDto getBooktalkDetail(String email, Long booktalkId) {
-        Member member = memberRepository.getMemberByEmail(email);
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
-        Boolean isApply = member.getUserBookTalkList()
-            .stream().anyMatch(memberBooktalk -> memberBooktalk.getBooktalk().equals(booktalk));
+        boolean isApply = false;
+        if (!email.isEmpty()) {
+            Member member = memberRepository.getMemberByEmail(email);
+            isApply = member.getUserBookTalkList()
+                .stream().anyMatch(memberBooktalk -> memberBooktalk.getBooktalk().equals(booktalk));
+        }
         return BooktalkDetailResponseDto.of(booktalk, isApply);
     }
 

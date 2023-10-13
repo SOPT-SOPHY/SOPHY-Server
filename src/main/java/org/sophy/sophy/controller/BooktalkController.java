@@ -38,11 +38,12 @@ public class BooktalkController {
     @GetMapping("/search/{booktalkId}/detail")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "북토크 상세 조회")
+    @SecurityRequirement(name = "JWT Auth")
     public ApiResponseDto<BooktalkDetailResponseDto> getBooktalkDetail(
         @Parameter(hidden = true) @AuthenticationPrincipal User user,
         @Parameter(example = "1") @PathVariable("booktalkId") Long booktalkId) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALK_DETAIL_SUCCESS,
-            booktalkService.getBooktalkDetail(user.getUsername(), booktalkId));
+            booktalkService.getBooktalkDetail(user == null ? "" : user.getUsername(), booktalkId));
     }
 
     @GetMapping("/search")
