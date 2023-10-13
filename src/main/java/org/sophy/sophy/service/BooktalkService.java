@@ -89,9 +89,12 @@ public class BooktalkService {
     }
 
     // 북토크 상세 조회
-    public BooktalkDetailResponseDto getBooktalkDetail(Long booktalkId) {
+    public BooktalkDetailResponseDto getBooktalkDetail(String email, Long booktalkId) {
+        Member member = memberRepository.getMemberByEmail(email);
         Booktalk booktalk = booktalkRepository.getBooktalkById(booktalkId);
-        return BooktalkDetailResponseDto.of(booktalk);
+        Boolean isApply = member.getUserBookTalkList()
+            .stream().anyMatch(memberBooktalk -> memberBooktalk.getBooktalk().equals(booktalk));
+        return BooktalkDetailResponseDto.of(booktalk, isApply);
     }
 
     // 북토크 참여 신청
@@ -101,6 +104,10 @@ public class BooktalkService {
         Member member = memberRepository.getMemberByEmail(email); //참가 신청 유저
         Booktalk booktalk = booktalkRepository.getBooktalkById(
             booktalkParticipationRequestDto.getBooktalkId()); //참가하고자 하는 북토크
+        if (!booktalk.getBooktalkStatus().equals(BooktalkStatus.RECRUITING)) {
+            throw new ForbiddenException(ErrorStatus.BOOKTALK_RECRUITING_CLOSED_EXCEPTION,
+                ErrorStatus.BOOKTALK_RECRUITING_CLOSED_EXCEPTION.getMessage());
+        }
         //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드
         if (booktalk.getMaximum() <= booktalk.getParticipantNum()) {
             throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION,
@@ -116,6 +123,9 @@ public class BooktalkService {
         // 복합키?
         memberBooktalkRepository.save(
             booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member));
+        if (booktalk.getMaximum().equals(booktalk.getParticipantNum())) { //인원이 다 찬 경우 마감
+            booktalk.setBooktalkStatus(BooktalkStatus.RECRUITING_CLOSED);
+        }
     }
 
     // 마감임박 북토크 조회

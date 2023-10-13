@@ -31,6 +31,7 @@ public enum ErrorStatus {
      */
 
     FORBIDDEN_USER_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+    BOOKTALK_RECRUITING_CLOSED_EXCEPTION(HttpStatus.FORBIDDEN, "모집 마감된 북토크입니다."),
     /**
      * 404 NOT FOUND
      */

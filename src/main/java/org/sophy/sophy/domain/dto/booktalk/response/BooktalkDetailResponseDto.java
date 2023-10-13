@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.enumerate.BookCategory;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 @Getter
@@ -16,7 +17,7 @@ public class BooktalkDetailResponseDto {
     private String title;
     private String Author;
     private BookCategory bookCategory;
-    private String book; //TODO 추후 연결
+    private String book;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Integer participant;
@@ -25,8 +26,10 @@ public class BooktalkDetailResponseDto {
     private String description;
     private String PlaceName;
     private String PlaceAddress;
+    private Boolean isApply;
+    private BooktalkStatus booktalkStatus;
 
-    public static BooktalkDetailResponseDto of(Booktalk booktalk) {
+    public static BooktalkDetailResponseDto of(Booktalk booktalk, Boolean isApply) {
         return new BooktalkDetailResponseDto(
             booktalk.getBooktalkImageUrl(),
             booktalk.getTitle(),
@@ -40,7 +43,9 @@ public class BooktalkDetailResponseDto {
             booktalk.getPreliminaryInfo(),
             booktalk.getDescription(),
             booktalk.getPlace().getName(),
-            booktalk.getPlace().getAddress()
+            booktalk.getPlace().getAddress(),
+            isApply,
+            booktalk.getBooktalkStatus()
         );
     }
 }
