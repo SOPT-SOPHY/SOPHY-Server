@@ -52,7 +52,7 @@ public class BooktalkController {
     public ApiResponseDto<List<BooktalkResponseDto>> getBooktalksByCities(
         @Parameter(description = "지역 이름", example = "UIJEONGBU_DONG") @Valid @RequestParam(name = "cities") List<City> cities) {
         return ApiResponseDto.success(SuccessStatus.GET_BOOKTALKS_BY_CITY_SUCCESS,
-            booktalkService.getBooktalksByCities(cities));
+            booktalkService.getBooktalksByCities());
     }
 
     @PostMapping("/participation")

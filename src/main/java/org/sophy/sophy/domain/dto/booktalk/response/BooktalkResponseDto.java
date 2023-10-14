@@ -3,6 +3,7 @@ package org.sophy.sophy.domain.dto.booktalk.response;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 @Data
@@ -19,4 +20,5 @@ public class BooktalkResponseDto {
     private Integer participant;
     private Integer maximum;
     private String booktalkImageUrl;
+    private BooktalkStatus booktalkStatus;
 }
