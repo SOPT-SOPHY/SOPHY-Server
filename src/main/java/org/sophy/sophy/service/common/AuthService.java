@@ -1,5 +1,6 @@
 package org.sophy.sophy.service.common;
 
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sophy.sophy.controller.dto.request.DuplCheckDto;
@@ -12,9 +13,11 @@ import org.sophy.sophy.exception.ErrorStatus;
 import org.sophy.sophy.exception.model.ExistEmailException;
 import org.sophy.sophy.exception.model.LogoutRefreshtokenException;
 import org.sophy.sophy.exception.model.SophyException;
+import org.sophy.sophy.exception.model.SophyJwtException;
 import org.sophy.sophy.infrastructure.MemberRepository;
 import org.sophy.sophy.jwt.TokenProvider;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -22,8 +25,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -136,7 +137,8 @@ public class AuthService {
 
         // 4. Refresh Token 일치하는지 검사
         if (!existRefreshToken.equals(refreshToken)) {
-            throw new RuntimeException("Refresh Token의 정보가 일치하지 않습니다.");
+            throw new SophyJwtException(HttpStatus.UNAUTHORIZED,
+                ErrorStatus.INVALID_REFRESH_TOKEN_EXCEPTION.getMessage());
         }
 
         // 5. 새로운 토큰 생성
