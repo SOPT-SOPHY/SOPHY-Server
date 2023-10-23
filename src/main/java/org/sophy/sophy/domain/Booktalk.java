@@ -1,22 +1,32 @@
 package org.sophy.sophy.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.sophy.sophy.domain.common.AuditingEntity;
+import org.sophy.sophy.domain.common.ScheduledBooktalk;
 import org.sophy.sophy.domain.dto.booktalk.BooktalkUpdateDto;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
 import org.sophy.sophy.domain.enumerate.City;
 import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import org.sophy.sophy.domain.common.AuditingEntity;
-import org.sophy.sophy.domain.common.ScheduledBooktalk;
 
 @Entity
 @Getter
@@ -80,7 +90,7 @@ public class Booktalk extends AuditingEntity {
     @Enumerated(EnumType.STRING)
     private PreliminaryInfo preliminaryInfo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)
