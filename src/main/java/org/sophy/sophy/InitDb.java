@@ -26,7 +26,7 @@ public class InitDb {
 
     private final InitService initService;
 
-//    @PostConstruct
+    @PostConstruct
     public void init() {
         initService.dbInit();
     }
@@ -89,7 +89,7 @@ public class InitDb {
                 .booktalkOpenCount(0)
                 .isRegistration(false)
                 .bookImageUrl(
-                    "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MDlfMzkg%2FMDAxNjg2MzEzNTI0MjIz.xkBWDoKNCj68MLjaV7eWZcGBavZkPHQUt4aad6pHf-cg.J3DKkWiEmvbne1hXh_xmeVRDXlgIwG5GOcHUuVwK1ggg.PNG.mmmhee1014%2FIMG_2427.PNG&type=a340")
+                    "https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/namkang.png")
                 .build();
             em.persist(bookBeak);
 
@@ -97,7 +97,7 @@ public class InitDb {
                 .place(placeBeak)
                 .title("고양이 물그릇에 빌게")
                 .booktalkImageUrl(
-                    "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MDlfMzkg%2FMDAxNjg2MzEzNTI0MjIz.xkBWDoKNCj68MLjaV7eWZcGBavZkPHQUt4aad6pHf-cg.J3DKkWiEmvbne1hXh_xmeVRDXlgIwG5GOcHUuVwK1ggg.PNG.mmmhee1014%2FIMG_2427.PNG&type=a340")
+                    "https://sophy-bucket.s3.ap-northeast-2.amazonaws.com/image/namkang.png")
                 .book(bookBeak)
                 .member(authorNam)
                 .bookCategory(bookBeak.getBookCategory())
@@ -105,11 +105,11 @@ public class InitDb {
                 .endDate(LocalDateTime.of(2023, 11, 4, 15, 30))
                 .maximum(5)
                 .participationFee(0)
-                .preliminaryInfo(PreliminaryInfo.PROVIDE_EXCERPT)
+                .preliminaryInfo(PreliminaryInfo.PROVIDE_BOOK)
                 .description(
                     "\"사람들은 늘상 무당도 사람이라는 점을 잊고 살아간다. 그들의 특수한 능력이나 생활 때문이기도 하지만 미디어에서 나타나는 무당들의 이미지 때문일 것이다. 맥락과는 상관없이 살을 날리고, 돼지피를 뿜어대고 칼을 연신 어르고, 작두를 타는 이미지 말이다. 무당은 소수자인 사람이다. 무당이 신이 아닌 사람이라는 점을 잊지는 말았으면 좋겠다. 나는 판타지가 아닌 지금 발 딛고 있는 현실에 기댄 이야기를 풀어내고 싶었다.\"\n"
                         + "\n"
-                        + "<고양이 물그릇에 빌게>는 민속학을 전공한 남강 작가님의 무속 에세이입니다. 북토크에 참여하면 작가님께서 무속에 관심을 가지게 된 이야기, 학예연구원으로 박물관에서 일하며 겪은 경험 등 작가님의 이야기를 직접 들을 수 있어요!")
+                        + "소피의 첫번째 북토크는 <고양이 물그릇에 빌게>를 집필하신 남강 작가님과 함께 합니다!")
                 .booktalkStatus(BooktalkStatus.RECRUITING)
                 .build();
             em.persist(booktalkBeak);
