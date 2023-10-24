@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.sophy.sophy.domain.Booktalk;
 import org.sophy.sophy.domain.enumerate.BookCategory;
 import org.sophy.sophy.domain.enumerate.BooktalkStatus;
-import org.sophy.sophy.domain.enumerate.PreliminaryInfo;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -22,7 +21,7 @@ public class BooktalkDetailResponseDto {
     private LocalDateTime endDate;
     private Integer participant;
     private Integer participationFee;
-    private PreliminaryInfo preliminaryInfo;
+    private String preliminaryInfo;
     private String description;
     private String PlaceName;
     private String PlaceAddress;
@@ -40,7 +39,7 @@ public class BooktalkDetailResponseDto {
             booktalk.getEndDate(),
             booktalk.getParticipantNum(),
             booktalk.getParticipationFee(),
-            booktalk.getPreliminaryInfo(),
+            booktalk.getPreliminaryInfo().getDescription(),
             booktalk.getDescription(),
             booktalk.getPlace().getName(),
             booktalk.getPlace().getAddress(),
