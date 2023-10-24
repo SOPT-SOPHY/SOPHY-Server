@@ -71,7 +71,7 @@ public class SecurityConfig {
             //로그인, 회원가입 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
             .and()
             .authorizeRequests()
-            .antMatchers("/author/**").hasRole("AUTHOR")
+            .antMatchers("/author/**").hasAuthority("AUTHOR")
             .antMatchers("/auth/**", "/profile/**", "/actuator/**", "/health/**").permitAll()
             .antMatchers("/home/**", "/booktalk/search/**", "/test/**", "/").permitAll()
             .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html").permitAll()
