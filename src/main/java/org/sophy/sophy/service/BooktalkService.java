@@ -153,7 +153,8 @@ public class BooktalkService {
 //                BooktalkStatus.RECRUITING);
 //        }
         booktalkList = booktalkQueryRepository.findBooktalkResponseDto(
-            Arrays.asList(BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_EXPECTED));
+            Arrays.asList(BooktalkStatus.RECRUITING, BooktalkStatus.RECRUITING_EXPECTED,
+                BooktalkStatus.RECRUITING_CLOSED));
 
         return booktalkList;
     }
