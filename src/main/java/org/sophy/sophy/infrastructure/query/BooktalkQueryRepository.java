@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 public interface BooktalkQueryRepository extends JpaRepository<Booktalk, Long> {
 
     @Query("select new org.sophy.sophy.domain.dto.booktalk.response.BooktalkResponseDto("
-        + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, b.participantNum, b.maximum, b.booktalkImageUrl, b.booktalkStatus)"
+        + " b.id, b.preliminaryInfo, b.title, m.name, b.startDate, b.endDate, p.name, b.participantList.size, b.maximum, b.booktalkImageUrl, b.booktalkStatus)"
         + " from Booktalk b"
         + " join b.member m"
         + " join b.place p"
@@ -47,7 +47,7 @@ public interface BooktalkQueryRepository extends JpaRepository<Booktalk, Long> {
         @Param("booktalkStatuses") List<BooktalkStatus> booktalkStatuses);
 
     @Query("select new org.sophy.sophy.domain.dto.mypage.MyPageBooktalkDto("
-        + " b.id, b.booktalkImageUrl, b.title, m.name, b.startDate, b.endDate, p.name, b.participantNum, b.maximum, b.booktalkStatus)"
+        + " b.id, b.booktalkImageUrl, b.title, m.name, b.startDate, b.endDate, p.name, b.participantList.size, b.maximum, b.booktalkStatus)"
         + " from Booktalk b"
         + " join b.member m"
         + " join b.place p"

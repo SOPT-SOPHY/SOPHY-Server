@@ -78,8 +78,6 @@ public class Booktalk extends AuditingEntity {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
-    private Integer participantNum;
-
     @Column(nullable = false)
     private Integer maximum;
 
@@ -107,10 +105,6 @@ public class Booktalk extends AuditingEntity {
 
     private final Boolean deleted = Boolean.FALSE;
 
-    public void plusParticipant() {
-        this.participantNum += 1;
-    }
-
     public void setBooktalkStatus(BooktalkStatus booktalkStatus) {
         this.booktalkStatus = booktalkStatus;
     }
@@ -136,7 +130,6 @@ public class Booktalk extends AuditingEntity {
         this.member = member;
         this.authorProperty = member.getAuthorProperty();
         member.getAuthorProperty().getMyBookTalkList().add(this);
-        member.getAuthorProperty().plusMyBookTalkSize();
     }
 
     @Builder
@@ -152,7 +145,6 @@ public class Booktalk extends AuditingEntity {
         this.bookCategory = bookCategory;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.participantNum = 0;
         this.maximum = maximum;
         this.participationFee = participationFee;
         this.preliminaryInfo = preliminaryInfo;

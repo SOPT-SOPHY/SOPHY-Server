@@ -32,7 +32,6 @@ public class MemberBooktalk extends AuditingEntity {
         if (!member.getUserBookTalkList().contains(this)) {
             // 시작날짜로 순으로 정렬해서 추가
             member.getUserBookTalkList().add(this);
-            member.plusUserBooktalk();
         }
     }
 
@@ -40,7 +39,6 @@ public class MemberBooktalk extends AuditingEntity {
         this.booktalk = booktalk;
         if (!booktalk.getParticipantList().contains(this)) {
             booktalk.getParticipantList().add(this);
-            booktalk.plusParticipant();
         }
     }
 

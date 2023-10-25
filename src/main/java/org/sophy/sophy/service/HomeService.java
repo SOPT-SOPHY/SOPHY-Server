@@ -30,7 +30,7 @@ public class HomeService {
 
     public HomeResponseDto getHome(String email) {
         Member member = memberRepository.getMemberByEmail(email);
-        Integer booktalkCount = member.getUserBookTalkSize();
+        Integer booktalkCount = member.getUserBookTalkList().size();
         List<BooktalkDeadlineUpcomingDto> booktalkDeadlineUpcoming = booktalkService.getBooktalkDeadlineUpcoming();
 
         if (member.getAuthority().equals(Authority.AUTHOR)) { //작가냐 아니냐에 따라 홈 화면 분리
