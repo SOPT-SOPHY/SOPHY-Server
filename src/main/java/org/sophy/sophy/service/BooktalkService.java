@@ -133,7 +133,7 @@ public class BooktalkService {
 
     // 마감임박 북토크 조회
     public List<BooktalkDeadlineUpcomingDto> getBooktalkDeadlineUpcoming() {
-        return booktalkRepository.findAllByBooktalkStatusOrderByEndDate(BooktalkStatus.RECRUITING)
+        return booktalkRepository.findAllByOrderByEndDate()
             .stream().map(BooktalkDeadlineUpcomingDto::of).collect(Collectors.toList());
     }
 
