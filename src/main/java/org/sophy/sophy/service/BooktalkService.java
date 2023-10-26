@@ -112,7 +112,7 @@ public class BooktalkService {
                 ErrorStatus.BOOKTALK_RECRUITING_CLOSED_EXCEPTION.getMessage());
         }
         //북토크 현재 인원이 최대인원을 넘지 않았는지 체크하는 메서드
-        if (booktalk.getMaximum() <= booktalk.getParticipantNum()) {
+        if (booktalk.getMaximum() <= booktalk.getParticipantList().size()) {
             throw new OverMaxParticipationException(ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION,
                 ErrorStatus.OVER_MAX_PARTICIPATION_EXCEPTION.getMessage());
         }
@@ -126,7 +126,7 @@ public class BooktalkService {
         // 복합키?
         memberBooktalkRepository.save(
             booktalkParticipationRequestDto.toMemberBooktalk(booktalk, member));
-        if (booktalk.getMaximum().equals(booktalk.getParticipantNum())) { //인원이 다 찬 경우 마감
+        if (booktalk.getMaximum().equals(booktalk.getParticipantList().size())) { //인원이 다 찬 경우 마감
             booktalk.setBooktalkStatus(BooktalkStatus.RECRUITING_CLOSED);
         }
     }
@@ -171,11 +171,9 @@ public class BooktalkService {
         for (MemberBooktalk memberBooktalk : booktalk.getParticipantList()) { //참가 인원들 소피스토리 세팅
             Member member = memberBooktalk.getMember();
             completedBooktalkSetting(booktalk, member);
-            member.minusUserBooktalk(); //예정된 북토크 수 감소
         }
         Member member = booktalk.getMember(); //작가 소피스토리 세팅
         CompletedBooktalk completedBooktalk = completedBooktalkSetting(booktalk, member);
-        member.getAuthorProperty().minusMyBookTalkSize(); //개최한 북토크 수 감소
         booktalkRepository.delete(booktalk);
         return completedBooktalk;
     }
